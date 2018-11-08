@@ -1,0 +1,22 @@
+<IfModule !mod_rewrite.c>
+    ErrorDocument 404 /index.php
+</IfModule>
+
+<IfModule mod_rewrite.c>
+
+ Options +FollowSymLinks
+ RewriteEngine on
+ RewriteBase /MarketPlace/
+ 
+ #phpmyadmin exception
+ RewriteCond %{REQUEST_URI} !^/phpmyadmin
+ RewriteCond %{REQUEST_FILENAME} !-f
+ RewriteRule .* index.php
+
+ # Send request via index.php
+ RewriteCond %{REQUEST_FILENAME} !-f
+ RewriteCond %{REQUEST_FILENAME} !-d
+ RewriteRule ^(.*)$ index.php/$1 [L]
+
+</IfModule>
+
