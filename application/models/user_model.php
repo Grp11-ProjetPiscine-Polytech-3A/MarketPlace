@@ -1,9 +1,53 @@
-<?php
+<?php  if ( ! defined('BASEPATH')) exit('No direct script access allowed');
 
-Class Login_Database extends CI_Model {
+class User_model extends CI_Model
+{
+	/**
+	 *  Nom de la table
+	 */
+	protected $table = 'user';
+	
+	/**
+	 *	Ajoute un utilisateur
+	 */
+	public function ajouter_user()
+	{
+		
+	}
+	
+	/**
+	 *	Édite un utilisateur déjà existante
+	 */
+	public function editer_user()
+	{
+		
+	}
+	
+	/**
+	 *	Supprime un utilisateur
+	 */
+	public function supprimer_user()
+	{
+		
+	}
+	
+	/**
+	 *	Retourne le nombre d'utilisateur
+	 */
+	public function count_user()
+	{
+		
+	}
+	
+	/**
+	 *	Retourne une liste d'utilisateur
+	 */
+	public function liste_user()
+	{
+		
+	}
 
-
-    /**
+	/**
      * Check the user with the username and password sent by the user
      * @param   Array     $data    the associative array that contains the loginUser and passUser
      * @return  boolean            TRUE if the informations given are correct, FALSE else
@@ -44,7 +88,8 @@ Class Login_Database extends CI_Model {
             return false;
         }
     }
-
 }
 
-?>
+
+/* End of file produit_variante_model.php */
+/* Location: ./application/models/produit_variante_model.php */

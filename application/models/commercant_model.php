@@ -1,6 +1,6 @@
 <?php  if ( ! defined('BASEPATH')) exit('No direct script access allowed');
 
-class commercant_model extends CI_Model
+class Commercant_model extends CI_Model
 {
 	/**
 	 *  Nom de la table
