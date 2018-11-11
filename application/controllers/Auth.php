@@ -33,14 +33,14 @@ class Auth extends CI_Controller {
         );
 
         // Check in the database if it's the right data
-        $result = $this->login_database->login($data);
+        $result = $this->User_model->login($data);
 
         // If the user is correctly authentified
         if ($result == TRUE) {
             
             // Saves the data of the user in session
             $username = $this->input->post('loginUser');
-            $result = $this->login_database->select_from_username($username);
+            $result = $this->User_model->select_from_username($username);
             if ($result != false) {
                 $session_data = array(
                     'username' => $result[0]->loginUser,
