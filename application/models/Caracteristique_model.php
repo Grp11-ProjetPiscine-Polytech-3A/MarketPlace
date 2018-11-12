@@ -6,13 +6,18 @@ class Caracteristique_model extends CI_Model
 	 *  Nom de la table
 	 */
 	protected $table = 'caracteristiques';
-	
+
 	/**
 	 *	Ajoute une caracteristique
+	 *
+	 *	@param string $nomCar   L'auteur de la news
+	 *	@return bool			Le résultat de la requête
 	 */
-	public function ajouter_caract()
+	public function ajouter_caract($nomCar)
 	{
-		
+		$this->db->set('nomCaracteristique', $nomCar);
+
+		return $this->db->insert($this->table);
 	}
 	
 	/**
