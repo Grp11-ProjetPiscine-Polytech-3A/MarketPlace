@@ -53,12 +53,11 @@ class User_model extends CI_Model
      * @return  boolean            TRUE if the informations given are correct, FALSE else
      */
     public function login($data) {
-        // Makes the request
-        $condition = "loginUser =" . "'" . $data['loginUser'] . "' AND " . "passUser =" . "'" . $data['passUser'] . "'";
-        
+        // Makes the request        
         $this->db->select('*');
         $this->db->from('User');
-        $this->db->where($condition);
+        $this->db->where('loginUser',$data['loginUser']);
+        $this->db->where('passUser',$data['passUser']);
         $this->db->limit(1);
         
         // Executes the query
@@ -75,12 +74,12 @@ class User_model extends CI_Model
      */
     public function select_from_username($username) {
 
-        $condition = "loginUser =" . "'" . $username . "'";
         $this->db->select('*');
         $this->db->from('User');
-        $this->db->where($condition);
+        $this->db->where('loginUser', $username);
         $this->db->limit(1);
         $query = $this->db->get();
+
 
         if ($query->num_rows() == 1) {
             return $query->result();
