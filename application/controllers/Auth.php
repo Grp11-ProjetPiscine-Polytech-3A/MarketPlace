@@ -14,10 +14,17 @@ class Auth extends CI_Controller {
     }
 
     /**
-     * Show Login page
+     * Show Login page if the user is not connected, or print a welcome message if he is
      */
     public function index() {
-        $this->load->view('login');
+        if (isset($this->session->logged_in['username'])) {
+            $data = array(
+               'username' => $this->session->logged_in['username'],
+            );
+            $this->load->view('logged_in', $data);
+        } else {
+            $this->load->view('login');
+        }
     }
 
     /**
@@ -37,7 +44,7 @@ class Auth extends CI_Controller {
 
         // If the user is correctly authentified
         if ($result == TRUE) {
-            
+
             // Saves the data of the user in session
             $username = $this->input->post('loginUser');
             $result = $this->User_model->select_from_username($username);
@@ -52,8 +59,8 @@ class Auth extends CI_Controller {
                 // Load the logged_in view
                 $this->load->view('logged_in', $session_data);
             }
-            
-        // If username or password is wrong, load the error
+
+            // If username or password is wrong, load the error
         } else {
             $data = array(
                 'error_message' => 'Invalid Username or Password'
@@ -71,13 +78,13 @@ class Auth extends CI_Controller {
         $sess_array = array(
             'username' => ''
         );
-        
+
         // Unset the session
         $this->session->unset_userdata('logged_in', $sess_array);
-        
+
         // Displays the message
         $data['message_display'] = 'Successfully Logged out ! ';
-        
+
         // Load the view
         $this->load->view('login', $data);
     }
