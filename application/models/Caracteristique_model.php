@@ -1,17 +1,17 @@
 <?php  if ( ! defined('BASEPATH')) exit('No direct script access allowed');
 
-class Caracteristique_model extends CI_Model
+class Caracteristique_model extends MY_Model
 {
-	/**
-	 *  Nom de la table
-	 */
+	// Nom de la table
 	protected $table = 'caracteristiques';
+	// Nom de l'identifiant de la table
+    protected $id = 'idCaracteristique';
 
 	/**
 	 *	Ajoute une caracteristique
 	 *
-	 *	@param string $nomCar   L'auteur de la news
-	 *	@return bool			Le résultat de la requête
+	 *	@param  string 		$nomCar   	Le nom de la caracteristique
+	 *	@return bool					Le résultat de la requête
 	 */
 	public function ajouter_caract($nomCar)
 	{
@@ -22,37 +22,47 @@ class Caracteristique_model extends CI_Model
 	
 	/**
 	 *	Édite une caracteristique déjà existante
-	 */
-	public function editer_caract()
+	 *	@param  integer 	$id			L'id de la caracteristique à modifier
+	 *	@param  string 		$nomCar   	Le nom de la caracteristique
+	 *	@return bool					Le résultat de la requête
+	 *
+	public function editer_caract($id = null, $nomCar = null)
 	{
-		
-	}
+		if ($id == null OR $nomCar == null)
+		{
+			return false;
+		}
+
+		$this->db->set('nomCaracteristique', $nomCar);
+		$this->db->where('idCaracteristique' (int) $id);
+
+		return $this->db->update($this->table);
+	}*/
 	
 	/**
 	 *	Supprime une caracteristique
-	 */
+	 *	@param integer 		$id			L'id de la caracteristique à supprimer
+	 *	@return bool					Le résultat de la requête
+	 *
 	public function supprimer_caract()
 	{
-		
-	}
-	
-	/**
-	 *	Retourne le nombre de caracteristique
-	 */
-	public function count_caract()
-	{
-		
-	}
+		$this->db->where('idCaracteristique' (int) $id),
+		return $this->db->delete($this->table);
+	}*/
 	
 	/**
 	 *	Retourne une liste de caracteristique
 	 */
 	public function liste_caract()
 	{
-		
+		return $this->db->select('*')
+					->from($this->table)
+					->order_by('id', 'desc')
+					->get()
+					->result();
 	}
 }
 
 
-/* End of file caracteristique_model.php */
-/* Location: ./application/models/caracteristique_model.php */
+/* End of file Caracteristique_model.php */
+/* Location: ./application/models/Caracteristique_model.php */
