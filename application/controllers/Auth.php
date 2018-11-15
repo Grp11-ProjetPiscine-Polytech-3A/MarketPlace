@@ -4,6 +4,12 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
 class Auth extends CI_Controller {
 
+    /*
+    |===============================================================================
+    | Constructeur
+    |===============================================================================
+    */
+
     public function __construct() {
         parent::__construct();
 
@@ -27,6 +33,14 @@ class Auth extends CI_Controller {
         }
     }
 
+
+    /*
+    |===============================================================================
+    | Méthodes pour la connexion d'un utilisateur
+    |   . user_login
+    |   . logout
+    |===============================================================================
+    */
     /**
      * User Login process
      * If the user gives the right username and password, the connexion is done, else, an error is printed

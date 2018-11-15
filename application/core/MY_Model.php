@@ -20,7 +20,7 @@ class MY_Model extends CI_Model
         {
             return false;
         }
-        
+
         return (bool) $this->db ->set($options_echappees)
                                 ->set($options_non_echappees, null, false)
                                 ->insert($this->table);
@@ -38,18 +38,18 @@ class MY_Model extends CI_Model
                         ->get()
                         ->result();
     }
-    
+
     /**
      *  Modifie une ou plusieurs lignes dans la base de données.
      */
     public function update($where, $options_echappees = array(), $options_non_echappees = array())
-    {       
+    {
         //  Vérification des données à mettre à jour
         if(empty($options_echappees) AND empty($options_non_echappees))
         {
             return false;
         }
-        
+
         //  Raccourci dans le cas où on sélectionne l'id
         //  TODO : Remplacer 'id' par une variable id, toute les tables (aucune en fait) n'a d'indentifiant s'appelant id
         if(is_integer($where))
@@ -63,7 +63,7 @@ class MY_Model extends CI_Model
                                 ->update($this->table);
 
     }
-    
+
     /**
      *  Supprime une ou plusieurs lignes de la base de données.
      */
@@ -73,7 +73,7 @@ class MY_Model extends CI_Model
         {
             $where = array('id' => $where);
         }
-        
+
         return (bool) $this->db ->where($where)
                                 ->delete($this->table);
     }
@@ -84,7 +84,7 @@ class MY_Model extends CI_Model
      *   - Rien (Retourne le nombre totale de valeur dans la table)
      *   - Un champs et la valeur souhaité
      *   - Un array avec tout les paramètres souhaités (le paramètre $valuer sera alors ignoré)
-     *  Exemples d'appel : 
+     *  Exemples d'appel :
      *  //  Le nombre d'entrées dans la table du modèle userManager
      *  $nb_membres = $this->userManager->count();
      *
