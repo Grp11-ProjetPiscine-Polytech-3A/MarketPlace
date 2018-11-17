@@ -45,7 +45,7 @@ class Layout
     {
         $this->var['output'] .= $this->CI->load->view($name, $data, true);
         
-        $this->CI->load->view('../themes/default', $this->var);
+        $this->CI->load->view('../themes/default_layout', $this->var);
     }
     
     /*
