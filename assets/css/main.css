@@ -1,0 +1,18 @@
+div.message_display {
+    color:#009933;
+    background:#ccffcc;
+    padding:5px 15px;
+    border:1px solid #009933;
+}
+
+div.error_display {
+    color:#800000;
+    background:#ffcccc;
+    padding:5px 15px;
+    border:1px solid #800000;
+}
+
+div.error_display,div.message_display {
+    margin-bottom: 10px;
+    margin-top: 10px;
+} 

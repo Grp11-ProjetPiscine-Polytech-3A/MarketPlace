@@ -28,6 +28,7 @@ class Layout
         $this->var['charset'] = $this->CI->config->item('charset');
 
         $this->var['css'] = array();
+        
         $this->var['js'] = array();
     }
     
