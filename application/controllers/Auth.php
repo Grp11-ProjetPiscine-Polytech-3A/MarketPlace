@@ -56,8 +56,8 @@ class Auth extends CI_Controller {
      */
     public function login_process() {
 
-        $this->form_validation->set_rules('loginUser', '"Login"', 'trim|required|min_length[4]|alpha_dash|encode_php_tags|required');
-        $this->form_validation->set_rules('passUser', '"Password"', 'trim|required|min_length[5]|alpha_dash|encode_php_tags|required');
+        $this->form_validation->set_rules('loginUser', '"Login"', 'trim|required|alpha_dash|encode_php_tags');
+        $this->form_validation->set_rules('passUser', '"Password"', 'trim|required|alpha_dash|encode_php_tags|required');
 
         if (!$this->form_validation->run()) {
             $data = array(
