@@ -1,3 +1,23 @@
+/* Sticky footer */
+html {
+  height: 100%;
+}
+body {
+  min-height: 100%;
+  display: grid;
+  grid-template-rows: 1fr auto;
+}
+footer {
+  grid-row-start: 2;
+  grid-row-end: 3;
+}
+
+#contenu {
+    padding-top: 2%;
+    padding-bottom: 1%;
+}
+
+/* Display and error messages */
 div.message_display {
     color:#009933;
     background:#ccffcc;
@@ -16,14 +36,3 @@ div.error_display,div.message_display {
     margin-bottom: 10px;
     margin-top: 10px;
 } 
-
-footer.footer {
-    position: absolute;
-    bottom: 0;
-    width:100%;
-}
-
-#contenu {
-    padding-top: 2%;
-    padding-bottom: 1%;
-}
