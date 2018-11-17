@@ -8,12 +8,26 @@ class User_model extends MY_Model {
     // Nom de la table
     protected $table = 'user';
     // Nom de l'identifiant de la table
-    protected $id = '';
+    protected $id = 'idUser';
 
-    
-//    public function create($options_echappees = array()) {
-//        
-//    }
+    /**
+     * Creates the user
+     * @param type $login       The login
+     * @param type $password    The password
+     * @return boolean          TRUE if the process worked
+     */
+    public function signup($login, $password) {
+        // Encrypt the password
+        $encrypted_password = encrypt_password($password, $login);
+ 
+        // Set the data
+        $data = array(
+            "loginUser" => $login,
+            "passUser" => $encrypted_password,
+        );
+        
+        return $this->create($data);
+   }
 
     /**
      * Check the user with the username and password sent by the user
