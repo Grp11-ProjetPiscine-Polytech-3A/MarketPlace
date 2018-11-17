@@ -15,5 +15,8 @@
     <?php echo form_close(); ?>
 </div>
 <br />
-<div> Vous n'avez pas de compte ? <a href="<?php echo site_url('Auth/signup') ?>">Créez-en un !</a>
+
+<div> 
+    Vous n'avez pas de compte ? <a href="<?php echo site_url('Auth/signup') ?>">Créez-en un !</a>
+</div>
 

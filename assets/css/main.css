@@ -16,3 +16,14 @@ div.error_display,div.message_display {
     margin-bottom: 10px;
     margin-top: 10px;
 } 
+
+footer.footer {
+    position: absolute;
+    bottom: 0;
+    width:100%;
+}
+
+#contenu {
+    padding-top: 2%;
+    padding-bottom: 1%;
+}

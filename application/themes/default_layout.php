@@ -13,12 +13,9 @@
         <!-- Affiche le titre composé du nom de la méthode et du nom du contrôleur -->
         <title><?php echo $titre; ?></title>
 
-        <!-- Bootstrap core CSS
-             Old one
         <link href="<?php echo base_url('assets/css/bootstrap.min.css'); ?>" rel="stylesheet">
-        -->
         <link rel="stylesheet" type="text/css" media="screen" href="<?php echo base_url('assets/css/main.css'); ?>" />
-        
+
         <?php foreach ($css as $url): ?>
             <link rel="stylesheet" type="text/css" media="screen" href="<?php echo $url; ?>" />
         <?php endforeach; ?>
@@ -29,22 +26,59 @@
     </head>
 
     <body>
-        <div id="contenu">
-            <?php echo $output; ?>
-        </div>
-        <!-- Footer -->
-        <footer class="py-5 bg-dark">
+
+        <!-- Navigation -->
+        <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
             <div class="container">
-                <p class="m-0 text-center text-white">Copyright &copy; HéroShop 2018</p>
+                <a class="navbar-brand" href="<?php echo site_url('')?>">HeroShop</a>
+                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarResponsive">
+                    <ul class="navbar-nav ml-auto">
+                        <li class="nav-item active">
+                            <a class="nav-link" href="<?php echo site_url('')?>">Home
+                                <span class="sr-only">(current)</span>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#">About</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#">Services</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#">Contact</a>
+                        </li>
+                        
+                        <li class="nav-item">
+                            <a class="nav-link" href="<?php echo site_url('Auth/') ?>">Authentification</a>
+                        </li>
+                    </ul>
+                </div>
             </div>
+        </nav>
+
+        <!-- Page Content -->
+        <div class="container">
+            <div id="contenu">
+                <?php echo $output; ?>
+            </div>
+        </div>
+        
+        
+        <!-- Footer -->
+        <footer class="py-5 bg-dark footer">
+                <div class="container">
+                    <p class="m-0 text-center text-white">Copyright &copy; HeroShop 2018</p>
+                </div>
             <!-- /.container -->
         </footer>
 
-        <!-- Bootstrap core JavaScript 
+        <!-- Bootstrap core JavaScript -->
         <script src="<?php echo base_url('assets/jquery/jquery.min.js'); ?>"></script>
         <script src="<?php echo base_url('assets/js/bootstrap.bundle.min.js'); ?>"></script>
-        Old Ones
-        -->
+
         <?php foreach ($js as $url): ?>
             <script type="text/javascript" src="<?php echo $url; ?>"></script> 
         <?php endforeach; ?>

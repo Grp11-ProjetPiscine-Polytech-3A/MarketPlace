@@ -17,5 +17,7 @@
     <?php echo form_close(); ?>
 </div>
 <br />
-<div> Vous avez déjà un compte ? <a href="<?php echo site_url('Auth/login') ?>">Connectez-vous !</a>
+<div>
+    Vous avez déjà un compte ? <a href="<?php echo site_url('Auth/login') ?>">Connectez-vous !</a>
+</div>
 
