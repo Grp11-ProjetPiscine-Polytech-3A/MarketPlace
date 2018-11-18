@@ -19,7 +19,7 @@
                             <br/>
                             <?php echo $c->telCommerce ?>
                             <br/>
-                            <?php echo $c->numAdresseComerce ?>
+                            <?php echo $c->numAdresseCommerce ?>
                             <?php echo $c->rueCommerce ?>
                             <br/>
 

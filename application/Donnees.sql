@@ -33,14 +33,14 @@ INSERT INTO `commercant` (`idCommercant`, `nomCommercant`, `prenomCommercant`, `
 -- Déchargement des données de la table `commerce`
 --
 
-INSERT INTO `commerce` (`siretCommerce`, `nomCommerce`, `mailCommerce`, `telCommerce`, `numAdresseComerce`, `rueCommerce`, `codePostalCommerce`, `villeCommerce`, `complementAdresseCommerce`, `tempsReservationProduitsCommerce`, `produitsLivrablesCommerce`, `idCommercant`) VALUES
+INSERT INTO `commerce` (`siretCommerce`, `nomCommerce`, `mailCommerce`, `telCommerce`, `numAdresseCommerce`, `rueCommerce`, `codePostalCommerce`, `villeCommerce`, `complementAdresseCommerce`, `tempsReservationProduitsCommerce`, `produitsLivrablesCommerce`, `idCommercant`) VALUES
 (12, 'Le Pont de Dupont', 'gnagna@mail.fr', '0654545454', 12, 'Le pont du pont', 34000, 'Montpellier', '', '23:00:00', 0, 1);
 
 --
 -- Déchargement des données de la table `produit_type`
 --
 
-INSERT INTO `produit_type` (`idProduitType`, `nomProduitType`, `decriptionProduitType`, `prixProduitType`, `seuilStockProduitType`, `idCategorie`, `siretCommerce`) VALUES
+INSERT INTO `produit_type` (`idProduitType`, `nomProduitType`, `descriptionProduitType`, `prixProduitType`, `seuilStockProduitType`, `idCategorie`, `siretCommerce`) VALUES
 (1, 'T-Shirt Coton', 'T-shirt en coton de fabrication française', 15, 0, NULL, 12),
 (2, 'Pull-Over', 'C\'EST UN PULL WOW !', 35, 0, NULL, 12);
 

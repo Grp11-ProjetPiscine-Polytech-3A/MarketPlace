@@ -6,7 +6,7 @@
     <br/>
     <?php echo $commerce->telCommerce ?>
     <br/>
-    <?php echo $commerce->numAdresseComerce ?>
+    <?php echo $commerce->numAdresseCommerce ?>
     <?php echo $commerce->rueCommerce ?>
     <br/>
 
