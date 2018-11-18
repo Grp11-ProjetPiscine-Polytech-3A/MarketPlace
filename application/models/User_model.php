@@ -74,7 +74,7 @@ class User_model extends MY_Model {
      */
     public function select_from_username($username) {
 
-        // 'UPPER' allows to ignore case 
+        // 'UPPER' allows to ignore case
         $data = array(
             "UPPER(loginUser)" => mb_strtoupper($username),
         );
