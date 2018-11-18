@@ -6,6 +6,30 @@ class Commerce_model extends MY_Model
 	protected $table = 'commerce';
     // Nom de l'identifiant de la table
     protected $id = 'siretCommerce';
+    
+     public function ajouter_commerce($siretCommerce,$nomCommerce,$mailCommerce,$telCommerce,
+             $numAdresseCommerce,$rueCommerce,$codePostalCommerce,$villeCommerce,
+             $complementAdresseCommerce,$tempsReservationProduitsCommerce,$produitsLivrablesCommerce,
+             $idCommercant)
+	{
+            $data = array(
+                'siretCommerce' => $siretCommerce,
+                'nomCommerce' => $nomCommerce,
+                'mailCommerce' => $mailCommerce,
+                'telCommerce' => $telCommerce,
+                'numAdresseCommerce' => $numAdresseCommerce,
+                'rueCommerce' => $rueCommerce,
+                'codePostalCommerce' => $codePostalCommerce,
+                'villeCommerce' => $villeCommerce,
+                'complementAdresseCommerce' => $complementAdresseCommerce,
+                'tempsReservationProduitsCommerce' => $tempsReservationProduitsCommerce,
+                'produitsLivrablesCommerce' => $produitsLivrablesCommerce,
+                'idCommercant' => $idCommercant
+                );
+            
+            return $this->create($data);
+	}
+    
 }
 
 
