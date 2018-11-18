@@ -42,14 +42,7 @@
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="#">About</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="#">Services</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="#">Contact</a>
-                        </li>
+                            <a class="nav-link" href="<?php echo site_url('Produits/') ?>">Liste des Produits</a>
                         
                         <li class="nav-item">
                             <a class="nav-link" href="<?php echo site_url('Auth/') ?>">Authentification</a>
