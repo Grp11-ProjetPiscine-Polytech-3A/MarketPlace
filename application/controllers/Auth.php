@@ -146,7 +146,7 @@ class Auth extends CI_Controller {
                 $this->layout->view('Auth/signup');
                 
             // If the login is already used
-            } else if ($this->User_model->count('loginUser', $loginUser) > 0) {
+            } else if ($this->User_model->count('UPPER(loginUser)', mb_strtoupper($loginUser)) > 0) {
                 $data = array(
                     'error_message' => "Ce nom d'utilisateur est déjà utilisé",
                 );
