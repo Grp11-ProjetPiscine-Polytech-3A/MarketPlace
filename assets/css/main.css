@@ -1,15 +1,15 @@
 /* Sticky footer */
 html {
-  height: 100%;
+    height: 100%;
 }
 body {
-  min-height: 100%;
-  display: grid;
-  grid-template-rows: 1fr auto;
+    min-height: 100%;
+    display: grid;
+    grid-template-rows: 1fr auto;
 }
 footer {
-  grid-row-start: 2;
-  grid-row-end: 3;
+    grid-row-start: 2;
+    grid-row-end: 3;
 }
 
 #contenu {
@@ -36,3 +36,9 @@ div.error_display,div.message_display {
     margin-bottom: 10px;
     margin-top: 10px;
 } 
+
+img {
+    max-width : 100%;
+    height: auto;
+    display: block;
+}

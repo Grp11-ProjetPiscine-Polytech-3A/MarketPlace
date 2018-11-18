@@ -134,6 +134,7 @@ class Layout {
      */
     public function init_menu() {
         $this->ajouter_menu('Home', '');
+        $this->ajouter_menu('Liste des Commerces', 'Commerces');
         $this->ajouter_menu('Liste des Produits', 'Produits');
         $this->ajouter_menu('Connexion', 'Auth');
     }

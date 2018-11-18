@@ -28,7 +28,7 @@ class Produits extends CI_Controller {
     public function liste_produits() {
         $result = $this->Produit_type_model->read();
         if ($result) {
-            $data = array (
+            $data = array(
                 "produits" => $result,
             );
             $this->layout->view('Produits/liste_produits', $data);
@@ -39,9 +39,23 @@ class Produits extends CI_Controller {
             $this->layout->view('template/error_display', $data);
         }
     }
-    
+
     public function fiche_produit($id_Produit) {
-        echo 'Fiche du produit dont l\'id est ' . $id_Produit;
+        $where = array(
+            "idProduitType" => $id_Produit,
+        );
+        $result = $this->Produit_type_model->read('*', $where, 1);
+        if ($result) {
+            $data = array(
+                "produit" => $result[0],
+            );
+            $this->layout->view('Produits/fiche_produit', $data);
+        } else {
+            $data = array(
+                'error_message' => 'Une erreur s\'est produite',
+            );
+            $this->layout->view('template/error_display', $data);
+        }
     }
 
 }
