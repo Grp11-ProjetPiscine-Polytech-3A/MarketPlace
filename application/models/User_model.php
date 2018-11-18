@@ -56,7 +56,7 @@ class User_model extends MY_Model {
         );
 
         $this->db->select('*');
-        $this->db->from($table);
+        $this->db->from($this->table);
         $this->db->where($data);
         $this->db->limit(1);
 
@@ -80,7 +80,7 @@ class User_model extends MY_Model {
         );
 
         $this->db->select('*');
-        $this->db->from($table);
+        $this->db->from($this->table);
         $this->db->where($data);
         $this->db->limit(1);
         $query = $this->db->get();
