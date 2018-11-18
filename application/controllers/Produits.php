@@ -46,8 +46,14 @@ class Produits extends CI_Controller {
         );
         $result = $this->Produit_type_model->read('*', $where, 1);
         if ($result) {
+            $images_files = scandir(FCPATH . "/assets/images/produits/produit_" . $id_Produit. "/");
+            $images_url = array();
+            for ($i = 2; $i < count($images_files); $i++) {
+                $images_url[] = base_url("/assets/images/produits/produit_" . $id_Produit. "/" . $images_files[$i]);
+            }
             $data = array(
                 "produit" => $result[0],
+                "images" => $images_url,
             );
             $this->layout->view('Produits/fiche_produit', $data);
         } else {
