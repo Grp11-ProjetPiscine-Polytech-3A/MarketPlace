@@ -30,23 +30,31 @@
         <!-- Navigation -->
         <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
             <div class="container">
-                <a class="navbar-brand" href="<?php echo site_url('')?>">HeroShop</a>
+                <a class="navbar-brand" href="<?php echo site_url('') ?>">HeroShop</a>
                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
                 </button>
                 <div class="collapse navbar-collapse" id="navbarResponsive">
                     <ul class="navbar-nav ml-auto">
-                        <li class="nav-item active">
-                            <a class="nav-link" href="<?php echo site_url('')?>">Home
-                                <span class="sr-only">(current)</span>
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="<?php echo site_url('Produits/') ?>">Liste des Produits</a>
-                        
-                        <li class="nav-item">
-                            <a class="nav-link" href="<?php echo site_url('Auth/') ?>">Authentification</a>
-                        </li>
+
+                        <?php foreach ($menu as $m): ?>
+                            <!--                        <li class="nav-item active">
+                                                        <a class="nav-link" href="<?php echo site_url('') ?>">Home</a>
+                                                    </li>
+                                                    <li class="nav-item">
+                                                        <a class="nav-link" href="<?php echo site_url('Produits/') ?>">Liste des Produits</a>
+                                                    </li>
+                                                    <li class="nav-item">
+                                                        <a class="nav-link" href="<?php echo site_url('Auth/') ?>">Authentification</a>
+                                                    </li>-->
+
+                            <li class="nav-item">
+                                <a class="nav-link <?php ($m['actif']) ? print 'active' : print '' ?>" href="<?php echo $m["url"] ?>">
+                                    <?php echo $m["intitule"] ?>
+                                </a>
+                            </li>
+                        <?php endforeach; ?>
+
                     </ul>
                 </div>
             </div>
@@ -58,13 +66,13 @@
                 <?php echo $output; ?>
             </div>
         </div>
-        
-        
+
+
         <!-- Footer -->
         <footer class="py-5 bg-dark footer">
-                <div class="container">
-                    <p class="m-0 text-center text-white">Copyright &copy; HeroShop 2018</p>
-                </div>
+            <div class="container">
+                <p class="m-0 text-center text-white">Copyright &copy; HeroShop 2018</p>
+            </div>
             <!-- /.container -->
         </footer>
 

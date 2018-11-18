@@ -21,6 +21,9 @@ class Welcome extends CI_Controller {
 	public function index()
 	{
             $this->load->library('Layout');
+            
+            $this->layout->activer_menu('');
+            
             $this->layout->view('index');
 	}
 }
