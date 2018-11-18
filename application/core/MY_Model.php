@@ -99,6 +99,7 @@ class MY_Model extends CI_Model
      */
     public function count($champ = array(), $valeur = null)
     {
+
         return (int) $this->db->where($champ, $valeur)
                               ->from($this->table)
                               ->count_all_results();

@@ -19,26 +19,37 @@ class User_model extends MY_Model {
     public function signup($login, $password) {
         // Encrypt the password
         $encrypted_password = encrypt_password($password, $login);
- 
+
         // Set the data
         $data = array(
             "loginUser" => $login,
             "passUser" => $encrypted_password,
         );
-        
+
         return $this->create($data);
-   }
+    }
 
     /**
      * Check the user with the username and password sent by the user
-     * @param   Array     $data    the associative array that contains the loginUser and passUser
-     * @return  boolean            TRUE if the informations given are correct, FALSE else
+     * @param String $login         The username of the entered by the user
+     * @param String $password      The password
+     * @return boolean            TRUE if the informations given are correct, FALSE else
      */
     public function login($login, $password) {
+        // Check if the user exists. 
+        $result = $this->select_from_username($login);
+
+        // If it doesn't exist, return false
+        if (!$result) {
+            return false;
+        } else {
+            $login = $result[0]->loginUser;
+        }
+
         // Encrypt the password
         $encrypted_password = encrypt_password($password, $login);
 
-        // Makes the request
+        // Check if the password is the right one
         $data = array(
             "loginUser" => $login,
             "passUser" => $encrypted_password,
@@ -57,15 +68,20 @@ class User_model extends MY_Model {
     }
 
     /**
-     * Select all the data from the username
+     * Select all the data from the username. This method is not case sensitive
      * @param type  $username    The username (loginUser) of the User
      * @return  The result of the query
      */
     public function select_from_username($username) {
 
+        // 'UPPER' allows to ignore case 
+        $data = array(
+            "UPPER(loginUser)" => mb_strtoupper($username),
+        );
+
         $this->db->select('*');
         $this->db->from('User');
-        $this->db->where('loginUser', $username);
+        $this->db->where($data);
         $this->db->limit(1);
         $query = $this->db->get();
 
