@@ -56,8 +56,8 @@ class Auth extends CI_Controller {
      */
     public function login_process() {
 
-        $this->form_validation->set_rules('loginUser', '"Login"', 'trim|required|alpha_dash|encode_php_tags');
-        $this->form_validation->set_rules('passUser', '"Password"', 'trim|required|alpha_dash|encode_php_tags|required');
+        $this->form_validation->set_rules('loginUser', '"Login"', 'trim|required|encode_php_tags');
+        $this->form_validation->set_rules('passUser', '"Password"', 'trim|required|encode_php_tags|required');
 
         if (!$this->form_validation->run()) {
             $data = array(
@@ -120,9 +120,9 @@ class Auth extends CI_Controller {
     public function signup_process() {
         
         // Check the rules for the form
-        $this->form_validation->set_rules('loginUser', '"Login"', 'trim|required|min_length[4]|alpha_dash|encode_php_tags|required');
-        $this->form_validation->set_rules('passUser', '"Password"', 'trim|required|min_length[5]|alpha_dash|encode_php_tags|required');
-        $this->form_validation->set_rules('confirm_password', '"Confirm Password"', 'trim|required|min_length[5]|alpha_dash|encode_php_tags|required');
+        $this->form_validation->set_rules('loginUser', '"Login"', 'trim|required|min_length[4]|encode_php_tags|required');
+        $this->form_validation->set_rules('passUser', '"Password"', 'trim|required|min_length[5]|encode_php_tags|required');
+        $this->form_validation->set_rules('confirm_password', '"Confirm Password"', 'trim|required|min_length[5]|encode_php_tags|required');
 
         // If the form wasn't filled properly
         if (!$this->form_validation->run()) {
