@@ -7,6 +7,18 @@ class Client_commande_effectuer_model extends MY_Model
     // Nom des identifiants de la table
     protected $id1 = 'idCommande';
     protected $id2 = 'idClient';
+    
+    public function ajouter_client_commande_effectuer($idCommande,$idClient,$nbPoint)
+	{
+            $data = array(
+                'idCommande' => $idCommande,
+                'idClient' => $idClient,
+                'nombrePointsUtilisés' => $nbPoint
+                );
+            
+            return $this->create($data);
+	}
+    
 }
 
 

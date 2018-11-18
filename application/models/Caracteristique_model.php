@@ -15,9 +15,11 @@ class Caracteristique_model extends MY_Model
 	 */
 	public function ajouter_caract($nomCar)
 	{
-		$this->db->set('nomCaracteristique', $nomCar);
-
-		return $this->db->insert($this->table);
+            $data = array(
+                'nomCaracteristique' => $nomCar
+                );
+            
+            return $this->create($data);
 	}
 	
 	/**

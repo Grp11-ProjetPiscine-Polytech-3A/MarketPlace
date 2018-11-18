@@ -6,6 +6,16 @@ class Categorie_model extends MY_Model
 	protected $table = 'categorie';
     // Nom de l'identifiant de la table
     protected $id = 'idCategorie';
+    
+  
+    public function ajouter_categorie($descriptionCategorie)
+	{
+            $data = array(
+                'descriptionCategorie' => $descriptionCategorie
+                );
+            
+            return $this->create($data);
+	}
 }
 
 

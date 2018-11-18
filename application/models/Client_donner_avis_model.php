@@ -7,6 +7,19 @@ class Client_donner_avis_model extends MY_Model
     // Nom des identifiants de la table
     protected $id1 = 'idClient';
     protected $id2 = 'idProduitVariante';
+    
+    
+    public function ajouter_client_donner_avis($idClient,$idProduitVariante,$commentaire,$note)
+	{
+            $data = array(
+                'idClient' => $idClient,
+                'idProduitVariante' => $idProduitVariante,
+                'commentaire' => $commentaire,
+                'note' => $note
+                );
+            
+            return $this->create($data);
+	}
 }
 
 

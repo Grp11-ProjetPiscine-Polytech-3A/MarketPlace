@@ -6,6 +6,22 @@ class Produit_type_model extends MY_Model
 	protected $table = 'produit_type';
     // Nom de l'identifiant de la table
     protected $id = 'idProduitType';
+    
+    public function ajouter_produit_type($idProduitType,$nomProduitType,$descriptionProduitType,
+            $prixProduitType,$seuilStockProduitType,$idCategorie,$siretCommerce)
+	{
+            $data = array(
+                'idProduitType' => $idProduitType,
+                'nomProduitType' => $nomProduitType,
+                'descriptionProduitType' => $descriptionProduitType,
+                'prixProduitType' => $prixProduitType,
+                'seuilStockProduitType' => $seuilStockProduitType,
+                'idCategorie' => $idCategorie,
+                'siretCommerce' => $siretCommerce
+                );
+            
+            return $this->create($data);
+	}
 }
 
 

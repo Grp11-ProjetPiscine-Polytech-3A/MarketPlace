@@ -7,6 +7,16 @@ class Code_reduction_produit_variante_concerner_model extends MY_Model
     // Nom de l'identifiant de la table
     protected $id1 = 'idCodeReduction';
     protected $id2 = 'idProduitVariante';
+    
+    public function ajouter_code_reduction_produit_variante($idCodeReduction,$idProduitVariante)
+	{
+            $data = array(
+                'idCodeReduction' => $idCodeReduction,
+                'idProduitVariante' => $idProduitVariante
+                );
+            
+            return $this->create($data);
+	}
 }
 
 

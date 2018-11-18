@@ -7,6 +7,18 @@ class Produit_type_caracteristique_model extends MY_Model
     // Nom des identifiants de la table
     protected $id1 = 'idProduitType';
     protected $id2 = 'idCaracteristique';
+    
+    public function ajouter_produit_type_caracteristique($idProduitType,$idCaracteristique,$contenuCaracteristique)
+	{
+            $data = array(
+                'idProduitType' => $idProduitType,
+                'idCaracteristique' => $idCaracteristique,
+                'contenuCaracteristique' => $contenuCaracteristique
+                );
+            
+            return $this->create($data);
+	}
+    
 }
 
 

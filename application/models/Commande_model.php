@@ -6,8 +6,17 @@ class Commande_model extends MY_Model
 	protected $table = 'commande';
     // Nom de l'identifiant de la table
     protected $id = 'idCommande';
+    
+    public function ajouter_commande($idCommande,$dateCommande)
+	{
+            $data = array(
+                'idCommande' => $idCommande,
+                'dateCommande' => $dateCommande,
+                );
+            
+            return $this->create($data);
+	}
 }
-
 
 /* End of file Commande_model.php */
 /* Location: ./application/models/Commande_model.php */
