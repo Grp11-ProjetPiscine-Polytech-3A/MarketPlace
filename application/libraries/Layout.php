@@ -133,10 +133,19 @@ class Layout {
      * Initialise le menu de base 
      */
     public function init_menu() {
+        $this->CI->load->library('session');
+        
+        
         $this->ajouter_menu('Home', '');
         $this->ajouter_menu('Liste des Commerces', 'Commerces');
         $this->ajouter_menu('Liste des Produits', 'Produits');
-        $this->ajouter_menu('Connexion', 'Auth');
+        if (isset($this->CI->session->logged_in['username'])) {
+            $this->ajouter_menu($this->CI->session->logged_in['username'], 'Auth');
+        }
+        else {
+            $this->ajouter_menu('Connexion', 'Auth');
+        }
+        
     }
     
     /**
