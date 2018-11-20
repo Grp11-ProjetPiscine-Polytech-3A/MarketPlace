@@ -39,7 +39,7 @@
         </div>
 
         <div class="col-lg-5 col-md-5 mb-4"> 
-            <h5><?php echo $produit->prixProduitType ?> €</h5>
+            <h5><?php echo $produit->prixProduitType ?> â‚¬</h5>
             <p class="card-text"><?php echo $produit->descriptionProduitType ?></p>
         </div>
     </div>
