@@ -35,7 +35,7 @@ class Layout {
 
         // Parametre les menus
         $this->var['menu'] = array();
-        $this->init_menu();
+        
     }
 
     /*
@@ -50,6 +50,8 @@ class Layout {
      */
 
     public function view($name, $data = array()) {
+        $this->init_menu();
+        
         $this->var['output'] .= $this->CI->load->view($name, $data, true);
 
         $this->CI->load->view('../themes/default_layout', $this->var);
