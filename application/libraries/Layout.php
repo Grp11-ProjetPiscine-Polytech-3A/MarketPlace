@@ -121,7 +121,7 @@ class Layout {
      * Ajoute un element au menu. Cet element est rendu actif s'il correspond au meme controlleur que celui courant
      * @param type $intitule
      * @param type $controller
-     * @param type $active      Definit si l'element est acif ou non
+     * @param type $active      Definit si l'element est actif ou non
      */
     public function ajouter_menu($intitule, $controller) {
         $this->var['menu'][$controller] = array(
