@@ -6,7 +6,7 @@
 
 
     <div class="row">
-        
+
         <!--Carroussel pour les images-->
         <div id="carouselExampleIndicators" class="carousel slide my-4 col-lg-5 col-md-5 mb-4" style="background:#CECECE;" data-ride="carousel">
             <ol class="carousel-indicators">
@@ -24,7 +24,7 @@
                     <div class="carousel-item <?php echo $active ?>">
                         <img class="d-block img-fluid" src="<?php echo $img ?>">
                     </div>
-                
+
                     <?php $active = "" ?>
                 <?php endforeach; ?>
             </div>
@@ -41,7 +41,15 @@
         <div class="col-lg-5 col-md-5 mb-4"> 
             <h5><?php echo $produit->prixProduitType ?> €</h5>
             <p class="card-text"><?php echo $produit->descriptionProduitType ?></p>
+
+            <a class="add-to-cart" href="<?php echo site_url('Panier/ajouter_panier/' . $produit->idProduitType) ?>">
+                Ajouter au panier
+            </a>
+
         </div>
+
     </div>
+
+
 
 </div>
