@@ -1,5 +1,5 @@
 <div id="signup">
-    <h2>Sign up to H√©roShop</h2>
+    <h2>Sign up to HeroShop</h2>
     <hr/>
 
     <?php echo form_open('Auth/signup_process'); ?>
@@ -18,6 +18,6 @@
 </div>
 <br />
 <div>
-    Vous avez d√©j√† un compte ? <a href="<?php echo site_url('Auth/login') ?>">Connectez-vous !</a>
+    Vous avez dÈj‡† un compte ? <a href="<?php echo site_url('Auth/login') ?>">Connectez-vous !</a>
 </div>
 

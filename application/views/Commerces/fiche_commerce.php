@@ -17,4 +17,7 @@
 
     <?php echo $commerce->codePostalCommerce ?>
     <?php echo $commerce->villeCommerce ?>
+    <br/>
+    <br/>
+    <?php echo $commerce->descriptionCommerce ?>
 </div>
