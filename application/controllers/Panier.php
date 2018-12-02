@@ -92,8 +92,12 @@ class Panier extends CI_Controller {
     /**
      * Ajoute un produit au panier
      * @param int $idProduit    L'id du produit a ajouter au panier
+     * @param int $quantite     La quantite a ajouter, ne fait rien si le nombre est negatif
      */
     public function ajouter_panier($idProduit, $quantite = 1) {
+        if ($quantite < 0) {
+            $quantite = 0;
+        }
         $session_data = array();
 
         if ($this->session->has_userdata('panier')) {
@@ -121,7 +125,7 @@ class Panier extends CI_Controller {
     /**
      * Supprime un produit du panier et affiche le nouveau panier
      * @param int $idProduit    l'id du produit a supprimer
-     * @param int $quantite     La quantite a supprimer, si la quantite est <= 0 ou est plus grande que la quantite actuelle, supprime tout
+     * @param int $quantite     La quantite a supprimer, si la quantite est <= 0 ou est plus grande que la quantite actuelle, supprime tout. 
      */
     public function supprimer_panier($idProduit, $quantite = 1) {
         $this->supprimer_produit_sesssion($idProduit, $quantite);
@@ -132,7 +136,7 @@ class Panier extends CI_Controller {
     /**
      * Supprime un produit du panier
      * @param int $idProduit    l'id du produit a supprimer
-     * @param int $quantite     La quantite a supprimer, si la quantite est <= 0 ou est plus grande que la quantite actuelle, supprime tout
+     * @param int $quantite     La quantite a supprimer, si la quantite est <= 0 ou est plus grande que la quantite actuelle, supprime tout. 
      */
     private function supprimer_produit_sesssion($idProduit, $quantite = 1) {
         $session_data = array();
@@ -145,7 +149,7 @@ class Panier extends CI_Controller {
                     $session_data[] = $p;
                 } else {
                     $p['quantite'] -= $quantite;
-                    if ($quantite > 0 && $p['quantite'] > 0) {
+                    if ($quantite > 0 && $p['quantite'] >= 0) {
                         $session_data[] = $p;
                     }
                 }
