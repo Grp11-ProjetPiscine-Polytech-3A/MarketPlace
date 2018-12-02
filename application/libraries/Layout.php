@@ -36,6 +36,8 @@ class Layout {
         // Parametre les menus
         $this->var['menu'] = array();
         
+        $this->var['topMenu'] = array();
+        
     }
 
     /*
@@ -119,12 +121,13 @@ class Layout {
 
     /**
      * Ajoute un element au menu. Cet element est rendu actif s'il correspond au meme controlleur que celui courant
+     * @param String $menu      Le menu ou ajouter le lien
      * @param type $intitule
      * @param type $controller
      * @param type $active      Definit si l'element est actif ou non
      */
-    public function ajouter_menu($intitule, $controller) {
-        $this->var['menu'][$controller] = array(
+    public function ajouter_menu($menu, $intitule, $controller) {
+        $this->var[$menu][$controller] = array(
             "intitule" => $intitule,
             "url" => site_url($controller . "/"),
             "actif" => $controller == $this->CI->router->fetch_class(),
@@ -137,16 +140,20 @@ class Layout {
     public function init_menu() {
         $this->CI->load->library('session');
         
+        // Ajoute a menu
+        $this->ajouter_menu('menu', 'Home', '');
+        $this->ajouter_menu('menu','Liste des Commerces', 'Commerces');
+        $this->ajouter_menu('menu', 'Liste des Produits', 'Produits');
         
-        $this->ajouter_menu('Home', '');
-        $this->ajouter_menu('Liste des Commerces', 'Commerces');
-        $this->ajouter_menu('Liste des Produits', 'Produits');
+        // Ajoute a topMenu
         if (isset($this->CI->session->logged_in['username'])) {
-            $this->ajouter_menu($this->CI->session->logged_in['username'], 'Auth');
+            $this->ajouter_menu('topMenu', $this->CI->session->logged_in['username'], 'Auth');
         }
         else {
-            $this->ajouter_menu('Connexion', 'Auth');
+            $this->ajouter_menu('topMenu', 'Connexion', 'Auth');
         }
+        $this->ajouter_menu('topMenu', 'Panier', 'Panier');
+        
         
     }
     

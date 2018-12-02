@@ -2,16 +2,16 @@
 html {
     height: 100%;
 }
-body {
-    min-height: 100%;
-    display: grid;
-    grid-template-rows: 1fr auto;
-}
-footer {
-    grid-row-start: 2;
-    grid-row-end: 3;
-}
 
+body {
+    padding-top:0;
+    display: flex;
+    min-height: 100vh;
+    flex-direction: column;
+}
+.main-content {
+    flex: 1;
+}
 #contenu {
     padding-top: 2%;
     padding-bottom: 1%;
@@ -41,4 +41,71 @@ img {
     max-width : 100%;
     height: auto;
     display: block;
+}
+
+.table td, .table th {
+    text-align: center;
+    vertical-align: middle;
+}
+
+.fa {
+    font-size:125%;
+}
+
+.fa-trash {
+    font-size:125%;
+    color:red;
+}
+
+.fa-trash:hover {
+    color:#ff9999;
+}
+.flex-centered-elements {
+    display:flex;
+    justify-content:center;
+    align-items: center;
+}
+.flex-centered-elements span{
+    padding-left:4px;
+    padding-right:4px;
+}
+
+
+/*Nav connexion et panier*/
+.top-navbar a {
+    color:white;
+    text-decoration: none;
+}
+.top-navbar a:hover {
+    text-decoration: none;
+}
+.right-nav {
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -ms-flex-wrap: nowrap;
+    flex-wrap: nowrap;
+    -webkit-box-pack: end;
+    -ms-flex-pack: end;
+    justify-content: flex-end;
+    color:white;
+}
+
+.top-menu {
+    height: 3rem;
+    min-width: 7rem;
+    padding: .75rem;
+    text-align: center;
+    white-space: nowrap;
+}
+
+.top-menu a {
+    color: inherit;
+}
+
+#panier-menu{
+    background: #006bb3;
+}
+#connexion-menu {
+    background: rgba(0,0,0,0.75);;
 }

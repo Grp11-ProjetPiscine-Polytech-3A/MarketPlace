@@ -13,55 +13,79 @@
         <!-- Affiche le titre composé du nom de la méthode et du nom du contrôleur -->
         <title><?php echo $titre; ?></title>
 
+        <!-- Custom styles for this template -->
+        <link href="<?php echo base_url('assets/css/shop-homepage.css'); ?>" rel="stylesheet">
         <link href="<?php echo base_url('assets/css/bootstrap.min.css'); ?>" rel="stylesheet">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
         <link rel="stylesheet" type="text/css" media="screen" href="<?php echo base_url('assets/css/main.css'); ?>" />
 
         <?php foreach ($css as $url): ?>
             <link rel="stylesheet" type="text/css" media="screen" href="<?php echo $url; ?>" />
         <?php endforeach; ?>
 
-        <!-- Custom styles for this template -->
-        <link href="<?php echo base_url('assets/css/shop-homepage.css'); ?>" rel="stylesheet">
+
 
     </head>
 
     <body>
-
         <!-- Navigation -->
-        <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
+        <div class="navbar-dark bg-dark top-navbar">
             <div class="container">
-                <a class="navbar-brand" href="<?php echo site_url('') ?>">HeroShop</a>
-                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
-                <div class="collapse navbar-collapse" id="navbarResponsive">
-                    <ul class="navbar-nav ml-auto">
+                <div class="row">                        
+                    <div class="col-md-12 right-nav">
 
-                        <?php foreach ($menu as $m): ?>
-                            <!--                        <li class="nav-item active">
-                                                        <a class="nav-link" href="<?php echo site_url('') ?>">Home</a>
-                                                    </li>
-                                                    <li class="nav-item">
-                                                        <a class="nav-link" href="<?php echo site_url('Produits/') ?>">Liste des Produits</a>
-                                                    </li>
-                                                    <li class="nav-item">
-                                                        <a class="nav-link" href="<?php echo site_url('Auth/') ?>">Authentification</a>
-                                                    </li>-->
+                        <a href="<?php echo($topMenu['Auth']['url']); ?>">
+                            <div id="connexion-menu" class="top-menu">
+                                <i class="fa fa-user"></i>
+                                <?php echo($topMenu['Auth']['intitule']); ?>
+                            </div>
+                        </a>
+                        <a href="<?php echo($topMenu['Panier']['url']); ?>">
+                            <div id="panier-menu" class="top-menu">
+                                <i class="fa fa-shopping-cart"></i>
+                                <?php echo($topMenu['Panier']['intitule']); ?>
+                            </div>
+                        </a>
 
-                            <li class="nav-item">
-                                <a class="nav-link <?php ($m['actif']) ? print 'active' : print '' ?>" href="<?php echo $m["url"] ?>">
-                                    <?php echo $m["intitule"] ?>
+                        <?php foreach ($topMenu as $m): ?>
+                            <?php if ($m['url'] != site_url("Auth/") && $m['intitule'] != 'Panier'): ?>
+                                <a href="<?php echo($m['url']); ?>">
+                                    <div id="panier-menu" class="top-menu">
+                                        <?php echo($m['intitule']); ?>
+                                    </div>
                                 </a>
-                            </li>
+                            <?php endif; ?>
+
                         <?php endforeach; ?>
-
-                    </ul>
+                    </div>
                 </div>
-            </div>
-        </nav>
 
+            </div>
+            <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+
+                <div class="container">
+                    <a class="navbar-brand" href="<?php echo site_url('') ?>">HeroShop</a>
+                    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+                        <span class="navbar-toggler-icon"></span>
+                    </button>
+                    <div class="collapse navbar-collapse" id="navbarResponsive">
+                        <ul class="navbar-nav ml-auto">
+
+                            <?php foreach ($menu as $m): ?>
+                                <li class="nav-item">
+                                    <a class="nav-link <?php ($m['actif']) ? print 'active' : print '' ?>" href="<?php echo $m["url"] ?>">
+                                        <?php echo $m["intitule"] ?>
+                                    </a>
+                                </li>
+                            <?php endforeach; ?>
+
+                        </ul>
+                    </div>
+                </div>
+            </nav>
+        </div>
         <!-- Page Content -->
-        <div class="container">
+        <div class="container main-content">
 
             <div class="row">
 
