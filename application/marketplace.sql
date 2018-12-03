@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 4.7.9
+-- version 4.7.4
 -- https://www.phpmyadmin.net/
 --
 -- Hôte : 127.0.0.1:3306
--- Généré le :  Dim 02 déc. 2018 à 13:59
--- Version du serveur :  5.7.21
--- Version de PHP :  5.6.35
+-- Généré le :  lun. 03 déc. 2018 à 11:55
+-- Version du serveur :  5.7.19
+-- Version de PHP :  5.6.31
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET AUTOCOMMIT = 0;
@@ -301,7 +301,10 @@ CREATE TABLE IF NOT EXISTS `produit_type` (
 --
 
 INSERT INTO `produit_type` (`idProduitType`, `nomProduitType`, `descriptionProduitType`, `prixProduitType`, `seuilStockProduitType`, `idCategorie`, `siretCommerce`) VALUES
-(1, 'TShirts ', 'Fabrication française', 15, 0, 1, '12345678912345');
+(1, 'TShirts ', 'Fabrication française', 15, 0, 1, '12345678912345'),
+(2, 'Pull-over', 'Un beau pull', 33, 0, 1, '12345678912345'),
+(3, 'TRUELLE', 'Une truelle !!!!', 197, 0, NULL, '12345678912345'),
+(4, 'Balançoire', 'Pour les grands et les petits', 589, 0, 3, '12345678912345');
 
 -- --------------------------------------------------------
 
@@ -364,7 +367,7 @@ CREATE TABLE IF NOT EXISTS `user` (
   `passUser` varchar(128) COLLATE utf8_bin NOT NULL,
   `mailUser` varchar(256) CHARACTER SET utf8 DEFAULT NULL,
   PRIMARY KEY (`idUser`)
-) ENGINE=InnoDB AUTO_INCREMENT=40 DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
+) ENGINE=InnoDB AUTO_INCREMENT=41 DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 
 --
 -- Déchargement des données de la table `user`
@@ -377,7 +380,7 @@ INSERT INTO `user` (`idUser`, `loginUser`, `passUser`, `mailUser`) VALUES
 (36, 'MoiMoi', '831af61650b512b4f9b0c8cdc0134680d27878b9', NULL),
 (37, 'Bonjour', '2fd0df88b6bb3faf3c60c99b4cefa147fd84f17d', NULL),
 (38, 'admin', '2ed665c31e8260f6f5beb39686c4bb576b3a3f20', NULL),
-(39, 'xXx_cOmPteDu32_xXx', 'ac4a827bc5c56414c0a50faa67da1d0fa1c85110', NULL);
+(40, 'xXx_cOmPteDu32_xXx', 'ac4a827bc5c56414c0a50faa67da1d0fa1c85110', NULL);
 
 --
 -- Contraintes pour les tables déchargées
