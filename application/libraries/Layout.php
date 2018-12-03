@@ -34,17 +34,15 @@ class Layout {
         $this->var['js'] = array();
 
         // Parametre les menus
-        
         // Menu principal
         $this->var['menu'] = array();
-        
+
         // Menu du haut
         $this->var['topMenu'] = array();
-        
+
         // Menu de gauche : il sera adaptatif en fonction du controleur (donc gere dans celui ci)
         $this->var['sideMenu'] = array();
         $this->var['nomSideMenu'] = "";
-        
     }
 
     /*
@@ -60,7 +58,7 @@ class Layout {
 
     public function view($name, $data = array()) {
         $this->init_menu();
-        
+
         $this->var['output'] .= $this->CI->load->view($name, $data, true);
 
         $this->CI->load->view('../themes/default_layout', $this->var);
@@ -140,8 +138,8 @@ class Layout {
             "actif" => $controller == $this->CI->router->fetch_class(),
         );
     }
-    
-        /**
+
+    /**
      * Ajoute un element au menu. Cet element est rendu actif s'il correspond au meme controlleur que celui courant
      * @param String $menu      Le menu ou ajouter le lien
      * @param type $intitule
@@ -159,22 +157,21 @@ class Layout {
      */
     public function init_menu() {
         $this->CI->load->library('session');
-        
+
         // Ajoute a menu
         $this->ajouter_menu('menu', 'Accueil', '');
-        $this->ajouter_menu('menu','Liste des Commerces', 'Commerces');
+        $this->ajouter_menu('menu', 'Liste des Commerces', 'Commerces');
         $this->ajouter_menu('menu', 'Liste des Produits', 'Produits');
-        
+
         // Ajoute a topMenu
         if (isset($this->CI->session->logged_in['username'])) {
             $this->ajouter_menu('topMenu', $this->CI->session->logged_in['username'], 'Auth');
-        }
-        else {
+        } else {
             $this->ajouter_menu('topMenu', 'Connexion', 'Auth');
         }
-        $this->ajouter_menu('topMenu', 'Panier', 'Panier');   
+        $this->ajouter_menu('topMenu', 'Panier', 'Panier');
     }
-    
+
     /**
      * Rend le menu actif
      * @param String $controller    Le controlleur du menu
@@ -184,15 +181,14 @@ class Layout {
             $m["actif"] = false;
         }
         $this->var['menu'][$controller]['actif'] = true;
-
     }
-    
+
     /**
      * Change le titre au dessus du side menu
      * @param String $nom Le contenu du titre au dessus du sidemenu
      */
     public function setNomSideMenu($nom = "") {
-        $this->var['nomSideMenu'] = $nom; 
+        $this->var['nomSideMenu'] = $nom;
     }
 
 }
