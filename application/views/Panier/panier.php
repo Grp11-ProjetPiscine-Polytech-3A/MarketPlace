@@ -69,5 +69,6 @@
 
     <div class="col-lg-12">
         <span class="pull-right lead"> Total : <?php echo $somme_totale ?> € </span>
+        <a class="btn btn-lg" role="button" href= "">Passer Commande</a>//TODO: lien vers la page de commande
     </div>
 </div>
