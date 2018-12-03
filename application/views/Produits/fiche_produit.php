@@ -20,7 +20,6 @@
             <div class="carousel-inner" role="listbox">
                 <?php $active = "active"; ?>
                 <?php foreach ($images as $img): ?>
-
                     <div class="carousel-item <?php echo $active ?>">
                         <img class="d-block img-fluid" src="<?php echo $img ?>">
                     </div>

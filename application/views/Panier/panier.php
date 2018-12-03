@@ -23,7 +23,7 @@
                     <tr>
                         <td>
                             <a href="<?php echo site_url('/Produits/fiche_produit/' . $p->idProduitType) ?>">
-                                <img src="<?php echo site_url('assets/images/produits/produit_' . $p->idProduitType . '/img1.png') ?>" style="height:80px;width:80px">
+                                <img src="<?php echo site_url('assets/images/produits/produit_' . $p->idProduitType . '/img1') ?>" style="height:80px;width:80px">
                             </a>
                         <td>
                             <a href="<?php echo site_url('/Produits/fiche_produit/' . $p->idProduitType) ?>">

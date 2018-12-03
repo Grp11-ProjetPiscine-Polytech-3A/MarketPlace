@@ -136,7 +136,7 @@ class Panier extends CI_Controller {
     /**
      * Supprime un produit du panier
      * @param int $idProduit    l'id du produit a supprimer
-     * @param int $quantite     La quantite a supprimer, si la quantite est <= 0 ou est plus grande que la quantite actuelle, supprime tout. 
+     * @param int $quantite     La quantite a supprimer, si la quantite est < 0 ou est plus grande que la quantite actuelle, supprime tout. 
      */
     private function supprimer_produit_sesssion($idProduit, $quantite = 1) {
         $session_data = array();
@@ -149,7 +149,7 @@ class Panier extends CI_Controller {
                     $session_data[] = $p;
                 } else {
                     $p['quantite'] -= $quantite;
-                    if ($quantite > 0 && $p['quantite'] >= 0) {
+                    if ($quantite > 0 && $p['quantite'] > 0) {
                         $session_data[] = $p;
                     }
                 }

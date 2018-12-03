@@ -9,7 +9,7 @@
             <div class="col-lg-4 col-md-6 mb-4">
                 <div class="card h-100">
                     <a  class="border-bottom" href="<?php echo site_url('/Produits/fiche_produit/' . $p->idProduitType) ?>">
-                        <img class="card-img-top" src="<?php echo site_url('assets/images/produits/produit_' . $p->idProduitType . '/img1.png') ?>" alt="<?php echo $p->nomProduitType ?>" style="height:300px">
+                        <img class="card-img-top" src="<?php echo site_url('assets/images/produits/produit_' . $p->idProduitType . '/img1') ?>" alt="<?php echo $p->nomProduitType ?>" style="height:300px">
                     </a>
                     <div class="card-body">
                         <h4 class="card-title">
