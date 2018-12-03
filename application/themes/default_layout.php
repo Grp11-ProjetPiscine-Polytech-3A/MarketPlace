@@ -29,7 +29,7 @@
 
     <body>
         <!-- Navigation -->
-        
+
         <div class="navbar-dark bg-dark top-navbar">
             <!--TopMenu-->
             <div id="topMenu" class="container">
@@ -63,7 +63,7 @@
                 </div>
 
             </div>
-            
+
             <!--Menu-->
             <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
 
@@ -93,51 +93,58 @@
 
             <div class="row">
 
-                <div class="col-lg-3">
+                <?php if (count($sideMenu) > 0): ?>
+                    <div class="col-lg-3">
 
-                    <!--TODO : chapger le side menu selon php input dans layout --> 
+                        <?php if ($nomSideMenu != ""): ?>
+                            <div class="my-4 titre-sidemenu"><?php echo $nomSideMenu?></div>
+                        <?php endif; ?>
+                            
+                        <div class="list-group">
+                            <?php foreach ($sideMenu as $m): ?>
+                                <a href="<?php echo $m["url"] ?>" class="list-group-item"><?php echo $m['intitule'] ?></a>
+                            <?php endforeach; ?>
+                        </div>
 
-                    <h1 class="my-4">Shop Name</h1>
-                    <div class="list-group">
-                        <a href="#" class="list-group-item">Category 1</a>
-                        <a href="#" class="list-group-item">Category 2</a>
-                        <a href="#" class="list-group-item">Category 3</a>
                     </div>
+                    <div class="col-lg-9">
+                 <?php else: ?>
+
+                    <div class="col-lg-12">
+                 <?php endif; ?>
+
+                        <div id="contenu">
+                            <?php echo $output; ?>
+                        </div>
+
+
+                    </div>
+                    <!-- /.col-lg-3 -->
+
+
+                    <!-- /.col-lg-9 -->
 
                 </div>
-                <!-- /.col-lg-3 -->
+                <!-- /.row -->
 
-                <div class="col-lg-9">
-
-                    <div id="contenu">
-                        <?php echo $output; ?>
-                    </div>
+            </div>
 
 
+            <!-- Footer -->
+            <footer class="py-5 bg-dark footer">
+                <div class="container">
+                    <p class="m-0 text-center text-white">Copyright &copy; HeroShop 2018</p>
                 </div>
-                <!-- /.col-lg-9 -->
+                <!-- /.container -->
+            </footer>
 
-            </div>
-            <!-- /.row -->
+            <!-- Bootstrap core JavaScript -->
+            <script src="<?php echo base_url('assets/jquery/jquery.min.js'); ?>"></script>
+            <script src="<?php echo base_url('assets/js/bootstrap.bundle.min.js'); ?>"></script>
 
-        </div>
-
-
-        <!-- Footer -->
-        <footer class="py-5 bg-dark footer">
-            <div class="container">
-                <p class="m-0 text-center text-white">Copyright &copy; HeroShop 2018</p>
-            </div>
-            <!-- /.container -->
-        </footer>
-
-        <!-- Bootstrap core JavaScript -->
-        <script src="<?php echo base_url('assets/jquery/jquery.min.js'); ?>"></script>
-        <script src="<?php echo base_url('assets/js/bootstrap.bundle.min.js'); ?>"></script>
-
-        <?php foreach ($js as $url): ?>
-            <script type="text/javascript" src="<?php echo $url; ?>"></script> 
-        <?php endforeach; ?>
+            <?php foreach ($js as $url): ?>
+                <script type="text/javascript" src="<?php echo $url; ?>"></script> 
+            <?php endforeach; ?>
 
     </body>
 

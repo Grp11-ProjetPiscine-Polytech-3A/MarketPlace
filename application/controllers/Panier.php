@@ -100,6 +100,7 @@ class Panier extends CI_Controller {
         }
         $session_data = array();
 
+        $ok = false;
         if ($this->session->has_userdata('panier')) {
             $panier = $this->session->panier;
 
@@ -108,14 +109,23 @@ class Panier extends CI_Controller {
                     $session_data[] = $p;
                 } else {
                     $quantite += $p['quantite'];
+                    $session_data[] = array(
+                        'idProduit' => $idProduit,
+                        'quantite' => $quantite,
+                    );
+                    $ok = true;
                 }
             }
         }
+        if (!$ok) { // FIXME
+            $session_data[] = array(
+                'idProduit' => $idProduit,
+                'quantite' => $quantite,
+            );
+        }
 
-        $session_data[] = array(
-            'idProduit' => $idProduit,
-            'quantite' => $quantite,
-        );
+
+
         // Add user data in session
         $this->session->set_userdata('panier', $session_data);
 

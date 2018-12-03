@@ -124,3 +124,8 @@ img {
     color:#FFF;
     text-decoration:none;
 }
+
+.titre-sidemenu {
+    font-size:120%;
+    font-weight: 700;
+}
