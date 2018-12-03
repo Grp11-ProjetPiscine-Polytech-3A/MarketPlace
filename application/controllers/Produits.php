@@ -20,6 +20,7 @@ class Produits extends CI_Controller {
 
         $this->load->model('Produit_type_model');
         $this->load->model('Categorie_model');
+        $this->load->model('Commerce_model');
         
         $categ = $this->getCategories();
         
@@ -56,13 +57,23 @@ class Produits extends CI_Controller {
         );
         $result = $this->Produit_type_model->read('*', $where, 1);
         if ($result) {
+            $produit = $result[0];
             $images_files = scandir(FCPATH . "/assets/images/produits/produit_" . $id_Produit . "/");
             $images_url = array();
             for ($i = 2; $i < count($images_files); $i++) {
                 $images_url[] = base_url("/assets/images/produits/produit_" . $id_Produit . "/" . $images_files[$i]);
             }
+            
+            $where = array(
+                'siretCommerce' => $produit->siretCommerce,
+            );
+            $commerce = $this->Commerce_model->read('*', $where);
+            
+            if ($commerce) {
+                $produit->commerce = $commerce[0];
+            }
             $data = array(
-                "produit" => $result[0],
+                "produit" => $produit,
                 "images" => $images_url,
             );
             $this->layout->view('Produits/fiche_produit', $data);

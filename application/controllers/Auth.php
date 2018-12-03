@@ -118,7 +118,7 @@ class Auth extends CI_Controller {
      * User signup process
      */
     public function signup_process() {
-        
+
         // Check the rules for the form
         $this->form_validation->set_rules('loginUser', '"Login"', 'trim|required|min_length[4]|encode_php_tags|required');
         $this->form_validation->set_rules('passUser', '"Password"', 'trim|required|min_length[5]|encode_php_tags|required');
@@ -144,16 +144,16 @@ class Auth extends CI_Controller {
                 );
                 $this->layout->views('template/error_display', $data);
                 $this->layout->view('Auth/signup');
-                
-            // If the login is already used
+
+                // If the login is already used
             } else if ($this->User_model->count('UPPER(loginUser)', mb_strtoupper($loginUser)) > 0) {
                 $data = array(
                     'error_message' => "Ce nom d'utilisateur est déjà utilisé",
                 );
                 $this->layout->views('template/error_display', $data);
                 $this->layout->view('Auth/signup');
-                
-            // Creates the User
+
+                // Creates the User
             } else {
                 // Creates the user in database
                 $result = $this->User_model->signup($loginUser, $passUser);
@@ -170,12 +170,12 @@ class Auth extends CI_Controller {
                     $data = array(
                         'message_display' => 'Votre compte a bien été créé',
                     );
-                    
+
                     // Load the logged_in view
                     $this->layout->views('template/message_display', $data);
                     $this->layout->view('Auth/logged_in', $session_data);
-                    
-                // If there is an error in the create
+
+                    // If there is an error in the create
                 } else {
                     $data = array(
                         'error_message' => 'Une erreur est survenue, veuillez réessayer',
