@@ -18,6 +18,6 @@
 </div>
 <br />
 <div>
-    Vous avez dÈj‡† un compte ? <a href="<?php echo site_url('Auth/login') ?>">Connectez-vous !</a>
+    Vous avez d√©j√† un compte ? <a href="<?php echo site_url('Auth/login') ?>">Connectez-vous !</a>
 </div>
 
