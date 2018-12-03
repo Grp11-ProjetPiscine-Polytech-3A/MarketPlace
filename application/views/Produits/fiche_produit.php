@@ -39,6 +39,7 @@
 
         <div class="col-lg-5 col-md-5 mb-4"> 
             <h5><?php echo $produit->prixProduitType ?> €</h5>
+            <a href="<?php echo site_url("Commerces/fiche_commerce/" . $produit->commerce->siret_commerce) ?>"><?php echo $produit->commerce->nomCommerce?></a>
             <p class="card-text"><?php echo $produit->descriptionProduitType ?></p>
 
             <a class="add-to-cart" href="<?php echo site_url('Panier/ajouter_panier/' . $produit->idProduitType) ?>">
