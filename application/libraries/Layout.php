@@ -161,7 +161,7 @@ class Layout {
         $this->CI->load->library('session');
         
         // Ajoute a menu
-        $this->ajouter_menu('menu', 'Home', '');
+        $this->ajouter_menu('menu', 'Accueil', '');
         $this->ajouter_menu('menu','Liste des Commerces', 'Commerces');
         $this->ajouter_menu('menu', 'Liste des Produits', 'Produits');
         
