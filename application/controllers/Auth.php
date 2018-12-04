@@ -17,6 +17,7 @@ class Auth extends CI_Controller {
         $this->load->library('form_validation');
         $this->load->library('session');
         $this->load->model('User_model');
+        $this->load->model('User_admin_model');
         $this->load->library('Layout');
     }
 
@@ -82,7 +83,8 @@ class Auth extends CI_Controller {
                 $result = $this->User_model->select_from_username($username);
                 if ($result != false) {
                     $session_data = array(
-                        'username' => $result[0]->loginUser,
+                        'username'  => $result[0]->loginUser,
+                        'idUser'    => $result[0]->idUser,
                     );
 
                     // Add user data in session
@@ -161,7 +163,8 @@ class Auth extends CI_Controller {
                 // If the user is correctly created
                 if ($result == TRUE) {
                     $session_data = array(
-                        'username' => $loginUser,
+                        'username'  => $loginUser,
+                        'idUser'    => $this->User_model->select_from_username($loginUser)[0]->idUser,
                     );
 
                     // Add user data in session
