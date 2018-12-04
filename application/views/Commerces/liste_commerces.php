@@ -12,7 +12,7 @@
                         <h4 class="card-title">
                             <a href="<?php echo site_url('/Commerces/fiche_commerce/' . $c->siretCommerce) ?>">
                                 <?php echo $c->nomCommerce ?>
-                            </a>                          
+                            </a>
                         </h4>
                         <p class="card-text">
                             <?php echo $c->mailCommerce ?>
@@ -41,5 +41,3 @@
 
 
 </div>
-
-

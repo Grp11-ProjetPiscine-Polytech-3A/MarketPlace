@@ -21,14 +21,15 @@ class Produits extends CI_Controller {
         $this->load->model('Produit_type_model');
         $this->load->model('Categorie_model');
         $this->load->model('Commerce_model');
-        
+        $this->load->model('Commercant_model');
+
         $categ = $this->getCategories();
-        
+
         foreach ($categ as $c) {
             $intitule = mb_strtoupper(mb_substr($c->descriptionCategorie, 0, 1)) . mb_substr($c->descriptionCategorie, 1);
             $this->layout->ajouter_menu_url('sideMenu', $intitule , 'Produits/tri_produits_categorie/' . $c->idCategorie);
         }
-        
+
         $this->layout->setNomSideMenu("Categories");
     }
 
@@ -42,6 +43,14 @@ class Produits extends CI_Controller {
             $data = array(
                 "produits" => $result,
             );
+
+            // Affiche un bouton de rajout d'un produit si l'utilisateur est un commercant
+            if (isset($this->session->logged_in['username'])){
+                if ($this->Commercant_model->isCommercant($this->session->logged_in['idUser'])) {
+                    $this->layout->views('Commercant/Produits/bouton_ajout_produit', $data);
+                }
+            }
+
             $this->layout->view('Produits/liste_produits', $data);
         } else {
             $data = array(
@@ -63,12 +72,12 @@ class Produits extends CI_Controller {
             for ($i = 2; $i < count($images_files); $i++) {
                 $images_url[] = base_url("/assets/images/produits/produit_" . $id_Produit . "/" . $images_files[$i]);
             }
-            
+
             $where = array(
                 'siretCommerce' => $produit->siretCommerce,
             );
             $commerce = $this->Commerce_model->read('*', $where);
-            
+
             if ($commerce) {
                 $produit->commerce = $commerce[0];
             }
@@ -104,7 +113,7 @@ class Produits extends CI_Controller {
         }
     }
 
-    
+
     private function getCategories() {
         $result = $this->Categorie_model->read('*');
         return $result;

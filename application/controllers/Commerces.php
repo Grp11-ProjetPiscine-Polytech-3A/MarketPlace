@@ -34,10 +34,10 @@ class Commerces extends CI_Controller {
             // Affiche un bouton de rajout d'un commerce si l'utilisateur est admin
             if (isset($this->session->logged_in['username'])){
                 if ($this->User_admin_model->isAdmin($this->session->logged_in['idUser'])) {
-                    $this->layout->views('Admin/ajout_commerce', $data);
+                    $this->layout->views('Admin/bouton_ajout_commerce', $data);
                 }
             }
-            
+
             $this->layout->view('Commerces/liste_commerces', $data);
         } else {
             $data = array(
