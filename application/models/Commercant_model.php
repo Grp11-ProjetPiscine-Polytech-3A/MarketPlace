@@ -23,7 +23,7 @@ class Commercant_model extends MY_Model
 
     public function isCommercant(){
         // Récupération de l'id de l'utilisateur en session
-        $id = $this->session->logged_in['idUser']
+        $id = $this->session->logged_in['idUser'];
 
         // Vérification de l'existance de l'id de l'utilisateur dans la Table Commercant
         $this->db->select('*');

@@ -1,8 +1,5 @@
 <div id="liste_commerces">
 
-    <h2>Liste des commerces</h2>
-    <hr/>
-
     <div class="row">
 
         <?php foreach ($commerces as $c): ?>

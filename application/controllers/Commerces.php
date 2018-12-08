@@ -31,13 +31,17 @@ class Commerces extends CI_Controller {
                 "commerces" => $result,
             );
 
-            // Affiche un bouton de rajout d'un commerce si l'utilisateur est admin
+            // Affiche un bouton de rajout d'un commerce si l'utilisateur est un admin
             if (isset($this->session->logged_in['username'])){
                 if ($this->User_admin_model->isAdmin()) {
-                    $this->layout->views('Admin/bouton_ajout_commerce', $data);
+                    $this->layout->views('Admin/Commerces/title_admin');
+                } else {
+                    $this->layout->views('Commerces/title_not_admin');
                 }
+            } else {
+                $this->layout->views('Commerces/title_not_admin');
             }
-
+            
             $this->layout->view('Commerces/liste_commerces', $data);
         } else {
             $data = array(
@@ -65,6 +69,20 @@ class Commerces extends CI_Controller {
         }
     }
 
+    public function ajout_commerce(){
+        // Vérification que l'utilisateur est bien admin
+        if ($this->User_admin_model->isAdmin()){
+            $data = array (
+                // EMPTY
+            );
+            $this->layout->view('Admin/Commerces/ajout_commerce', $data);
+        } else {
+            $data = array(
+                'error_message' => 'Not allowed here',
+            );
+            $this->layout->view('template/error_display', $data);
+        }
+    }
 }
 
 ?>

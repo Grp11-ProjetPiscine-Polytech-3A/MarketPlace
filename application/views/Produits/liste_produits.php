@@ -1,8 +1,5 @@
 <div id="liste_produits">
 
-    <h2>Liste des produits</h2>
-    <hr/>
-
     <div class="row">
 
         <?php foreach ($produits as $p): ?>

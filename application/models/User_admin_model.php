@@ -18,7 +18,7 @@ if (!defined('BASEPATH'))
      */
     public function isAdmin(){
         // Récupération de l'id de l'utilisateur en session
-        $id = $this->session->logged_in['idUser']
+        $id = $this->session->logged_in['idUser'];
 
         // Vérification de l'existance de cet ID dans la Table user_admin
         $this->db->select('*');

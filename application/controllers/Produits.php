@@ -48,10 +48,14 @@ class Produits extends CI_Controller {
             // Affiche un bouton de rajout d'un produit si l'utilisateur est un commercant
             if (isset($this->session->logged_in['username'])){
                 if ($this->Commercant_model->isCommercant()) {
-                    $this->layout->views('Commercant/Produits/bouton_ajout_produit', $data);
+                    $this->layout->views('Commercant/Produits/title_commercant');
+                } else {
+                    $this->layout->views('Produits/title_not_commercant');
                 }
+            } else {
+                $this->layout->views('Produits/title_not_commercant');
             }
-
+            
             $this->layout->view('Produits/liste_produits', $data);
         } else {
             $data = array(
@@ -114,10 +118,9 @@ class Produits extends CI_Controller {
         }
     }
 
-    //TODO : Mettre en private : Accessible pour un commercant/Admin seulement
     public function ajout_produit(){
         // Vérification que l'utilisateur est bien commercant
-        if ($this->User_admin_model->isAdmin()){
+        if ($this->Commercant_model->isCommercant()){
             $result = $this->Categorie_model->read();
             if ($result) {
                 $data = array (
