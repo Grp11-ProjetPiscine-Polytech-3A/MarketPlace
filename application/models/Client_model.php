@@ -7,12 +7,11 @@ class Client_model extends MY_Model
     // Nom de l'identifiant de la table
     protected $id = 'idClient';
     
-    public function ajouter_client($idClient,$nomClient,$prenomClient,$dateNaissanceClient,
+    public function ajouter_client($nomClient,$prenomClient,$dateNaissanceClient,
             $telClient,$mailClient,$numAdresseClient,$rueClient,$codePostalClient,$villeClient,
             $complementAdresseCommerce,$pointsFidelitesClient)
 	{
             $data = array(
-                'idClient' => $idClient,
                 'nomClient' => $nomClient,
                 'prenomClient' => $prenomClient,
                 'dateNaissanceClient' => $dateNaissanceClient,

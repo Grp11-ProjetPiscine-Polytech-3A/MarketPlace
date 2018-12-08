@@ -7,11 +7,10 @@ class Commercant_model extends MY_Model
     // Nom de l'identifiant de la table
     protected $id = 'idCommercant';
 
-    public function ajouter_commercant($idCommercant,$nomCommercant,$prenomCommercant,
+    public function ajouter_commercant($nomCommercant,$prenomCommercant,
             $dateNaissanceCommercant,$telCommercant,$mailCommercant)
 	{
             $data = array(
-                'idCommercant' => $idCommercant,
                 'nomCommercant' => $nomCommercant,
                 'prenomCommercant' => $prenomCommercant,
                 'dateNaissanceCommercant' => $dateNaissanceCommercant,
@@ -22,7 +21,11 @@ class Commercant_model extends MY_Model
             return $this->create($data);
 	}
 
-    public function isCommercant($id){
+    public function isCommercant(){
+        // Récupération de l'id de l'utilisateur en session
+        $id = $this->session->logged_in['idUser']
+
+        // Vérification de l'existance de l'id de l'utilisateur dans la Table Commercant
         $this->db->select('*');
         $this->db->from('commercant');
         $this->db->where('user.idUser', $id);

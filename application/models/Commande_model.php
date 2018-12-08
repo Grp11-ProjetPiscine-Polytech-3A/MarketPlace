@@ -7,10 +7,9 @@ class Commande_model extends MY_Model
     // Nom de l'identifiant de la table
     protected $id = 'idCommande';
     
-    public function ajouter_commande($idCommande,$dateCommande)
+    public function ajouter_commande($dateCommande)
 	{
             $data = array(
-                'idCommande' => $idCommande,
                 'dateCommande' => $dateCommande,
                 );
             

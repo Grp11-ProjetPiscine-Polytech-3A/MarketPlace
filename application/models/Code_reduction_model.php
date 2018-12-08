@@ -7,10 +7,9 @@ class Code_reduction_model extends MY_Model
     // Nom de l'identifiant de la table
     protected $id = 'idCodeReduction';
     
-    public function ajouter_code_reduction($idCodeReduction,$dateDebutCodeReduction,$dateFinCodeReduction)
+    public function ajouter_code_reduction($dateDebutCodeReduction,$dateFinCodeReduction)
 	{
             $data = array(
-                'idCodeReduction' => $idCodeReduction,
                 'dateDebutCodeReduction' => $dateDebutCodeReduction,
                 'dateFinCodeReduction' => $dateFinCodeReduction,
                 );
