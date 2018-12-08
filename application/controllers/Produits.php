@@ -22,6 +22,7 @@ class Produits extends CI_Controller {
         $this->load->model('Categorie_model');
         $this->load->model('Commerce_model');
         $this->load->model('Commercant_model');
+        $this->load->model('User_admin_model');
 
         $categ = $this->getCategories();
 
@@ -46,7 +47,7 @@ class Produits extends CI_Controller {
 
             // Affiche un bouton de rajout d'un produit si l'utilisateur est un commercant
             if (isset($this->session->logged_in['username'])){
-                if ($this->Commercant_model->isCommercant($this->session->logged_in['idUser'])) {
+                if ($this->Commercant_model->isCommercant()) {
                     $this->layout->views('Commercant/Produits/bouton_ajout_produit', $data);
                 }
             }
@@ -113,6 +114,30 @@ class Produits extends CI_Controller {
         }
     }
 
+    //TODO : Mettre en private : Accessible pour un commercant/Admin seulement
+    public function ajout_produit(){
+        // Vérification que l'utilisateur est bien commercant
+        if ($this->User_admin_model->isAdmin()){
+            $result = $this->Categorie_model->read();
+            if ($result) {
+                $data = array (
+                    "Categories" => $result,
+                );
+                $this->layout->view('Commercant/Produits/ajout_produit', $data);
+            } else {
+                $data = array(
+                    'error_message' => 'Une erreur s\'est produite',
+                );
+                $this->layout->view('template/error_display', $data);
+            } 
+        } else {
+            $data = array(
+                    'error_message' => 'Not allowed here',
+                );
+                $this->layout->view('template/error_display', $data);
+        }
+        
+    }
 
     private function getCategories() {
         $result = $this->Categorie_model->read('*');

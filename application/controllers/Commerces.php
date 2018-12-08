@@ -21,10 +21,10 @@ class Commerces extends CI_Controller {
     }
 
     public function index() {
-        $this->liste_produits();
+        $this->liste_commerces();
     }
 
-    public function liste_produits() {
+    public function liste_commerces() {
         $result = $this->Commerce_model->read();
         if ($result) {
             $data = array (
@@ -33,7 +33,7 @@ class Commerces extends CI_Controller {
 
             // Affiche un bouton de rajout d'un commerce si l'utilisateur est admin
             if (isset($this->session->logged_in['username'])){
-                if ($this->User_admin_model->isAdmin($this->session->logged_in['idUser'])) {
+                if ($this->User_admin_model->isAdmin()) {
                     $this->layout->views('Admin/bouton_ajout_commerce', $data);
                 }
             }
