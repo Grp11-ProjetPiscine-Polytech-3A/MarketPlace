@@ -68,21 +68,6 @@ class Commerces extends CI_Controller {
             $this->layout->view('template/error_display', $data);
         }
     }
-
-    public function ajout_commerce(){
-        // Vérification que l'utilisateur est bien admin
-        if ($this->User_admin_model->isAdmin()){
-            $data = array (
-                // EMPTY
-            );
-            $this->layout->view('Admin/Commerces/ajout_commerce', $data);
-        } else {
-            $data = array(
-                'error_message' => 'Not allowed here',
-            );
-            $this->layout->view('template/error_display', $data);
-        }
-    }
 }
 
 ?>

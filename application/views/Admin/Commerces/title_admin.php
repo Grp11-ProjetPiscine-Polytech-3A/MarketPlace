@@ -4,7 +4,7 @@
             <h2>Liste des commerces</h2>
         </div>
         <div id ="button" class="col-sm-2">
-            <a href="<?php echo base_url('Commerces/ajout_commerce') ?>" class="btn btn-success" role="button"> <span class="glyphicon glyphicon-plus"></span> Ajouter un Commerce</a>
+            <a href="<?php echo base_url('Admin/ajout_commerce') ?>" class="btn btn-success" role="button"> <span class="glyphicon glyphicon-plus"></span> Ajouter un Commerce</a>
         </div>
     </div>
     <hr/>

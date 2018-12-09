@@ -24,7 +24,7 @@ class Produits extends CI_Controller {
         $this->load->model('Commercant_model');
         $this->load->model('User_admin_model');
 
-        $categ = $this->getCategories();
+        $categ = $this->Categorie_model->read('*');
 
         foreach ($categ as $c) {
             $intitule = mb_strtoupper(mb_substr($c->descriptionCategorie, 0, 1)) . mb_substr($c->descriptionCategorie, 1);
@@ -116,35 +116,6 @@ class Produits extends CI_Controller {
             );
             $this->layout->view('template/message_display', $data);
         }
-    }
-
-    public function ajout_produit(){
-        // Vérification que l'utilisateur est bien commercant
-        if ($this->Commercant_model->isCommercant()){
-            $result = $this->Categorie_model->read();
-            if ($result) {
-                $data = array (
-                    "Categories" => $result,
-                );
-                $this->layout->view('Commercant/Produits/ajout_produit', $data);
-            } else {
-                $data = array(
-                    'error_message' => 'Une erreur s\'est produite',
-                );
-                $this->layout->view('template/error_display', $data);
-            } 
-        } else {
-            $data = array(
-                    'error_message' => 'Not allowed here',
-                );
-                $this->layout->view('template/error_display', $data);
-        }
-        
-    }
-
-    private function getCategories() {
-        $result = $this->Categorie_model->read('*');
-        return $result;
     }
 }
 
