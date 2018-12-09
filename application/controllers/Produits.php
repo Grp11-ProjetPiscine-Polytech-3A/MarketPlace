@@ -113,8 +113,17 @@ class Produits extends CI_Controller {
         }
         $result = $this->Produit_type_model->read('*', $where);
         if ($result) {
+            
+            $liste_produits = array();
+            foreach ($result as $produit) {
+                
+                // On recupere le lien de la premiere image du produit
+                $produit->img_url = url_files_in_folder("/assets/images/produits/produit_" . $produit->idProduitType . "/")[0];
+                $liste_produits[] = $produit;
+            }
+            
             $data = array(
-                "produits" => $result,
+                "produits" => $liste_produits,
             );
             $this->layout->view('Produits/liste_produits', $data);
         } else {
