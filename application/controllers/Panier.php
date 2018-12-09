@@ -13,9 +13,12 @@ class Panier extends CI_Controller {
         parent::__construct();
 
         $this->load->helper('form');
+        $this->load->helper('assets');
+        
         $this->load->library('form_validation');
         $this->load->library('session');
         $this->load->library('Layout');
+        
         $this->load->model('Produit_type_model');
         $this->load->model('Produit_variante_model');
         $this->load->model('User_model');
