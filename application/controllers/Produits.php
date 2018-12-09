@@ -13,6 +13,7 @@ class Produits extends CI_Controller {
         parent::__construct();
 
         $this->load->helper('form');
+        $this->load->helper('assets');
 
         $this->load->library('form_validation');
         $this->load->library('session');
@@ -41,9 +42,17 @@ class Produits extends CI_Controller {
     public function liste_produits() {
         $result = $this->Produit_type_model->read();
         if ($result) {
+            $liste_produits = array();
+            foreach ($result as $produit) {
+                
+                // On recupere le lien de la premiere image du produit
+                $produit->img_url = url_files_in_folder("/assets/images/produits/produit_" . $produit->idProduitType . "/")[0];
+                $liste_produits[] = $produit;
+            }
             $data = array(
-                "produits" => $result,
+                "produits" => $liste_produits,
             );
+            
 
             // Affiche un bouton de rajout d'un produit si l'utilisateur est un commercant
             if (isset($this->session->logged_in['username'])){
@@ -72,11 +81,9 @@ class Produits extends CI_Controller {
         $result = $this->Produit_type_model->read('*', $where, 1);
         if ($result) {
             $produit = $result[0];
-            $images_files = scandir(FCPATH . "/assets/images/produits/produit_" . $id_Produit . "/");
-            $images_url = array();
-            for ($i = 2; $i < count($images_files); $i++) {
-                $images_url[] = base_url("/assets/images/produits/produit_" . $id_Produit . "/" . $images_files[$i]);
-            }
+            
+            // Reccupere la liste des url des images du dossier
+            $images_url = url_files_in_folder("/assets/images/produits/produit_" . $id_Produit . "/");
 
             $where = array(
                 'siretCommerce' => $produit->siretCommerce,
