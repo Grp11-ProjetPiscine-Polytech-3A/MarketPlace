@@ -16,6 +16,7 @@ class Auth extends CI_Controller {
         $this->load->helper('encrypt');
         $this->load->library('form_validation');
         $this->load->library('session');
+        $this->load->model('Client_model');
         $this->load->model('User_model');
         $this->load->model('User_admin_model');
         $this->load->library('Layout');
@@ -80,11 +81,14 @@ class Auth extends CI_Controller {
 
                 // Saves the data of the user in session
                 $username = $this->input->post('loginUser');
-                $result = $this->User_model->select_from_username($username);
+                $idUser = $this->User_model->select_from_username($username);
+                $idClient = $this->Client_model->get_client_id($idUser[0]->idUser);
+
                 if ($result != false) {
                     $session_data = array(
-                        'username'  => $result[0]->loginUser,
-                        'idUser'    => $result[0]->idUser,
+                        'username'  => $loginUser,
+                        'idUser'    => $idUser[0]->idUser,
+                        'idClient'  => $idClient[0]->idClient,
                     );
 
                     // Add user data in session
@@ -162,9 +166,15 @@ class Auth extends CI_Controller {
 
                 // If the user is correctly created
                 if ($result == TRUE) {
+
+                    $username = $this->input->post('loginUser');
+                    $idUser = $this->User_model->select_from_username($loginUser);
+                    $idClient = $this->Client_model->get_client_id($idUser[0]->idUser);
+
                     $session_data = array(
                         'username'  => $loginUser,
-                        'idUser'    => $this->User_model->select_from_username($loginUser)[0]->idUser,
+                        'idUser'    => $idUser[0]->idUser,
+                        'idClient'  => $idClient[0]->idClient,
                     );
 
                     // Add user data in session

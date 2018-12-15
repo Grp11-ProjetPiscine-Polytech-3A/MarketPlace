@@ -6,7 +6,7 @@ class Client_model extends MY_Model
 	protected $table = 'client';
     // Nom de l'identifiant de la table
     protected $id = 'idClient';
-    
+
     public function ajouter_client($nomClient,$prenomClient,$dateNaissanceClient,
             $telClient,$mailClient,$numAdresseClient,$rueClient,$codePostalClient,$villeClient,
             $complementAdresseCommerce,$pointsFidelitesClient)
@@ -24,9 +24,19 @@ class Client_model extends MY_Model
                 'complementAdresseCommerce' => $complementAdresseCommerce,
                 'pointsFidelitesClient' => $pointsFidelitesClient
                 );
-            
+
             return $this->create($data);
 	}
+
+    public function get_client_id($id)
+    {
+        $this->db->select('idClient');
+        $this->db->from('client');
+        $this->db->where('client.idUser', $id);
+        $query = $this->db->get();
+
+        return $query->result();
+    }
 }
 
 
