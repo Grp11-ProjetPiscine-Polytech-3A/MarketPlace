@@ -97,7 +97,6 @@ class Auth extends CI_Controller {
                     );
                     
                     if ($data_commercant) {
-                        
                         $session_data['idCommercant'] = $data_commercant[0]->idCommercant;
                     }
 

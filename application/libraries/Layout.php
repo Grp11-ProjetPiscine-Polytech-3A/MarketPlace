@@ -17,6 +17,8 @@ class Layout {
     public function __construct() {
         $this->CI = & get_instance();
 
+        $this->menu_auto = true;
+
         $this->var['output'] = '';
 
         /*  Le titre est composé du nom de la méthode et du nom du contrôleur
@@ -56,12 +58,18 @@ class Layout {
      *  view permet d'afficher une vue dans un layout
      */
 
-    public function view($name, $data = array()) {
-        $this->init_menu();
+    public function view($name, $data = array(), $return = false) {
+        if ($this->menu_auto) {
+            $this->init_menu();
+        }
 
         $this->var['output'] .= $this->CI->load->view($name, $data, true);
 
-        $this->CI->load->view('../themes/default_layout', $this->var);
+        if (!$return) {
+            $this->CI->load->view('../themes/default_layout', $this->var);
+        } else {
+            return $this->CI->load->view('../themes/default_layout', $this->var, true);
+        }
     }
 
     /*
@@ -166,7 +174,7 @@ class Layout {
         // Ajoute a topMenu
         if (isset($this->CI->session->logged_in['username'])) {
             if (isset($this->CI->session->logged_in['idCommercant'])) {
-                $this->ajouter_menu('topMenu', 'Vos commerces', 'Commercant/Commercant');
+                $this->ajouter_menu('topMenu', '<i class="fa fa fa-cogs"></i> Espace commercant', 'Commercant/Commercant');
             }
             $this->ajouter_menu('topMenu', $this->CI->session->logged_in['username'], 'Auth');
         } else {
@@ -192,6 +200,20 @@ class Layout {
      */
     public function setNomSideMenu($nom = "") {
         $this->var['nomSideMenu'] = $nom;
+    }
+
+    /**
+     * Supprime toutes les entrees d'un menu
+     * @param String $menu  Le menu a reset
+     */
+    public function resetMenu($menu) {
+        if (array_key_exists($menu, $this->var) && is_array($this->var[$menu])) {
+            $this->var[$menu] = array();
+        }
+    }
+
+    public function set_menu_auto_false() {
+        $this->menu_auto = false;
     }
 
 }

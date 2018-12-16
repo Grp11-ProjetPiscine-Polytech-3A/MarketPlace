@@ -36,18 +36,22 @@
                 <div class="row">                        
                     <div class="col-md-12 right-nav">
 
-                        <a href="<?php echo($topMenu['Auth']['url']); ?>">
-                            <div id="connexion-menu" class="top-menu">
-                                <i class="fa fa-user"></i>
-                                <?php echo($topMenu['Auth']['intitule']); ?>
-                            </div>
-                        </a>
-                        <a href="<?php echo($topMenu['Panier']['url']); ?>">
-                            <div id="panier-menu" class="top-menu">
-                                <i class="fa fa-shopping-cart"></i>
-                                <?php echo($topMenu['Panier']['intitule']); ?>
-                            </div>
-                        </a>
+                        <?php if (array_key_exists('Auth', $topMenu)): ?>
+                            <a href="<?php echo($topMenu['Auth']['url']); ?>">
+                                <div id="connexion-menu" class="top-menu">
+                                    <i class="fa fa-user"></i>
+                                    <?php echo($topMenu['Auth']['intitule']); ?>
+                                </div>
+                            </a>
+                        <?php endif; ?>
+                        <?php if (array_key_exists('Panier', $topMenu)): ?>
+                            <a href="<?php echo($topMenu['Panier']['url']); ?>">
+                                <div id="panier-menu" class="top-menu">
+                                    <i class="fa fa-shopping-cart"></i>
+                                    <?php echo($topMenu['Panier']['intitule']); ?>
+                                </div>
+                            </a>
+                        <?php endif; ?>
 
                         <?php foreach ($topMenu as $m): ?>
                             <?php if ($m['url'] != site_url("Auth/") && $m['intitule'] != 'Panier'): ?>
@@ -97,9 +101,9 @@
                     <div class="col-lg-3">
 
                         <?php if ($nomSideMenu != ""): ?>
-                            <div class="my-4 titre-sidemenu"><?php echo $nomSideMenu?></div>
+                            <div class="my-4 titre-sidemenu"><?php echo $nomSideMenu ?></div>
                         <?php endif; ?>
-                            
+
                         <div class="list-group">
                             <?php foreach ($sideMenu as $m): ?>
                                 <a href="<?php echo $m["url"] ?>" class="list-group-item"><?php echo $m['intitule'] ?></a>
@@ -108,10 +112,10 @@
 
                     </div>
                     <div class="col-lg-9">
-                 <?php else: ?>
+                    <?php else: ?>
 
-                    <div class="col-lg-12">
-                 <?php endif; ?>
+                        <div class="col-lg-12">
+                        <?php endif; ?>
 
                         <div id="contenu">
                             <?php echo $output; ?>

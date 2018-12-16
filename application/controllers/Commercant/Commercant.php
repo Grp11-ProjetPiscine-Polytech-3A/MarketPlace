@@ -1,4 +1,4 @@
- <?php
+<?php
 
 defined('BASEPATH') OR exit('No direct script access allowed');
 
@@ -12,49 +12,39 @@ class Commercant extends CI_Controller {
     public function __construct() {
         parent::__construct();
 
+
         $this->load->helper('form');
         $this->load->library('form_validation');
         $this->load->library('session');
         $this->load->library('Layout');
         $this->load->model('Commercant_model');
         $this->load->model('Categorie_model');
+        
+        // Verifie que l'utilisateur est bien un commercant et refuse l'acces si ce n'est pas le cas
+        if (!isset($this->session->logged_in['idCommercant'])) {
+             $data = array(
+                'error_message' => 'Vous ne possédez pas les droits pour accéder à cette page',
+            );
+            echo $this->layout->view('template/error_display', $data, true);
+            die();
+        }
+        
+        // Gestion du menu commercant
+        if (isset($this->session->logged_in['idCommercant'])) {
+            $this->layout->set_menu_auto_false();
+
+            // Menu du haut pour le retour à la vue client
+            $this->layout->ajouter_menu('topMenu', '<i class="fa fa-arrow-left"></i> Retour à l\'espace client', '');
+            
+            // Menu de gauche (gestion des produits, des commerces, Parametres...
+            $this->layout->ajouter_menu_url('sideMenu', 'Gerer vos produits', 'Commercant/Produits');
+            $this->layout->ajouter_menu_url('sideMenu', 'Gerer vos Commerces', 'Commercant/Commerces');
+            $this->layout->ajouter_menu_url('sideMenu', 'Parametres', 'Commercant/Parametres');
+        }
     }
 
     public function index() {
-        if ($this->Commercant_model->isCommercant()){
-            $data = array (
-                // EMPTY
-            );
-            $this->layout->view('Commercant/menu_commercant', $data);
-        } else {
-            $data = array(
-                'error_message' => 'Not allowed here',
-            );
-            $this->layout->view('template/error_display', $data);
-        }
+            $this->layout->view('Commercant/espace_commercant');
     }
 
-    public function ajout_produit(){
-        // Vérification que l'utilisateur est bien commercant
-        if ($this->Commercant_model->isCommercant()){
-            $categ = $result = $this->Categorie_model->read('*');
-            if ($categ) {
-                $data = array (
-                    "categories"    => $categ,
-                    "error"         => ' ',
-                );
-                $this->layout->view('Commercant/Produits/ajout_produit', $data);
-            } else {
-                $data = array(
-                    'error_message' => 'Une erreur s\'est produite : Pas de categories',
-                );
-                $this->layout->view('template/error_display', $data);
-            } 
-        } else {
-            $data = array(
-                    'error_message' => 'Not allowed here',
-                );
-                $this->layout->view('template/error_display', $data);
-        }
-    }
 }
