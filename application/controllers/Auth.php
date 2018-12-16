@@ -86,9 +86,9 @@ class Auth extends CI_Controller {
 
                 if ($result != false) {
                     $session_data = array(
-                        'username'  => $loginUser,
-                        'idUser'    => $idUser[0]->idUser,
-                        'idClient'  => $idClient[0]->idClient,
+                        'username' => $loginUser,
+                        'idUser' => $idUser[0]->idUser,
+                        'idClient' => $idClient[0]->idClient,
                     );
 
                     // Add user data in session
@@ -164,17 +164,29 @@ class Auth extends CI_Controller {
                 // Creates the user in database
                 $result = $this->User_model->signup($loginUser, $passUser);
 
-                // If the user is correctly created
-                if ($result == TRUE) {
+                if ($result) {
+                    $idUser = $this->User_model->select_from_username($loginUser)[0]->idUser;
+                    // Create the client profile
+                    
+                    // TODO : Ameliorrer le formulaire pour demander nom, prenom, mail, date de naissance et adresse
+                    $data_client = array(
+                        "idUser" => $idUser,
+                    );
 
-                    $username = $this->input->post('loginUser');
-                    $idUser = $this->User_model->select_from_username($loginUser);
-                    $idClient = $this->Client_model->get_client_id($idUser[0]->idUser);
+                    $result = $this->Client_model->create($data_client);
+                }
+
+                // If the user is correctly created
+                if ($result) {
+
+                    $username = $loginUser;
+                    
+                    $idClient = $this->Client_model->get_client_id($idUser)[0]->idClient;
 
                     $session_data = array(
-                        'username'  => $loginUser,
-                        'idUser'    => $idUser[0]->idUser,
-                        'idClient'  => $idClient[0]->idClient,
+                        'username' => $loginUser,
+                        'idUser' => $idUser,
+                        'idClient' => $idClient,
                     );
 
                     // Add user data in session
