@@ -19,6 +19,7 @@ class Auth extends CI_Controller {
         $this->load->model('Client_model');
         $this->load->model('User_model');
         $this->load->model('User_admin_model');
+        $this->load->model('Commercant_model');
         $this->load->library('Layout');
     }
 
@@ -81,15 +82,24 @@ class Auth extends CI_Controller {
 
                 // Saves the data of the user in session
                 $username = $this->input->post('loginUser');
-                $idUser = $this->User_model->select_from_username($username);
-                $idClient = $this->Client_model->get_client_id($idUser[0]->idUser);
+                $idUser = $this->User_model->select_from_username($username)[0]->idUser;
+                $idClient = $this->Client_model->get_client_id($idUser)[0]->idClient;
+                
+                // Add the idCommercant if it exists
+                $data_commercant = $this->Commercant_model->get_commercant_iduser($idUser);
+                
 
                 if ($result != false) {
                     $session_data = array(
                         'username' => $loginUser,
-                        'idUser' => $idUser[0]->idUser,
-                        'idClient' => $idClient[0]->idClient,
+                        'idUser' => $idUser,
+                        'idClient' => $idClient,
                     );
+                    
+                    if ($data_commercant) {
+                        
+                        $session_data['idCommercant'] = $data_commercant[0]->idCommercant;
+                    }
 
                     // Add user data in session
                     $this->session->set_userdata('logged_in', $session_data);

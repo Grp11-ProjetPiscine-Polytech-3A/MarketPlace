@@ -47,6 +47,8 @@ class Commandes extends CI_Controller {
 }
 
     /**
+     * CHECKME On a deja un panier, tu as recopié les commentaires sans les corriger ?
+     * 
      * Ajoute un produit au panier
      * @param int $idProduit    L'id du produit a ajouter au panier
      * @param int $quantite     La quantite a ajouter, ne fait rien si le nombre est negatif

@@ -52,7 +52,7 @@
                         <?php foreach ($topMenu as $m): ?>
                             <?php if ($m['url'] != site_url("Auth/") && $m['intitule'] != 'Panier'): ?>
                                 <a href="<?php echo($m['url']); ?>">
-                                    <div id="panier-menu" class="top-menu">
+                                    <div class="top-menu top-menu-element">
                                         <?php echo($m['intitule']); ?>
                                     </div>
                                 </a>

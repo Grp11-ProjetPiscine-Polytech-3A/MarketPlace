@@ -29,7 +29,7 @@ class Produits extends CI_Controller {
 
         foreach ($categ as $c) {
             $intitule = mb_strtoupper(mb_substr($c->descriptionCategorie, 0, 1)) . mb_substr($c->descriptionCategorie, 1);
-            $this->layout->ajouter_menu_url('sideMenu', $intitule , 'Produits/tri_produits_categorie/' . $c->idCategorie);
+            $this->layout->ajouter_menu_url('sideMenu', $intitule, 'Produits/tri_produits_categorie/' . $c->idCategorie);
         }
 
         $this->layout->setNomSideMenu("Categories");
@@ -44,7 +44,7 @@ class Produits extends CI_Controller {
         if ($result) {
             $liste_produits = array();
             foreach ($result as $produit) {
-                
+
                 // On recupere le lien de la premiere image du produit
                 $produit->img_url = url_files_in_folder("/assets/images/produits/produit_" . $produit->idProduitType . "/")[0];
                 $liste_produits[] = $produit;
@@ -52,19 +52,23 @@ class Produits extends CI_Controller {
             $data = array(
                 "produits" => $liste_produits,
             );
-            
+// ==============================
+//          CHECKME (Dorian) Je ne suis pas vraiment d'accord avec ce code, le module d'ajout des produits doit 
+//          se faire sur une page completement differente (un panneau d'admin des commercants)
+//          
+//            // Affiche un bouton de rajout d'un produit si l'utilisateur est un commercant
+//            if (isset($this->session->logged_in['username'])){
+//                if ($this->Commercant_model->isCommercant()) {
+//                    $this->layout->views('Commercant/Produits/title_commercant');
+//                } else {
+//                    $this->layout->views('Produits/title_not_commercant');
+//                }
+//            } else {
+//                $this->layout->views('Produits/title_not_commercant');
+//            }
+// =============================
 
-            // Affiche un bouton de rajout d'un produit si l'utilisateur est un commercant
-            if (isset($this->session->logged_in['username'])){
-                if ($this->Commercant_model->isCommercant()) {
-                    $this->layout->views('Commercant/Produits/title_commercant');
-                } else {
-                    $this->layout->views('Produits/title_not_commercant');
-                }
-            } else {
-                $this->layout->views('Produits/title_not_commercant');
-            }
-            
+            $this->layout->views('Produits/title_not_commercant');
             $this->layout->view('Produits/liste_produits', $data);
         } else {
             $data = array(
@@ -81,7 +85,7 @@ class Produits extends CI_Controller {
         $result = $this->Produit_type_model->read('*', $where, 1);
         if ($result) {
             $produit = $result[0];
-            
+
             // Reccupere la liste des url des images du dossier
             $images_url = url_files_in_folder("/assets/images/produits/produit_" . $id_Produit . "/");
 
@@ -109,22 +113,23 @@ class Produits extends CI_Controller {
     public function tri_produits_categorie($id_Categ = 0) {
         $where = array();
         if ($id_Categ > 0) {
-            $where['idCategorie']=$id_Categ;
+            $where['idCategorie'] = $id_Categ;
         }
         $result = $this->Produit_type_model->read('*', $where);
         if ($result) {
-            
+
             $liste_produits = array();
             foreach ($result as $produit) {
-                
+
                 // On recupere le lien de la premiere image du produit
                 $produit->img_url = url_files_in_folder("/assets/images/produits/produit_" . $produit->idProduitType . "/")[0];
                 $liste_produits[] = $produit;
             }
-            
+
             $data = array(
                 "produits" => $liste_produits,
             );
+            $this->layout->views('Produits/title_not_commercant');
             $this->layout->view('Produits/liste_produits', $data);
         } else {
             $data = array(
@@ -133,6 +138,7 @@ class Produits extends CI_Controller {
             $this->layout->view('template/message_display', $data);
         }
     }
+
 }
 
 ?>

@@ -165,6 +165,9 @@ class Layout {
 
         // Ajoute a topMenu
         if (isset($this->CI->session->logged_in['username'])) {
+            if (isset($this->CI->session->logged_in['idCommercant'])) {
+                $this->ajouter_menu('topMenu', 'Vos commerces', 'Commercant/Commercant');
+            }
             $this->ajouter_menu('topMenu', $this->CI->session->logged_in['username'], 'Auth');
         } else {
             $this->ajouter_menu('topMenu', 'Connexion', 'Auth');

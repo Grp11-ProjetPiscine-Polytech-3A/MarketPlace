@@ -97,6 +97,7 @@ img {
     padding: .75rem;
     text-align: center;
     white-space: nowrap;
+
 }
 
 .top-menu a {
@@ -107,8 +108,14 @@ img {
     background: #006bb3;
 }
 #connexion-menu {
-    background: rgba(0,0,0,0.75);;
+    background: rgba(0,0,0,0.75);
 }
+
+.top-menu-element {
+    background: rgba(0,0,0,0.75);
+    border:1px solid #FFF;
+}
+
 
 
 .add-to-cart {
