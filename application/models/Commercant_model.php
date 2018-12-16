@@ -54,6 +54,8 @@ class Commercant_model extends MY_Model {
         return $this->read('*', $data);
 
     }
+    
+    
 
 }
 

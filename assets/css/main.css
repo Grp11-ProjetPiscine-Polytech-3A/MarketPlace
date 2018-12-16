@@ -136,3 +136,13 @@ img {
     font-size:120%;
     font-weight: 700;
 }
+
+.icon-fa {
+    font-size: 110%;
+    text-decoration: none;
+    margin-left: 10px;
+}
+
+.icon-fa:hover {
+    text-decoration: none;
+}

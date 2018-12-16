@@ -81,7 +81,7 @@
 
                             <?php foreach ($menu as $m): ?>
                                 <li class="nav-item">
-                                    <a class="nav-link <?php ($m['actif']) ? print 'active' : print '' ?>" href="<?php echo $m["url"] ?>">
+                                    <a class="nav-link <?php (array_key_exists('actif', $m) && $m['actif']) ? print 'active' : print '' ?>" href="<?php echo $m["url"] ?>">
                                         <?php echo $m["intitule"] ?>
                                     </a>
                                 </li>

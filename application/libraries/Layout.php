@@ -145,6 +145,7 @@ class Layout {
             "url" => site_url($controller . "/"),
             "actif" => $controller == $this->CI->router->fetch_class(),
         );
+
     }
 
     /**
