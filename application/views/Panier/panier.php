@@ -44,10 +44,10 @@
                                     <?php echo $p->quantite ?>
                                 </span>
                                 <span class="btn-group-vertical pull-right">
-                                    <a href="<?php echo site_url('Panier/ajouter_panier/' . $p->idProduitType . '/1') ?>"> 
+                                    <a href="<?php echo site_url('Panier/ajouter_panier/' . $p->idProduitType . '/1') ?>">
                                         <i class="fa fa-angle-up"></i>
                                     </a>
-                                    <a href="<?php echo site_url('Panier/supprimer_panier/' . $p->idProduitType . '/1') ?>"> 
+                                    <a href="<?php echo site_url('Panier/supprimer_panier/' . $p->idProduitType . '/1') ?>">
                                         <i class="fa fa-angle-down"></i>
                                     </a>
                                 </span>
@@ -58,7 +58,7 @@
                         </td>
                         <td>
                             <a href="<?php echo site_url('Panier/supprimer_panier/' . $p->idProduitType . '/0') ?>">
-                                <i class="fa fa-trash"></i>                             
+                                <i class="fa fa-trash"></i>
                             </a>
                         </td>
                     </tr>
@@ -69,6 +69,6 @@
 
     <div class="col-lg-12">
         <span class="pull-right lead"> Total : <?php echo $somme_totale ?> € </span>
-        <a class="btn btn-lg" role="button" href= "">Passer Commande</a>//TODO: lien vers la page de commande
+        <a class="btn btn-lg" role="button" href= "">Passer Commande</a><!--//TODO: lien vers la page de commande-->
     </div>
 </div>
