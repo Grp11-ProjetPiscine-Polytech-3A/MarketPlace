@@ -35,7 +35,7 @@ div.error_display {
 div.error_display,div.message_display {
     margin-bottom: 10px;
     margin-top: 10px;
-} 
+}
 
 img {
     max-width : 100%;
@@ -145,4 +145,11 @@ img {
 
 .icon-fa:hover {
     text-decoration: none;
+}
+.passer_commande{
+    color: #FFF;
+    background:#006bb3;
+    padding: 30px;
+    text-transform: uppercase;
+    text-align: center;
 }
