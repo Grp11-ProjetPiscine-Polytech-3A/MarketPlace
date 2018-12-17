@@ -29,30 +29,7 @@ class Produits extends Commercant {
         }
 
         // Reccupere la liste des produits
-        $liste_produits = array();
-        foreach ($commerces as $com) {
-            foreach ($com as $c) {
-                $where = array(
-                    "siretCommerce" => $c->siretCommerce,
-                );
-                $produits = $this->Produit_type_model->read('*', $where);
-
-                if ($produits) {
-                    foreach ($produits as $p) {
-
-                        // Ajoute aux donnees du produit l'url de l'image 
-                        $image_url = url_files_in_folder ("/assets/images/produits/produit_" . $p->idProduitType . "/") [0];
-                        $p->image_url = $image_url;
-
-                        // Ajout le nom du commerce au donnees du produit
-                        $p->nomCommerce = $c->nomCommerce;
-
-                        // Ajoute le produit avec les donnees completés à la liste
-                        $liste_produits[] = $p;
-                    }
-                }
-            }
-        }
+        $liste_produits = $this->liste_produit();
 
         $data = array(
             "produits" => $liste_produits,
@@ -80,6 +57,7 @@ class Produits extends Commercant {
 
     /**
      * TODO changer cette fonction pour gerer les variantes + stocks
+     * TODO Check que ce commercant a bien le droit d'ajouter un produit a ce commerce
      */
     public function ajout_produit_process() {
         $this->form_validation->set_rules('commerce', '"Commerce"', 'trim|required|encode_php_tags');
@@ -125,6 +103,36 @@ class Produits extends Commercant {
         }
     }
 
+    public function supprimer_produit($id_produit = 0) {
+        if ($id_produit != 0) {
+            $liste_produits = $this->liste_produit();
+            $id_produit_suppr = 0;
+            foreach ($liste_produits as $p) {
+                if ($id_produit == $p->idProduitType) {
+                    $id_produit_suppr = $p->idProduitType;
+                }
+            }
+        }
+        if ($id_produit_suppr != 0) {
+            $where = array(
+                "idProduitType" => $id_produit_suppr,
+            );
+            $res = $this->Produit_type_model->delete($where);
+            if ($res) {
+                $data = array(
+                    'message_display' => 'Le produit a bien été supprimé'
+                );
+                $this->layout->views('template/message_display', $data);
+            } else {
+                $data = array(
+                    'error_message' => "Erreur durant la suppression" . $this->form_validation->error_string()
+                );
+                $this->layout->views('template/error_display', $data);
+            }
+        }
+        $this->liste_produits();
+    }
+
     /**
      * Verifie que le produit peut bien etre géré par ce commercant
      * @param $idProduit    L'id du produit
@@ -132,6 +140,38 @@ class Produits extends Commercant {
      */
     private function verif_produit($idProduit) {
         
+    }
+
+    private function liste_produit() {
+        $commerces = $this->get_commerces();
+
+        // Reccupere la liste des produits
+        $liste_produits = array();
+        foreach ($commerces as $com) {
+            foreach ($com as $c) {
+                $where = array(
+                    "siretCommerce" => $c->siretCommerce,
+                );
+                $produits = $this->Produit_type_model->read('*', $where);
+
+                if ($produits) {
+                    foreach ($produits as $p) {
+
+                        // Ajoute aux donnees du produit l'url de l'image 
+                        $image_url = url_files_in_folder("/assets/images/produits/produit_" . $p->idProduitType . "/") [0];
+                        $p->image_url = $image_url;
+
+                        // Ajout le nom du commerce au donnees du produit
+                        $p->nomCommerce = $c->nomCommerce;
+
+                        // Ajoute le produit avec les donnees completés à la liste
+                        $liste_produits[] = $p;
+                    }
+                }
+            }
+        }
+
+        return $liste_produits;
     }
 
 }

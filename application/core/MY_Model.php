@@ -71,7 +71,7 @@ class MY_Model extends CI_Model
     {
         if(is_integer($where))
         {
-            $where = array('id' => $where);
+            $where = array($this->id => $where);
         }
 
         return (bool) $this->db ->where($where)
