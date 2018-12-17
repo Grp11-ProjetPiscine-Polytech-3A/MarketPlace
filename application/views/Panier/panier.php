@@ -67,14 +67,14 @@
         </table>
     </div>
 
-    <div class="col-lg-9">
+    <div class="row justify-content-end">
+        <div class="col-lg-3">
+            <span class="pull-right lead"> Total : <?php echo $somme_totale ?> € </span>
+        </div>
     </div>
-    <div class="col-lg-3">
-        <span class="pull-right lead"> Total : <?php echo $somme_totale ?> € </span>
-    </div>
-    <div class="col-lg-9">
-    </div>
-    <div class="col-lg-3">
-        <a class="passer_commande pull-right lead" role="button" href= "<?php echo base_url('Commandes/afficher_commandes')?>">Passer Commande</a>
+    <div class="row justify-content-end">
+        <div class="col-lg-3">
+            <a class="passer_commande pull-right lead" role="button" href= "<?php echo base_url('Commandes/afficher_commandes')?>">Passer Commande</a>
+        </div>
     </div>
 </div>
