@@ -54,10 +54,17 @@ if (!function_exists('url_files_in_folder')) {
      * @param String $folder    The path to the folder (relative to the root of the website)
      */
     function url_files_in_folder($folder) {
-        $files = scandir(FCPATH . $folder);
+        $path = FCPATH . $folder;
         $files_url = array();
-        for ($i = 2; $i < count($files); $i++) {
-            $files_url[] = base_url($folder . "/" . $files[$i]);
+
+        if (is_dir($path)) {
+            $files = scandir($path);
+            for ($i = 2; $i < count($files); $i++) {
+                $files_url[] = base_url($folder . "/" . $files[$i]);
+            }
+        }
+        if (count($files_url) == 0) {
+            $files_url[] = base_url("/assets/images/no-image.png");
         }
         return $files_url;
     }

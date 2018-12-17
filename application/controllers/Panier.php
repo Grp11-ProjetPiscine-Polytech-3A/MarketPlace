@@ -14,11 +14,11 @@ class Panier extends CI_Controller {
 
         $this->load->helper('form');
         $this->load->helper('assets');
-        
+
         $this->load->library('form_validation');
         $this->load->library('session');
         $this->load->library('Layout');
-        
+
         $this->load->model('Produit_type_model');
         $this->load->model('Produit_variante_model');
         $this->load->model('User_model');
@@ -57,8 +57,7 @@ class Panier extends CI_Controller {
                     $donnees_produit = $result[0];
 
                     // Ajoute aux donnees du produit l'url de l'image 
-                    $images_files = scandir(FCPATH . "/assets/images/produits/produit_" . $id_Produit . "/");
-                    $image_url = base_url("/assets/images/produits/produit_" . $id_Produit . "/" . $images_files[2]);
+                    $image_url = url_files_in_folder("/assets/images/produits/produit_" . $id_Produit . "/") [0];
                     $donnees_produit->image_url = $image_url;
 
                     // Ajoute aux donnees du produit la quantite
