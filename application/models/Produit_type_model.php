@@ -7,8 +7,8 @@ class Produit_type_model extends MY_Model
     // Nom de l'identifiant de la table
     protected $id = 'idProduitType';
     
-    public function ajouter_produit_type($nomProduitType,$descriptionProduitType,
-            $prixProduitType,$seuilStockProduitType,$idCategorie,$siretCommerce)
+    public function ajouter_produit_type($nomProduitType,$descriptionProduitType
+        ,$seuilStockProduitType,$idCategorie,$siretCommerce)
 	{
             $data = array(
                 'nomProduitType' => $nomProduitType,
@@ -21,6 +21,17 @@ class Produit_type_model extends MY_Model
             
             return $this->create($data);
 	}
+
+    public function getIdProduitType($nomProduit){
+        $this->db->select('idProduitType');
+        $this->db->from('produit_type');
+        $this->db->where('produit_type.nomProduitType', $nomProduit);
+        $query = $this->db->get();
+
+        return $query->result();
+    }
+
+
 }
 
 

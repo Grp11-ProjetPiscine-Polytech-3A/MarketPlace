@@ -42,18 +42,21 @@
                     <input type="number" class="form-control" name="stock" id="stock" min="0" placeholder="" value="<?php echo set_value('stock')?>">
                 </div>
                 <div class="form-group">
-                    <label for="stock">Description du produit :</label>
+                    <label for="seuil">Seuil :</label>
+                    <input type="number" class="form-control" name="seuil" id="seuil" min="0" placeholder="" value="<?php echo set_value('stock')?>">
+                </div>
+                <div class="form-group">
+                    <label for="description">Description du produit :</label>
                     <textarea type="text" class="form-control" name="description" id="inputCaract" placeholder="" rows="10"><?php echo set_value('description')?></textarea>
                 </div>
 
-                <!--TODO (Je sais pas si c'est utile d'ouvrir un nouveau form)-->
-                <!--                <div id ="ajout image">
-                                    <label for="Image">Image</label>
-                                    <br />
-                <?php echo $error; ?>
-                <?php echo form_open_multipart('Commercant/do_upload'); ?>
-                                    <input type="file" name="userfile" size="20" />
-                                </div>-->
+                <div id ="ajout image">
+                    <label for="Image">Image</label>
+                    <br />
+                    <?php echo $error; ?>
+                    <?php echo form_open_multipart('Commercant/do_upload'); ?>
+                    <input type="file" name="userfile" size="20" />
+                </div>
                 <hr />
 
                 <button type="submit" class="btn btn-primary">Ajouter le produit</button>

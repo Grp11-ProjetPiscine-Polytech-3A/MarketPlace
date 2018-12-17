@@ -20,6 +20,14 @@ class Produit_variante_model extends MY_Model
             
             return $this->create($data);
 	}
+
+    public function getIdProduitVariante($nomProduit) {
+        $this->db->select('idProduitVariante');
+        $this->db->from('produit_variante');
+        $this->db->where('produit_variante.nomProduitVariante', $nomProduit);
+        $query = $this->db->get();
+        return $query->result();
+    }
 }
 
 

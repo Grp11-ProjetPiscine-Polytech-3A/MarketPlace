@@ -14,6 +14,9 @@ class Produits extends Commercant {
     public function __construct() {
         parent::__construct();
 
+        $this->load->model('Produit_type_model');
+        $this->load->model('Produit_variante_model');
+
         $this->layout->ajouter_menu_url('sideMenu', 'Liste des produits', 'Commercant/Produits/liste_produits');
         $this->layout->ajouter_menu_url('sideMenu', 'Ajouter un produit', 'Commercant/Produits/ajout_produit');
     }
@@ -69,38 +72,90 @@ class Produits extends Commercant {
 
         if ($this->form_validation->run()) {
 
-            // Retrieve the data from POST
+            // Recuperer les données du formulaire pour creer le produit type
             $data_post = $this->input->post();
-            $data_create = array(
+            $table_produit_type = array(
                 "nomProduitType" => $data_post["nomProduit"],
                 "descriptionProduitType" => $data_post["description"],
-                "prixProduitType" => $data_post["prix"],
+                "seuilStockProduitType" => $data_post["seuil"],
                 "idCategorie" => $data_post["categorie"],
                 "siretCommerce" => $data_post["commerce"],
             );
+            // Creer la ligne dans Produit Type
+            $resultProduitType = $this->Produit_type_model->create($table_produit_type);
 
-            $result = $this->Produit_type_model->create($data_create);
+            if ($resultProduitType) {
+                // Aller chercher l'id du produit type créé
+                $idProduitType = $this->Produit_type_model->getIdProduitType($data_post["nomProduit"])[0]->idProduitType;
 
-            if ($result) {
-                $data = array(
-                    'message_display' => 'Le produit a bien été ajouté'
-                );
-                $this->layout->views('template/message_display', $data);
-                $this->liste_produits();
+                // Recuperer les données du formulaire pour creer le produit variante
+                $table_produit_variante = array(
+                    "nomProduitVariante" => $data_post["nomProduit"],
+                    "descriptionProduitVariante" => $data_post["description"],
+                    "prixProduitVariante" => $data_post["prix"],
+                    "stockProduitVariante" => $data_post["stock"],
+                    "idProduitType" => $idProduitType,
+                 );
+                $resultProduitVariante = $this->Produit_variante_model->create($table_produit_variante);
+
+                if ($resultProduitVariante) {
+                    // Recuperer les l'id du produit Variant pour l'integrer dans le nom de l'image
+                    $idProduitVariante = $this->Produit_variante_model->getIdProduitVariante($data_post["nomProduit"])[0]->idProduitVariante;
+
+                    // Création du dossier accueillant l'image
+                    if (!file_exists('assets/images/produits/produit_' . $idProduitType)) { 
+                        mkdir('assets/images/produits/produit_' . $idProduitType, 0755, true); 
+                    }
+
+
+                    // Enregistrement de l'image
+                    // Configurer les fichiers acceptés
+                    $config['file_name']            = 'img' . $idProduitVariante;
+                    $config['upload_path']          = 'assets/images/produits/produit_' . $idProduitType;
+                    $config['allowed_types']        = 'gif|jpg|jpeg|png';
+                    $config['max_size']             = 10000;
+                    $config['max_width']            = 1024;
+                    $config['max_height']           = 768;
+
+                    // Charger la librairie upload
+                    $this->load->library('upload', $config);
+
+                    // Vérifier que l'upload s'est bien effectuer
+                    if ( ! $this->upload->do_upload('userfile'))
+                    {
+                            $data = array(
+                                'error_message' => $this->upload->display_errors(),
+                                'message_display' => $data_post["nomProduit"] . ' ajouté a vos produits ',
+                            );
+                    }
+                    else
+                    {
+                            $data = array(
+                                'message_display' => $data_post["nomProduit"] . ' ajouté a vos produits',
+                            );
+                    }
+
+                } else {
+                    $this->Produit_type_model->delete($table_produit_type);
+                    $data = array(
+                        'error_message' => "Une erreur s'est produite",
+                    );
+                }
             } else {
                 $data = array(
                     'error_message' => "Une erreur s'est produite",
                 );
-                $this->layout->views('template/error_display', $data);
+                
                 $this->ajout_produit();
             }
         } else {
             $data = array(
                 'error_message' => "Erreur dans le formulaire : <br />" . $this->form_validation->error_string()
             );
-            $this->layout->views('template/error_display', $data);
-            $this->ajout_produit();
         }
+        $this->layout->views('template/error_display', $data);
+        $this->layout->views('template/message_display', $data);
+        $this->layout->view('Commercant/espace_commercant', $data);
     }
 
     //TODO
