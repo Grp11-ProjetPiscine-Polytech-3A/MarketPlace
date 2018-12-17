@@ -14,6 +14,8 @@ class Commercant extends CI_Controller {
 
 
         $this->load->helper('form');
+        $this->load->helper('assets_helper');
+        
         $this->load->library('form_validation');
         $this->load->library('session');
         $this->load->library('Layout');
