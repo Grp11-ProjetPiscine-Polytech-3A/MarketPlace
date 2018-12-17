@@ -103,6 +103,14 @@ class Produits extends Commercant {
         }
     }
 
+    //TODO
+    public function modifier_produit($id_produit = 0) {
+        $data = array(
+            'message_display' => 'TODO'
+        );
+        $this->layout->view('template/message_display', $data);
+    }
+
     public function supprimer_produit($id_produit = 0) {
         if ($id_produit != 0) {
             $liste_produits = $this->liste_produit();
