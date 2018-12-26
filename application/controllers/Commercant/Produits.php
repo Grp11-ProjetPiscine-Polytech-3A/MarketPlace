@@ -16,6 +16,8 @@ class Produits extends Commercant {
 
         $this->load->model('Produit_type_model');
         $this->load->model('Produit_variante_model');
+        $this->load->model('Caracteristique_model');
+        $this->load->model('Produit_variante_caracteristique_model');
 
         $this->layout->ajouter_menu_url('sideMenu', 'Liste des produits', 'Commercant/Produits/liste_produits');
         $this->layout->ajouter_menu_url('sideMenu', 'Ajouter un produit', 'Commercant/Produits/ajout_produit');
@@ -43,19 +45,22 @@ class Produits extends Commercant {
 
     public function ajout_produit() {
         $categ = $this->Categorie_model->read('*');
-        if ($categ) {
-            $data = array(
-                "categories" => $categ,
-                "commerces" => $this->get_raw_commerces(),
-                "error" => '',
-            );
-            $this->layout->view('Commercant/Produits/ajout_produit', $data);
-        } else {
-            $data = array(
-                'error_message' => 'Une erreur s\'est produite : Pas de categories',
-            );
-            $this->layout->view('template/error_display', $data);
+        if (!$categ) {
+            $categ = array();
         }
+
+        $caracteristiques = $this->Caracteristique_model->liste_caract();
+        if (!$caracteristiques) {
+            $caracteristiques = array();
+        }
+
+        $data = array(
+            "categories" => $categ,
+            "commerces" => $this->get_raw_commerces(),
+            "caracteristiques" => $caracteristiques,
+            "error" => '',
+        );
+        $this->layout->view('Commercant/Produits/ajout_produit', $data);
     }
 
     /**
@@ -95,46 +100,56 @@ class Produits extends Commercant {
                     "prixProduitVariante" => $data_post["prix"],
                     "stockProduitVariante" => $data_post["stock"],
                     "idProduitType" => $idProduitType,
-                 );
+                );
                 $resultProduitVariante = $this->Produit_variante_model->create($table_produit_variante);
 
                 if ($resultProduitVariante) {
                     // Recuperer les l'id du produit Variant pour l'integrer dans le nom de l'image
                     $idProduitVariante = $this->Produit_variante_model->getIdProduitVariante($data_post["nomProduit"])[0]->idProduitVariante;
 
+                    // Ajout des caracteristiques
+                    $carac = $data_post["carac"];
+                    $carac_text = $data_post["carac_text"];
+                    for ($i = 0; $i < count($carac); $i++) {
+                        if ($carac_text[$i] != "") {
+                            $table_carac = array(
+                                "idProduitVariante" => $idProduitVariante,
+                                "idCaracteristique" => $carac[$i],
+                                "contenuCaracteristique" => $carac_text[$i],
+                            );
+                            $this->Produit_variante_caracteristique_model->create($table_carac);
+                        }
+                    }
+
                     // Création du dossier accueillant l'image
-                    if (!file_exists('assets/images/produits/produit_' . $idProduitType)) { 
-                        mkdir('assets/images/produits/produit_' . $idProduitType, 0755, true); 
+                    if (!file_exists('assets/images/produits/produit_' . $idProduitType)) {
+                        mkdir('assets/images/produits/produit_' . $idProduitType, 0755, true);
                     }
 
 
                     // Enregistrement de l'image
                     // Configurer les fichiers acceptés
-                    $config['file_name']            = 'img' . $idProduitVariante;
-                    $config['upload_path']          = 'assets/images/produits/produit_' . $idProduitType;
-                    $config['allowed_types']        = 'gif|jpg|jpeg|png';
-                    $config['max_size']             = 10000;
-                    $config['max_width']            = 1024;
-                    $config['max_height']           = 768;
+                    $config['file_name'] = 'img' . $idProduitVariante;
+                    $config['upload_path'] = 'assets/images/produits/produit_' . $idProduitType;
+                    $config['allowed_types'] = 'gif|jpg|jpeg|png';
+                    $config['max_size'] = 10000;
+                    $config['max_width'] = 1024;
+                    $config['max_height'] = 768;
 
                     // Charger la librairie upload
                     $this->load->library('upload', $config);
 
                     // Vérifier que l'upload s'est bien effectuer
-                    if ( ! $this->upload->do_upload('userfile'))
-                    {
-                            $data = array(
-                                'error_message' => $this->upload->display_errors(),
-                                'message_display' => $data_post["nomProduit"] . ' ajouté a vos produits ',
-                            );
+                    if (!$this->upload->do_upload('userfile')) {
+                        $data = array(
+                            'error_message' => $this->upload->display_errors(),
+                            'message_display' => $data_post["nomProduit"] . ' ajouté a vos produits ',
+                        );
+                    } else {
+                        $data = array(
+                            'message_display' => $data_post["nomProduit"] . ' ajouté a vos produits',
+                        );
                     }
-                    else
-                    {
-                            $data = array(
-                                'message_display' => $data_post["nomProduit"] . ' ajouté a vos produits',
-                            );
-                    }
-
                 } else {
                     $this->Produit_type_model->delete($table_produit_type);
                     $data = array(
@@ -145,7 +160,7 @@ class Produits extends Commercant {
                 $data = array(
                     'error_message' => "Une erreur s'est produite",
                 );
-                
+
                 $this->ajout_produit();
             }
         } else {
@@ -160,10 +175,23 @@ class Produits extends Commercant {
 
     //TODO
     public function modifier_produit($id_produit = 0) {
+        // Verification de l'existence du produit
+        // Affichage du formulaire
+        $categ = $this->Categorie_model->read('*');
+        if (!$categ) {
+            $categ = array();
+        }
+
         $data = array(
-            'message_display' => 'TODO'
+            "categories" => $categ,
+            "commerces" => $this->get_raw_commerces(),
+            "error" => '',
         );
-        $this->layout->view('template/message_display', $data);
+        $this->layout->view('Commercant/Produits/modifier_produit', $data);
+    }
+
+    public function modifier_produit_process() {
+        
     }
 
     public function supprimer_produit($id_produit = 0) {

@@ -6,63 +6,106 @@
                 <hr>
             </div>
             <?php echo form_open_multipart('Commercant/Produits/ajout_produit_process'); ?>
-                <div class="form-group">
-                    <label for="Commerce">Commerce :</label>
-                    <select class="form-control" name="commerce" id="commerce" required="true">
-                        <?php foreach ($commerces as $c): ?>
-                            <option value="<?php echo $c->siretCommerce ?>" <?php (set_value('commerce') == $c->siretCommerce)? "selected" : ""; ?>> 
-                                <?php echo $c->nomCommerce ?>
-                            </option>
-                        <?php endforeach; ?>
-                    </select>
-                </div>
-                <div class="form-group">
-                    <label for="inputNom">Nom du produit :</label>
-                    <input class="form-control" name="nomProduit" id="inputNom" placeholder="" value="<?php echo set_value('nomProduit')?>">
-                </div>
-                <div class="form-group">
-                    <label for="Categorie">Catégorie :</label>
-                    <select class="form-control" name="categorie" id="cat">
-                        <option value=""></option>
-                        <?php foreach ($categories as $c): ?>
-                            <option value="<?php echo $c->idCategorie ?>" <?php (set_value('categorie') == $c->idCategorie)? "selected" : ""; ?>>
-                                <?php echo $c->descriptionCategorie ?>
-                            </option>
-                        <?php endforeach; ?>
-                    </select>
-                </div>
+            <div class="form-group">
+                <label for="Commerce">Commerce :</label>
+                <select class="form-control" name="commerce" id="commerce" required="true">
+                    <?php foreach ($commerces as $c): ?>
+                        <option value="<?php echo $c->siretCommerce ?>" <?php (set_value('commerce') == $c->siretCommerce) ? "selected" : ""; ?>> 
+                            <?php echo $c->nomCommerce ?>
+                        </option>
+                    <?php endforeach; ?>
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="inputNom">Nom du produit :</label>
+                <input class="form-control" name="nomProduit" id="inputNom" placeholder="" value="<?php echo set_value('nomProduit') ?>">
+            </div>
+            <div class="form-group">
+                <label for="Categorie">Catégorie :</label>
+                <select class="form-control" name="categorie" id="cat">
+                    <option value=""></option>
+                    <?php foreach ($categories as $c): ?>
+                        <option value="<?php echo $c->idCategorie ?>" <?php (set_value('categorie') == $c->idCategorie) ? "selected" : ""; ?>>
+                            <?php echo $c->descriptionCategorie ?>
+                        </option>
+                    <?php endforeach; ?>
+                </select>
+            </div>
 
-                <div class="form-group">
-                    <label for="inputPrix">Prix (€) :</label>
-                    <input class="form-control" name="prix" id="inputPrix" placeholder="" value="<?php echo set_value('prix')?>">
-                </div>
+            <div class="form-group">
+                <label for="inputPrix">Prix (€) :</label>
+                <input class="form-control" name="prix" id="inputPrix" placeholder="" value="<?php echo set_value('prix') ?>">
+            </div>
 
-                <div class="form-group">
-                    <label for="stock">Stock :</label>
-                    <input type="number" class="form-control" name="stock" id="stock" min="0" placeholder="" value="<?php echo set_value('stock')?>">
-                </div>
-                <div class="form-group">
-                    <label for="seuil">Seuil :</label>
-                    <input type="number" class="form-control" name="seuil" id="seuil" min="0" placeholder="" value="<?php echo set_value('stock')?>">
-                </div>
-                <div class="form-group">
-                    <label for="description">Description du produit :</label>
-                    <textarea type="text" class="form-control" name="description" id="inputCaract" placeholder="" rows="10"><?php echo set_value('description')?></textarea>
-                </div>
+            <div class="form-group">
+                <label for="stock">Stock :</label>
+                <input type="number" class="form-control" name="stock" id="stock" min="0" placeholder="" value="<?php echo set_value('stock') ?>">
+            </div>
+            <div class="form-group">
+                <label for="seuil">Seuil :</label>
+                <input type="number" class="form-control" name="seuil" id="seuil" min="0" placeholder="" value="<?php echo set_value('stock') ?>">
+            </div>
+            <div class="form-group">
+                <label for="description">Description du produit :</label>
+                <textarea type="text" class="form-control" name="description" id="inputCaract" placeholder="" rows="10"><?php echo set_value('description') ?></textarea>
+            </div>
 
-                <div id ="ajout image">
-                    <label for="Image">Image</label>
-                    <br />
-                    <?php echo $error; ?>
-                    <?php echo form_open_multipart('Commercant/do_upload'); ?>
-                    <input type="file" name="userfile" size="20" />
-                </div>
-                <hr />
+            <div id ="ajout image">
+                <label for="Image">Image</label>
+                <br />
+                <?php echo $error; ?>
+                <?php echo form_open_multipart('Commercant/do_upload'); ?>
+                <input type="file" name="userfile" size="20" />
+            </div>
 
-                <button type="submit" class="btn btn-primary">Ajouter le produit</button>
+            <hr />
+            <div id="carac">
+                <h5>Caractéristiques</h3>
+                    <div id="add_carac_button" class="btn btn-secondary">
+                        Ajouter une caractéristique
+                    </div>
+                    <br/>
+            </div>
+            <hr />
+
+
+            <button type="submit" class="btn btn-primary">Ajouter le produit</button>
 
             <?php echo form_close(); ?>
         </div>
 
     </div>
 </div>
+
+<script>
+    var carac_array = <?php print(json_encode($caracteristiques)) ?>
+
+    $("#add_carac_button").click(add_carac_field)
+
+    function add_carac_field() {
+        var select_carac = document.createElement("select")
+        select_carac.className = "form-control col-3"
+        select_carac.name = "carac[]"
+
+        for (var idcarac in carac_array) {
+            var opt = document.createElement("option")
+            opt.value = idcarac;
+            opt.innerHTML = carac_array[idcarac];
+            select_carac.append(opt)
+        }
+
+        var textarea_carac = document.createElement("textarea")
+        textarea_carac.name = "carac_text[]"
+        textarea_carac.className = "form-control col-12"
+
+        var div_carac = document.createElement("div")
+        div_carac.className = "carac"
+        div_carac.append("Sélectionner la caractéristique : ")
+        div_carac.append(select_carac)
+        div_carac.append("Contenu : ")
+        div_carac.append(textarea_carac)
+
+        $("#carac").append("<br/>")
+        $("#carac").append(div_carac)
+    }
+</script>

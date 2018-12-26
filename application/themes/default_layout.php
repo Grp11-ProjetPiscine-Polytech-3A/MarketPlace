@@ -23,6 +23,10 @@
             <link rel="stylesheet" type="text/css" media="screen" href="<?php echo $url; ?>" />
         <?php endforeach; ?>
 
+        <!-- Bootstrap core JavaScript -->
+        <script src="<?php echo base_url('assets/jquery/jquery.min.js'); ?>"></script>
+        <script src="<?php echo base_url('assets/js/bootstrap.bundle.min.js'); ?>"></script>
+
 
 
     </head>
@@ -142,9 +146,6 @@
                 <!-- /.container -->
             </footer>
 
-            <!-- Bootstrap core JavaScript -->
-            <script src="<?php echo base_url('assets/jquery/jquery.min.js'); ?>"></script>
-            <script src="<?php echo base_url('assets/js/bootstrap.bundle.min.js'); ?>"></script>
 
             <?php foreach ($js as $url): ?>
                 <script type="text/javascript" src="<?php echo $url; ?>"></script> 

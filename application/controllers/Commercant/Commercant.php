@@ -91,7 +91,7 @@ class Commercant extends CI_Controller {
             $data['commerces'] = $data_commerce;
         }
 
-        // Chargement des donnes des commerces geres (mais pas proprio)
+        // Chargement des donnees des commerces geres (mais pas proprio)
         $siret_commerces = $this->Commercant_commerce_gerer_model->read('siretCommerce', $where);
         if ($siret_commerces) {
             $data_commerce_geres = array();

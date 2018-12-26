@@ -57,11 +57,16 @@ class Caracteristique_model extends MY_Model
 	 */
 	public function liste_caract()
 	{
-		return $this->db->select('*')
+		$carac = $this->db->select('*')
 					->from($this->table)
-					->order_by('id', 'desc')
+					->order_by($this->id, 'asc')
 					->get()
 					->result();
+                $array_carac = array();
+                foreach ($carac as $c) {
+                    $array_carac[$c->idCaracteristique] = $c->nomCaracteristique;
+                }
+                return $array_carac;
 	}
 }
 
