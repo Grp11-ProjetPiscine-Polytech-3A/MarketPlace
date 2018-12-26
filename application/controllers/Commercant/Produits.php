@@ -175,23 +175,11 @@ class Produits extends Commercant {
 
     //TODO
     public function modifier_produit($id_produit = 0) {
-        // Verification de l'existence du produit
-        // Affichage du formulaire
-        $categ = $this->Categorie_model->read('*');
-        if (!$categ) {
-            $categ = array();
-        }
-
-        $data = array(
-            "categories" => $categ,
-            "commerces" => $this->get_raw_commerces(),
-            "error" => '',
-        );
-        $this->layout->view('Commercant/Produits/modifier_produit', $data);
+        //TODO
     }
 
     public function modifier_produit_process() {
-        
+        // TODO
     }
 
     public function supprimer_produit($id_produit = 0) {

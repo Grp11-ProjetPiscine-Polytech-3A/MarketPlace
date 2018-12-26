@@ -37,15 +37,42 @@
             </a>
         </div>
 
-        <div class="col-lg-5 col-md-5 mb-4"> 
-            <h5><?php echo $produit->prixProduitType ?> €</h5>
-            <a href="<?php echo site_url("Commerces/fiche_commerce/" . $produit->commerce->siretCommerce) ?>"><?php echo $produit->commerce->nomCommerce?></a>
-            <p class="card-text"><?php echo $produit->descriptionProduitType ?></p>
+        <div class="col-lg-7 col-md-7 mb-6"> 
+            <div id="choix_variante">
+                <?php foreach ($variantes as $v): ?>
+                    <a class="btn btn-secondary" href="<?php echo base_url('/Produits/fiche_produit/' . $produit->idProduitType . '/' . $v->idProduitVariante) ?>">
+                        <?php echo $v->nomProduitVariante ?>
+                    </a>
+                <?php endforeach; ?>
+            </div>
 
-            <a class="add-to-cart" href="<?php echo site_url('Panier/ajouter_panier/' . $produit->idProduitType) ?>">
+            <div id="description_generale">
+                <h5><?php echo $variante->prixProduitVariante ?> €</h5>
+                <a href="<?php echo site_url("Commerces/fiche_commerce/" . $produit->commerce->siretCommerce) ?>"><?php echo $produit->commerce->nomCommerce ?></a>
+                <p class="card-text"><?php echo $produit->descriptionProduitType ?></p>
+            </div>
+
+            <hr/>
+            <div id="description_variante">
+                <p class="card-text"><?php echo $variante->descriptionProduitVariante ?></p>
+
+            </div>
+
+        </div>
+
+        <div id="carac" class="col-12">
+            <h3>Caractéristiques</h3>
+            <?php foreach ($caracteristiques as $c): ?>
+                <h6><?php echo $c->nomCaracteristique ?></h6>
+                <p class="card-text"><?php echo $c->contenuCaracteristique ?></p>
+            <?php endforeach; ?>
+        </div>
+
+       
+        <div id="ajout_panier" class="col-12">
+            <a class="btn btn-primary" href="<?php echo site_url('Panier/ajouter_panier/' . $variante->idProduitVariante) ?>">
                 Ajouter au panier
             </a>
-
         </div>
 
     </div>

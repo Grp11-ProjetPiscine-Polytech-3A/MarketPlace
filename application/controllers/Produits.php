@@ -20,6 +20,7 @@ class Produits extends CI_Controller {
         $this->load->library('Layout');
 
         $this->load->model('Produit_type_model');
+        $this->load->model('Produit_variante_model');
         $this->load->model('Categorie_model');
         $this->load->model('Commerce_model');
         $this->load->model('Commercant_model');
@@ -52,21 +53,6 @@ class Produits extends CI_Controller {
             $data = array(
                 "produits" => $liste_produits,
             );
-// ==============================
-//          CHECKME (Dorian) Je ne suis pas vraiment d'accord avec ce code, le module d'ajout des produits doit 
-//          se faire sur une page completement differente (un panneau d'admin des commercants)
-//          
-//            // Affiche un bouton de rajout d'un produit si l'utilisateur est un commercant
-//            if (isset($this->session->logged_in['username'])){
-//                if ($this->Commercant_model->isCommercant()) {
-//                    $this->layout->views('Commercant/Produits/title_commercant');
-//                } else {
-//                    $this->layout->views('Produits/title_not_commercant');
-//                }
-//            } else {
-//                $this->layout->views('Produits/title_not_commercant');
-//            }
-// =============================
 
             $this->layout->views('Produits/title_not_commercant');
             $this->layout->view('Produits/liste_produits', $data);
@@ -78,28 +64,46 @@ class Produits extends CI_Controller {
         }
     }
 
-    public function fiche_produit($id_Produit) {
-        $where = array(
+    public function fiche_produit($id_Produit, $id_variante = 0) {
+        $whereProduit = array(
             "idProduitType" => $id_Produit,
         );
-        $result = $this->Produit_type_model->read('*', $where, 1);
+        $result = $this->Produit_type_model->read('*', $whereProduit, 1);
         if ($result) {
             $produit = $result[0];
 
             // Reccupere la liste des url des images du dossier
             $images_url = url_files_in_folder("/assets/images/produits/produit_" . $id_Produit . "/");
 
-            $where = array(
+            $whereCommerce = array(
                 'siretCommerce' => $produit->siretCommerce,
             );
-            $commerce = $this->Commerce_model->read('*', $where);
+            $commerce = $this->Commerce_model->read('*', $whereCommerce);
 
             if ($commerce) {
                 $produit->commerce = $commerce[0];
             }
+            
+            $variantes = $this->Produit_variante_model->read("idProduitVariante, nomProduitVariante", $whereProduit);
+            
+            $verif_variante = false;
+            foreach ($variantes as $v) {
+                if ($v->idProduitVariante == $id_variante) {
+                    $verif_variante = true;
+                }
+            }
+            if (!$verif_variante) {
+                $id_variante = $variantes[0]->idProduitVariante;
+            }
+            $variante_select = $this->Produit_variante_model->read("*", ["idProduitVariante" => $id_variante])[0];
+           
+
             $data = array(
                 "produit" => $produit,
                 "images" => $images_url,
+                "variantes" => $variantes,
+                "variante" => $variante_select,
+                "caracteristiques" => $this->Produit_variante_model->getCaracteristiques($id_variante),
             );
             $this->layout->view('Produits/fiche_produit', $data);
         } else {

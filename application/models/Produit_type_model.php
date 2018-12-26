@@ -30,6 +30,7 @@ class Produit_type_model extends MY_Model
 
         return $query->result();
     }
+    
 
 
 }
