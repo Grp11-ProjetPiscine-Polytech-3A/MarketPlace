@@ -115,6 +115,12 @@ class Produits extends CI_Controller {
             if ($commerce) {
                 $produit->commerce = $commerce[0];
             }
+            
+            if ($variante_select->descriptionProduitVariante == $produit->descriptionProduitType) {
+                $variante_select->descriptionProduitVariante = "";
+            }
+            $variante_select->descriptionProduitVariante = nl2br($variante_select->descriptionProduitVariante);
+            $produit->descriptionProduitType = nl2br($produit->descriptionProduitType);
 
             $data = array(
                 "produit" => $produit,
