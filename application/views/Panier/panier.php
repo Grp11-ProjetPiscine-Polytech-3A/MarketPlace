@@ -74,7 +74,7 @@
     </div>
     <div class="row justify-content-end">
         <div class="col-lg-3">
-            <a class="passer_commande" role="button" href= "<?php echo base_url('Commandes/afficher_commandes')?>">Passer Commande</a>
+            <a class="passer_commande btn btn-primary" role="button" href= "<?php echo base_url('Commandes/afficher_commandes')?>">Passer Commande</a>
         </div>
     </div>
 </div>

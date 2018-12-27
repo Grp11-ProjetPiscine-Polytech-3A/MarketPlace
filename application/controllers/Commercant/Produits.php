@@ -4,6 +4,8 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
 include "Commercant.php";
 
+// TODO : Afficher la liste des produits TYPES dans liste de produits, et afficher les variantes lorsqu'on clique dessus, puis proposition de modifier les variantes ou modifier le produit type (description ...)
+
 class Produits extends Commercant {
     /*
       |===============================================================================
@@ -11,6 +13,7 @@ class Produits extends Commercant {
       |===============================================================================
      */
 
+    
     public function __construct() {
         parent::__construct();
 
@@ -91,8 +94,10 @@ class Produits extends Commercant {
 
             if ($resultProduitType) {
                 // Aller chercher l'id du produit type créé
-                $idProduitType = $this->Produit_type_model->getIdProduitType($data_post["nomProduit"])[0]->idProduitType;
-
+                //$idProduitType = $this->Produit_type_model->getIdProduitType($data_post["nomProduit"])[0]->idProduitType;
+                //--- Alternative : 
+                $idProduitType = $this->db->insert_id();
+                        
                 // Recuperer les données du formulaire pour creer le produit variante
                 $table_produit_variante = array(
                     "nomProduitVariante" => $data_post["nomProduit"],

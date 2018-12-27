@@ -36,16 +36,19 @@
                 <span class="sr-only">Next</span>
             </a>
         </div>
+        <!--endCarroussel-->
 
+        <!--Description du produit-->
         <div class="col-lg-7 col-md-7 mb-6"> 
+            <!--Choix des variantes-->
             <div id="choix_variante">
                 <?php foreach ($variantes as $v): ?>
-                    <a class="btn btn-secondary" href="<?php echo base_url('/Produits/fiche_produit/' . $produit->idProduitType . '/' . $v->idProduitVariante) ?>">
+                    <a class="btn btn-secondary choix-variante" href="<?php echo base_url('/Produits/fiche_produit/' . $produit->idProduitType . '/' . $v->idProduitVariante) ?>">
                         <?php echo $v->nomProduitVariante ?>
                     </a>
                 <?php endforeach; ?>
             </div>
-
+            <!--Description generale-->
             <div id="description_generale">
                 <h5><?php echo $variante->prixProduitVariante ?> €</h5>
                 <a href="<?php echo site_url("Commerces/fiche_commerce/" . $produit->commerce->siretCommerce) ?>"><?php echo $produit->commerce->nomCommerce ?></a>
@@ -53,6 +56,8 @@
             </div>
 
             <hr/>
+
+            <!--Description de la variante-->
             <div id="description_variante">
                 <p class="card-text"><?php echo $variante->descriptionProduitVariante ?></p>
 
@@ -60,6 +65,8 @@
 
         </div>
 
+
+        <!--Liste des caractéristiques-->
         <div id="carac" class="col-12">
             <h3>Caractéristiques</h3>
             <?php foreach ($caracteristiques as $c): ?>
@@ -68,9 +75,9 @@
             <?php endforeach; ?>
         </div>
 
-       
+        <!--Bouton d'ajout au panier-->
         <div id="ajout_panier" class="col-12">
-            <a class="btn btn-primary" href="<?php echo site_url('Panier/ajouter_panier/' . $variante->idProduitVariante) ?>">
+            <a class="passer_commande btn btn-primary" href="<?php echo site_url('Panier/ajouter_panier/' . $variante->idProduitVariante) ?>">
                 Ajouter au panier
             </a>
         </div>
