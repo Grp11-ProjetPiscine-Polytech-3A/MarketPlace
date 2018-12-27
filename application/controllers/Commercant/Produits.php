@@ -66,7 +66,7 @@ class Produits extends Commercant {
     }
 
     /**
-     * TODO changer cette fonction pour gerer les variantes + stocks
+     *
      * TODO Check que ce commercant a bien le droit d'ajouter un produit a ce commerce
      */
     public function ajout_produit_process() {
@@ -184,9 +184,8 @@ class Produits extends Commercant {
         $this->layout->view('Commercant/espace_commercant', $data);
     }
 
-    //TODO
     public function modifier_produit($id_produit = 0) {
-        //TODO
+        $this->verif_produit($id_produit);
     }
 
     public function modifier_produit_process() {
@@ -225,11 +224,24 @@ class Produits extends Commercant {
 
     /**
      * Verifie que le produit peut bien etre géré par ce commercant
+     * Si ce n'est pas le cas, arrete l'execution et affiche une erreur
      * @param $idProduit    L'id du produit
      * @return bool true si le commercant a le droit de modifier ce produit, false sinon
      */
     private function verif_produit($idProduit) {
+        $liste_produits = $this->Produit_type_model->getProduitsCommercant($this->session->logged_in['idCommercant']);
+        foreach ($liste_produits as $p) {
+            if ($p->idProduitType == $idProduit) {
+                return true;
+            }
+        }
         
+        // Si la fonction n'a pas retourne, c'est a dire si l'id du produit renseigne ne correspond a aucun produits pouvant gere par le commercant
+        $data = array(
+            'error_message' => 'Vous ne possédez pas les droits pour accéder à cette page',
+        );
+        echo $this->layout->view('template/error_display', $data, true);
+        die();
     }
 
     private function liste_produit() {
@@ -253,6 +265,29 @@ class Produits extends Commercant {
 
                         // Ajout le nom du commerce au donnees du produit
                         $p->nomCommerce = $c->nomCommerce;
+
+                        // On reccupere les prix des variantes
+                        $whereProduit = array(
+                            "idProduitType" => $p->idProduitType,
+                        );
+                        $prix_variantes = $this->Produit_variante_model->read("prixProduitVariante", $whereProduit);
+
+                        // Formate le prix
+                        if (count($prix_variantes) >= 2) {
+
+                            foreach ($prix_variantes as $prix) {
+                                $pr = $prix->prixProduitVariante;
+                                if (!isset($min) || $pr <= $min) {
+                                    $min = $pr;
+                                }
+                                if (!isset($max) || $pr >= $max) {
+                                    $max = $pr;
+                                }
+                            }
+                            $p->prixProduitType = $min . ' - ' . $max;
+                        } else {
+                            $p->prixProduitType = $prix_variantes[0]->prixProduitVariante;
+                        }
 
                         // Ajoute le produit avec les donnees completés à la liste
                         $liste_produits[] = $p;
