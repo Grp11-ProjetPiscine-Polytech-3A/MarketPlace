@@ -21,7 +21,7 @@
 
             <div class="form-group">
                 <label for="inputTel">Numéro de téléphone :</label>
-                <input class="form-control" name="telCommerce" id="inputTel" placeholder="" value="<?php echo set_value('telCommerce') ?>">
+                <input type="tel" class="form-control" name="telCommerce" id="inputTel" placeholder="" value="<?php echo set_value('telCommerce') ?>">
             </div>
 
             <div class="form-group">
@@ -33,6 +33,10 @@
                 <input type="text" class="form-control" name="rueCommerce" id="inputRue" placeholder="" value="<?php echo set_value('rueCommerce') ?>">
             </div>
             <div class="form-group">
+                <label for="inputComplementAdresse">Complément d'adresse :</label>
+                <input type="text" class="form-control" name="complementAdresseCommerce" id="inputComplementAdresse" placeholder="" value="<?php echo set_value('complementAdresseCommerce') ?>">
+            </div>
+            <div class="form-group">
                 <label for="inputCodePostal">Code Postal :</label>
                 <input class="form-control" name="codePostalCommerce" id="inputCodePostal" placeholder="" value="<?php echo set_value('codePostalCommerce') ?>">
             </div>
@@ -41,16 +45,16 @@
                 <input type="text" class="form-control" name="villeCommerce" id="inputVille" placeholder="" value="<?php echo set_value('villeCommerce') ?>">
             </div>
             <div class="form-group">
-                <label for="inputComplementAdresse">Complément d'adresse :</label>
-                <input type="text" class="form-control" name="complementAdresseCommerce" id="inputComplementAdresse" placeholder="" value="<?php echo set_value('complementAdresseCommerce') ?>">
-            </div>
-            <div class="form-group">
                 <label for="inputTempsReservation">Temps de réservation maximum pour les produits :</label>
                 <input type="time" class="form-control" name="tempsReservationProduitsCommerce" id="inputTempsReservation" placeholder="" value="<?php echo set_value('tempsReservationProduitsCommerce') ?>">
             </div>
             <div class="form-group">
                 <label for="inputLivrable">Possibilité de livraison des produits (cocher si vous pouvez) :</label>
-                <input type="checkbox" name="Oui" value="<?php echo set_value('descriptionCommerce') ?>">
+                <select class="form-control" name="produitsLivrablesCommerce" id="inputLivrable">
+                    <option value=""></option>
+                    <option name="produitsLivrablesCommerce" value="<?php echo set_value('produitsLivrablesCommerce',1) ?>" >Oui</option>
+                    <option name="produitsLivrablesCommerce" value="<?php echo set_value('produitsLivrablesCommerce',0) ?>" >Non</option>
+                </select>
             </div>
             <div class="form-group">
                 <label for="description">Description du commerce :</label>
