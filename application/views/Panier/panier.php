@@ -21,13 +21,13 @@
             <tbody>
                 <?php foreach ($produits as $p): ?>
                     <tr>
-                        <td>
-                            <a href="<?php echo site_url('/Produits/fiche_produit/' . $p->idProduitType) ?>">
-                                <img src="<?php echo $p->image_url ?>" style="height:80px;width:80px">
+                        <td style="display:flex; justify-content: center">
+                            <a href="<?php echo site_url('/Produits/fiche_produit/' . $p->idProduitType . '/' . $p->idProduitVariante) ?>">
+                                <img src="<?php echo $p->image_url ?>" style="height:80px;width:auto">
                             </a>
                         <td>
-                            <a href="<?php echo site_url('/Produits/fiche_produit/' . $p->idProduitType) ?>">
-                                <?php echo $p->nomProduitType ?>
+                            <a href="<?php echo site_url('/Produits/fiche_produit/' . $p->idProduitType . '/' . $p->idProduitVariante) ?>">
+                                <?php echo $p->nomProduitType . ' - ' . $p->nomProduitVariante ?>
                             </a>
                         </td>
                         <td>
@@ -36,7 +36,7 @@
                             </a>
                         </td>
                         <td>
-                            <?php echo $p->prixProduitType ?> €
+                            <?php echo $p->prixProduitVariante ?> €
                         </td>
                         <td>
                             <div class="flex-centered-elements">
@@ -44,10 +44,10 @@
                                     <?php echo $p->quantite ?>
                                 </span>
                                 <span class="btn-group-vertical pull-right">
-                                    <a href="<?php echo site_url('Panier/ajouter_panier/' . $p->idProduitType . '/1') ?>">
+                                    <a href="<?php echo site_url('Panier/ajouter_panier/' . $p->idProduitVariante . '/1') ?>">
                                         <i class="fa fa-angle-up"></i>
                                     </a>
-                                    <a href="<?php echo site_url('Panier/supprimer_panier/' . $p->idProduitType . '/1') ?>">
+                                    <a href="<?php echo site_url('Panier/supprimer_panier/' . $p->idProduitVariante . '/1') ?>">
                                         <i class="fa fa-angle-down"></i>
                                     </a>
                                 </span>
@@ -57,7 +57,7 @@
                             <?php echo $p->prixTotal ?> €
                         </td>
                         <td>
-                            <a href="<?php echo site_url('Panier/supprimer_panier/' . $p->idProduitType . '/0') ?>">
+                            <a href="<?php echo site_url('Panier/supprimer_panier/' . $p->idProduitVariante . '/0') ?>">
                                 <i class="fa fa-trash"></i>
                             </a>
                         </td>

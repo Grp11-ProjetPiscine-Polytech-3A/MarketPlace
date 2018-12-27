@@ -162,3 +162,8 @@ img {
     margin-bottom : 15px;
     margin-top: 25px;
 }
+.carousel-item-next, .carousel-item-prev, .carousel-item.active {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}

@@ -5,8 +5,8 @@
         <?php foreach ($produits as $p): ?>
             <div class="col-lg-4 col-md-6 mb-4">
                 <div class="card h-100">
-                    <a  class="border-bottom" href="<?php echo site_url('/Produits/fiche_produit/' . $p->idProduitType) ?>">
-                        <img class="card-img-top" src="<?php echo $p->img_url ?>" alt="<?php echo $p->nomProduitType ?>" style="height:300px">
+                    <a  class="border-bottom" href="<?php echo site_url('/Produits/fiche_produit/' . $p->idProduitType) ?>" style="display:flex; justify-content: center">
+                        <img class="card-img-top" src="<?php echo $p->img_url ?>" alt="<?php echo $p->nomProduitType ?>" style="height:300px; width: auto;">
                     </a>
                     <div class="card-body">
                         <h4 class="card-title">

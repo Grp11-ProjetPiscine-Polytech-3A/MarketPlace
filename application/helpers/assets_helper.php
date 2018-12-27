@@ -70,3 +70,39 @@ if (!function_exists('url_files_in_folder')) {
     }
 
 }
+
+if (!function_exists('url_images_in_folder')) {
+
+    /**
+     * Return an array of urls of the images in a folder given in parameter
+     * @param mixed $folder    The path to the folder (relative to the root of the website) OR an array of paths to the folders
+     * 
+     */
+    function url_images_in_folder($folder, $reccursive = false) {
+        if (!is_array($folder)) {
+            $folder = [$folder];
+        }
+        $files_url = array();
+
+        foreach ($folder as $f) {
+            $path = FCPATH . $f;
+
+            if (is_dir($path)) {
+                $files = scandir($path);
+                for ($i = 2; $i < count($files); $i++) {
+                    if (!is_dir($path . '/' . $files[$i])) {
+                        $files_url[] = base_url($f . "/" . $files[$i]);
+                    } else if ($reccursive) {
+                        $files_url = array_merge($files_url, url_images_in_folder($f . "/" . $files[$i], true));
+                    }
+                }
+            }
+        }
+        if (count($files_url) == 0) {
+            $files_url[] = base_url("/assets/images/no-image.png");
+        }
+        return $files_url;
+    }
+
+}
+

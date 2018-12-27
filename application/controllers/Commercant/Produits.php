@@ -13,7 +13,6 @@ class Produits extends Commercant {
       |===============================================================================
      */
 
-    
     public function __construct() {
         parent::__construct();
 
@@ -97,7 +96,7 @@ class Produits extends Commercant {
                 //$idProduitType = $this->Produit_type_model->getIdProduitType($data_post["nomProduit"])[0]->idProduitType;
                 //--- Alternative : 
                 $idProduitType = $this->db->insert_id();
-                        
+
                 // Recuperer les données du formulaire pour creer le produit variante
                 $table_produit_variante = array(
                     "nomProduitVariante" => $data_post["nomProduit"],
@@ -113,16 +112,18 @@ class Produits extends Commercant {
                     $idProduitVariante = $this->Produit_variante_model->getIdProduitVariante($data_post["nomProduit"])[0]->idProduitVariante;
 
                     // Ajout des caracteristiques
-                    $carac = $data_post["carac"];
-                    $carac_text = $data_post["carac_text"];
-                    for ($i = 0; $i < count($carac); $i++) {
-                        if ($carac_text[$i] != "") {
-                            $table_carac = array(
-                                "idProduitVariante" => $idProduitVariante,
-                                "idCaracteristique" => $carac[$i],
-                                "contenuCaracteristique" => $carac_text[$i],
-                            );
-                            $this->Produit_variante_caracteristique_model->create($table_carac);
+                    if (array_key_exists("carac", $data_post) && array_key_exists("carac_text", $data_post)) {
+                        $carac = $data_post["carac"];
+                        $carac_text = $data_post["carac_text"];
+                        for ($i = 0; $i < count($carac); $i++) {
+                            if ($carac_text[$i] != "") {
+                                $table_carac = array(
+                                    "idProduitVariante" => $idProduitVariante,
+                                    "idCaracteristique" => $carac[$i],
+                                    "contenuCaracteristique" => $carac_text[$i],
+                                );
+                                $this->Produit_variante_caracteristique_model->create($table_carac);
+                            }
                         }
                     }
 
@@ -131,11 +132,16 @@ class Produits extends Commercant {
                         mkdir('assets/images/produits/produit_' . $idProduitType, 0755, true);
                     }
 
+                    // Création du dossier accueillant l'image de la variante
+                    if (!file_exists('assets/images/produits/produit_' . $idProduitType . '/variante_' . $idProduitVariante)) {
+                        mkdir('assets/images/produits/produit_' . $idProduitType . '/variante_' . $idProduitVariante, 0755, true);
+                    }
+
 
                     // Enregistrement de l'image
                     // Configurer les fichiers acceptés
-                    $config['file_name'] = 'img' . $idProduitVariante;
-                    $config['upload_path'] = 'assets/images/produits/produit_' . $idProduitType;
+                    $config['file_name'] = 'img1';
+                    $config['upload_path'] = 'assets/images/produits/produit_' . $idProduitType . '/variante_' . $idProduitVariante;
                     $config['allowed_types'] = 'gif|jpg|jpeg|png';
                     $config['max_size'] = 10000;
                     $config['max_width'] = 1024;
@@ -242,7 +248,7 @@ class Produits extends Commercant {
                     foreach ($produits as $p) {
 
                         // Ajoute aux donnees du produit l'url de l'image 
-                        $image_url = url_files_in_folder("/assets/images/produits/produit_" . $p->idProduitType . "/") [0];
+                        $image_url = url_images_in_folder("/assets/images/produits/produit_" . $p->idProduitType . "/", true) [0];
                         $p->image_url = $image_url;
 
                         // Ajout le nom du commerce au donnees du produit

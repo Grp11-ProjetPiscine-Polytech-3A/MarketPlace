@@ -43,21 +43,30 @@ class Panier extends CI_Controller {
             $session_data = $this->session->panier;
             foreach ($session_data as $ligne) {
                 // On stocke les donnees de la session dans ces deux variables
-                $id_Produit = $ligne['idProduit'];
+                $id_Produit_variante = $ligne['idProduit'];
                 $quantite = $ligne['quantite'];
 
-                // Reccupere les donnees sur le produit
+                // Reccupere les donnees sur le produit Variante
                 $where = array(
-                    "idProduitType" => $id_Produit,
+                    "idProduitVariante" => $id_Produit_variante,
                 );
-                $result = $this->Produit_type_model->read('*', $where, 1);
-
+                $produit_variante = $this->Produit_variante_model->read('*', $where, 1)[0];
+                
+                if ($produit_variante) {
+                    // Reccupere les donnees sur le produit Type
+                    $where = array(
+                        "idProduitType" => $produit_variante->idProduitType,
+                    );
+                    $produit_type = $this->Produit_type_model->read('*', $where, 1);
+                }
+                
                 // Si le produit existe, on l'ajoute au tableau
-                if ($result) {
-                    $donnees_produit = $result[0];
+                if ($produit_variante && isset($produit_type) && $produit_type) {
+                    // Rassemble les donnees du 
+                    $donnees_produit = (object) array_merge((array) $produit_type[0], (array) $produit_variante);
 
                     // Ajoute aux donnees du produit l'url de l'image 
-                    $image_url = url_files_in_folder("/assets/images/produits/produit_" . $id_Produit . "/") [0];
+                    $image_url = url_images_in_folder("/assets/images/produits/produit_" . $donnees_produit->idProduitType . '/variante_' . $id_Produit_variante) [0];
                     $donnees_produit->image_url = $image_url;
 
                     // Ajoute aux donnees du produit la quantite
@@ -73,7 +82,7 @@ class Panier extends CI_Controller {
                     }
 
                     // Calcul du prix total du produit (PU * quantite) et ajoute a donnees commerce
-                    $prix_total = $donnees_produit->prixProduitType * $donnees_produit->quantite;
+                    $prix_total = $donnees_produit->prixProduitVariante * $donnees_produit->quantite;
                     $donnees_produit->prixTotal = $prix_total;
 
                     // Ajoute ce prix total a la somme totale
@@ -83,7 +92,7 @@ class Panier extends CI_Controller {
                     $data['produits'][] = $donnees_produit;
                 } else {
                     // Si le produit n'existe pas, on le supprime de la session
-                    $this->supprimer_produit_sesssion($id_Produit, 0);
+                    $this->supprimer_produit_sesssion($id_Produit_variante, 0);
                 }
             }
         }
@@ -96,7 +105,7 @@ class Panier extends CI_Controller {
      * @param int $idProduit    L'id du produit a ajouter au panier
      * @param int $quantite     La quantite a ajouter, ne fait rien si le nombre est negatif
      */
-    public function ajouter_panier($idProduit, $quantite = 1) {
+    public function ajouter_panier($idProduitVariante, $quantite = 1) {
         if ($quantite < 0) {
             $quantite = 0;
         }
@@ -107,21 +116,21 @@ class Panier extends CI_Controller {
             $panier = $this->session->panier;
 
             foreach ($panier as $p) {
-                if ($p['idProduit'] != $idProduit) {
+                if ($p['idProduit'] != $idProduitVariante) {
                     $session_data[] = $p;
                 } else {
                     $quantite += $p['quantite'];
                     $session_data[] = array(
-                        'idProduit' => $idProduit,
+                        'idProduit' => $idProduitVariante,
                         'quantite' => $quantite,
                     );
                     $ok = true;
                 }
             }
         }
-        if (!$ok) { // FIXME
+        if (!$ok) { // FIXME parce que bof
             $session_data[] = array(
-                'idProduit' => $idProduit,
+                'idProduit' => $idProduitVariante,
                 'quantite' => $quantite,
             );
         }

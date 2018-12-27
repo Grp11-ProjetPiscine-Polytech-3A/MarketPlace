@@ -8,7 +8,7 @@
     <div class="row">
 
         <!--Carroussel pour les images-->
-        <div id="carouselExampleIndicators" class="carousel slide my-4 col-lg-5 col-md-5 mb-4" style="background:#CECECE;" data-ride="carousel">
+        <div id="carouselExampleIndicators" class="carousel slide my-4 col-lg-5 col-md-5 mb-4" style="background:#CECECE;height: fit-content;" data-ride="carousel">
             <ol class="carousel-indicators">
                 <li data-target="#carouselExampleIndicators" data-slide-to="0" class="active"></li>
                 <?php
@@ -43,7 +43,7 @@
             <!--Choix des variantes-->
             <div id="choix_variante">
                 <?php foreach ($variantes as $v): ?>
-                    <a class="btn btn-secondary choix-variante" href="<?php echo base_url('/Produits/fiche_produit/' . $produit->idProduitType . '/' . $v->idProduitVariante) ?>">
+                    <a class="btn <?php ($v->idProduitVariante == $variante->idProduitVariante) ? print 'btn-dark' : print 'btn-secondary' ?>  choix-variante" href="<?php echo base_url('/Produits/fiche_produit/' . $produit->idProduitType . '/' . $v->idProduitVariante) ?>">
                         <?php echo $v->nomProduitVariante ?>
                     </a>
                 <?php endforeach; ?>
