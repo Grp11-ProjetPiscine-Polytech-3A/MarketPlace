@@ -75,17 +75,24 @@ if (!function_exists('url_images_in_folder')) {
 
     /**
      * Return an array of urls of the images in a folder given in parameter
-     * @param String $folder    The path to the folder (relative to the root of the website)
+     * @param mixed $folder    The path to the folder (relative to the root of the website) OR an array of paths to the folders
+     * 
      */
     function url_images_in_folder($folder) {
-        $path = FCPATH . $folder;
+        if (!is_array($folder)) {
+            $folder = [$folder];
+        }
         $files_url = array();
+        
+        foreach ($folder as $f) {
+            $path = FCPATH . $f;
 
-        if (is_dir($path)) {
-            $files = scandir($path);
-            for ($i = 2; $i < count($files); $i++) {
-                if (!is_dir($path . '/' . $files[$i])) {
-                    $files_url[] = base_url($folder . "/" . $files[$i]);
+            if (is_dir($path)) {
+                $files = scandir($path);
+                for ($i = 2; $i < count($files); $i++) {
+                    if (!is_dir($path . '/' . $files[$i])) {
+                        $files_url[] = base_url($f . "/" . $files[$i]);
+                    }
                 }
             }
         }
@@ -94,4 +101,5 @@ if (!function_exists('url_images_in_folder')) {
         }
         return $files_url;
     }
+
 }
