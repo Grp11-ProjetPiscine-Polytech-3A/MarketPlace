@@ -10,22 +10,23 @@
                     <th scope="col">Désignation</th>
                     <th scope="col">Commerce</th>
                     <th scope="col">Prix</th>
-                    <th scope="col">Stock</th>
                     <th scope="col"></th> <!--Action-->
 
                 </tr>
             </thead>
-
-
-
             <tbody>
 
                 <?php foreach ($produits as $p): ?>
                     <tr>
                         <td style = "display:flex; justify-content:center">
-                            <img src="<?php echo $p->image_url ?>" style="height:80px;width:auto">
+                            <a href="<?php echo site_url('Commercant/Produits/fiche_produit_type/' . $p->idProduitType) ?>">
+                                <img src="<?php echo $p->image_url ?>" style="height:80px;width:auto">
+                            </a>
+                        </td>
                         <td>
-                            <?php echo $p->nomProduitType ?>
+                            <a href="<?php echo site_url('Commercant/Produits/fiche_produit_type/' . $p->idProduitType) ?>">
+                                <?php echo $p->nomProduitType ?>
+                            </a>
                         </td>
                         <td>    
                             <?php echo $p->nomCommerce ?>
@@ -34,17 +35,8 @@
                             <?php echo $p->prixProduitType ?> €
                         </td>
                         <td>
-
-                        </td>
-                        <td>
-
-                        </td>
-                        <td>
-                            <a class="icon-fa" href="<?php echo site_url('Commercant/Produits/modifier_produit/' . $p->idProduitType) ?>">
+                            <a class="icon-fa" href="<?php echo site_url('Commercant/Produits/fiche_produit_type/' . $p->idProduitType) ?>">
                                 <i class="fa fa-pencil-square-o"></i>                             
-                            </a>
-                            <a class="icon-fa" href="<?php echo site_url('Commercant/Produits/supprimer_produit/' . $p->idProduitType) ?>">
-                                <i class="fa fa-trash"></i>                             
                             </a>
 
                         </td>
