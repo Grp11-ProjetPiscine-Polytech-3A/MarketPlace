@@ -30,7 +30,7 @@ class Produits extends CI_Controller {
 
         foreach ($categ as $c) {
             $intitule = mb_strtoupper(mb_substr($c->descriptionCategorie, 0, 1)) . mb_substr($c->descriptionCategorie, 1);
-            $this->layout->ajouter_menu_url('sideMenu', $intitule, 'Produits/tri_produits_categorie/' . $c->idCategorie);
+            $this->layout->ajouter_menu_url('sideMenu', $intitule, 'Produits/liste_produits/' . $c->idCategorie);
         }
 
         $this->layout->setNomSideMenu("Categories");
@@ -40,15 +40,25 @@ class Produits extends CI_Controller {
         $this->liste_produits();
     }
 
-    public function liste_produits() {
-        $result = $this->Produit_type_model->read();
-        if ($result) {
+    public function liste_produits($id_Categ = 0) {
+        $where = array();
+        if ($id_Categ > 0) {
+            $where['idCategorie'] = $id_Categ;
+        }
+        $result = $this->Produit_type_model->read('*', $where);
+        if ($result && count($result) > 0) {
             $liste_produits = array();
             foreach ($result as $produit) {
 
                 // On recupere le lien de la premiere image du produit
                 $produit->img_url = url_images_in_folder("/assets/images/produits/produit_" . $produit->idProduitType . "/", true)[0];
                 $liste_produits[] = $produit;
+
+                $longueur_max_description = 100;
+                $produit->descriptionProduitType = substr($produit->descriptionProduitType, 0, $longueur_max_description);
+                if (strlen($produit->descriptionProduitType) >= $longueur_max_description) {
+                    $produit->descriptionProduitType .= '...';
+                }
             }
             $data = array(
                 "produits" => $liste_produits,
@@ -57,9 +67,15 @@ class Produits extends CI_Controller {
             $this->layout->views('Produits/title_not_commercant');
             $this->layout->view('Produits/liste_produits', $data);
         } else {
-            $data = array(
-                'error_message' => 'Une erreur s\'est produite',
-            );
+            if ($id_Categ > 0) {
+                $data = array(
+                    'error_message' => 'Il n\'y a pas de produits correspondant à cette catégorie pour le moment',
+                );
+            } else {
+                $data = array(
+                    'error_message' => 'Une erreur s\'est produite',
+                );
+            }
             $this->layout->view('template/error_display', $data);
         }
     }
@@ -116,7 +132,7 @@ class Produits extends CI_Controller {
         }
     }
 
-    public function tri_produits_categorie($id_Categ = 0) {
+    public function tri_produits_categorie() {
         $where = array();
         if ($id_Categ > 0) {
             $where['idCategorie'] = $id_Categ;
