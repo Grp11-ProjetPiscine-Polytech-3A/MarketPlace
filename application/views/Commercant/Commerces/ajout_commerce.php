@@ -8,7 +8,7 @@
             <?php echo form_open_multipart('Commercant/Commerces/ajout_commerce_process'); ?>
             <div class="form-group">
                 <label for="inputSiret">Siret du Commerce :</label>
-                <input type="number" class="form-control" name="siretCommerce" id="siretCommerce" placeholder="" value="<?php echo set_value('siretCommerce') ?>">
+                <input class="form-control" name="siretCommerce" id="siretCommerce" placeholder="" value="<?php echo set_value('siretCommerce') ?>">
             </div>
             <div class="form-group">
                 <label for="inputNom">Nom du commerce :</label>
@@ -21,7 +21,7 @@
 
             <div class="form-group">
                 <label for="inputTel">Numéro de téléphone :</label>
-                <input type="number" class="form-control" name="telCommerce" id="inputTel" placeholder="" value="<?php echo set_value('telCommerce') ?>">
+                <input class="form-control" name="telCommerce" id="inputTel" placeholder="" value="<?php echo set_value('telCommerce') ?>">
             </div>
 
             <div class="form-group">
@@ -34,7 +34,7 @@
             </div>
             <div class="form-group">
                 <label for="inputCodePostal">Code Postal :</label>
-                <input type="number" class="form-control" name="codePostalCommerce" id="inputCodePostal" placeholder="" value="<?php echo set_value('codePostalCommerce') ?>">
+                <input class="form-control" name="codePostalCommerce" id="inputCodePostal" placeholder="" value="<?php echo set_value('codePostalCommerce') ?>">
             </div>
             <div class="form-group">
                 <label for="inputVille">Ville :</label>
@@ -44,58 +44,23 @@
                 <label for="inputComplementAdresse">Complément d'adresse :</label>
                 <input type="text" class="form-control" name="complementAdresseCommerce" id="inputComplementAdresse" placeholder="" value="<?php echo set_value('complementAdresseCommerce') ?>">
             </div>
-            
-
-            
-
-            <hr />
-            <div id="carac">
-                <h5>Caractéristiques</h3>
-                    <div id="add_carac_button" class="btn btn-secondary">
-                        Ajouter une caractéristique
-                    </div>
-                    <br/>
+            <div class="form-group">
+                <label for="inputTempsReservation">Temps de réservation maximum pour les produits :</label>
+                <input type="time" class="form-control" name="tempsReservationProduitsCommerce" id="inputTempsReservation" placeholder="" value="<?php echo set_value('tempsReservationProduitsCommerce') ?>">
             </div>
-            <hr />
-
-
-            <button type="submit" class="btn btn-primary">Ajouter le produit</button>
+            <div class="form-group">
+                <label for="inputLivrable">Possibilité de livraison des produits :</label>
+                <select class="form-control" name="livrable" id="inputLivrable">
+                    <option value=""></option>
+                    <option value="Oui">Oui</option>
+                    <option value="Non">Non</option>
+                </select>
+            </div>
+       
+            <button type="submit" class="btn btn-primary">Ajouter le commerce</button>
 
             <?php echo form_close(); ?>
         </div>
 
     </div>
 </div>
-
-<script>
-    var carac_array = <?php print(json_encode($caracteristiques)) ?>
-
-    $("#add_carac_button").click(add_carac_field)
-
-    function add_carac_field() {
-        var select_carac = document.createElement("select")
-        select_carac.className = "form-control col-3"
-        select_carac.name = "carac[]"
-
-        for (var idcarac in carac_array) {
-            var opt = document.createElement("option")
-            opt.value = idcarac;
-            opt.innerHTML = carac_array[idcarac];
-            select_carac.append(opt)
-        }
-
-        var textarea_carac = document.createElement("textarea")
-        textarea_carac.name = "carac_text[]"
-        textarea_carac.className = "form-control col-12"
-
-        var div_carac = document.createElement("div")
-        div_carac.className = "carac"
-        div_carac.append("Sélectionner la caractéristique : ")
-        div_carac.append(select_carac)
-        div_carac.append("Contenu : ")
-        div_carac.append(textarea_carac)
-
-        $("#carac").append("<br/>")
-        $("#carac").append(div_carac)
-    }
-</script>
