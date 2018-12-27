@@ -184,8 +184,38 @@ class Produits extends Commercant {
         $this->layout->view('Commercant/espace_commercant', $data);
     }
 
-    public function modifier_produit($id_produit = 0) {
+    public function fiche_produit_type($id_produit = 0) {
         $this->verif_produit($id_produit);
+
+        $where = ['idProduitType' => $id_produit];
+        $produitType = $this->Produit_type_model->read('*', $where);
+        if ($produitType) {
+            $produitType = $produitType [0];
+
+            // Reccuperation des url des images du produit
+            $produitType->images_url = url_images_in_folder("/assets/images/produits/produit_" . $produitType->idProduitType);
+
+            // Reccupere les variantes et leur donnees
+            $variantes = $this->Produit_variante_model->read("*", $where);
+
+            $array_variantes = array();
+            // Reccuperation des url des images des variantes 
+            foreach ($variantes as $v) {
+                $v->images_url = url_images_in_folder("/assets/images/produits/produit_" . $produitType->idProduitType . '/variante_' . $v->idProduitVariante);
+                $array_variantes[] = $v;
+            }
+
+            $data = [
+                "produit_type" => $produitType,
+                "variantes" => $array_variantes,
+            ];
+            $this->layout->view('Commercant/Produits/fiche_produit_type', $data);
+        } else {
+            $data = array(
+                'error_message' => "Erreur : Le produit demandé n'existe pas",
+            );
+            $this->layout->views('template/error_display', $data);
+        }
     }
 
     public function modifier_produit_process() {
@@ -235,7 +265,7 @@ class Produits extends Commercant {
                 return true;
             }
         }
-        
+
         // Si la fonction n'a pas retourne, c'est a dire si l'id du produit renseigne ne correspond a aucun produits pouvant gere par le commercant
         $data = array(
             'error_message' => 'Vous ne possédez pas les droits pour accéder à cette page',
