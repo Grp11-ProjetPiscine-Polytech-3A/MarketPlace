@@ -20,7 +20,7 @@ class Commerces extends Commercant {
         $this->load->model('Commerce_model');
 
         $this->layout->ajouter_menu_url('sideMenu', 'Liste des commerces', 'Commercant/Commerces/liste_commerces');
-        $this->layout->ajouter_menu_url('sideMenu', 'Ajouter un commerce', 'Commercant/Commerces/ajout_produit');
+        $this->layout->ajouter_menu_url('sideMenu', 'Ajouter un commerce', 'Commercant/Commerces/ajout_commerce');
     }
     
     public function index() {
@@ -62,6 +62,12 @@ class Commerces extends Commercant {
         }
         return $liste_commerce;
     }
+    
+    public function ajout_commerce() {
+        
+        $this->layout->view('Commercant/Commerces/ajout_commerce');
+    }
+    
     
 }
 
