@@ -9,7 +9,7 @@
                     <th scope="col"></th> <!--Image de l'objet-->
                     <th scope="col">Désignation</th>
                     <th scope="col">Commerce</th>
-                    <th scope="col">Prix unitaire</th>
+                    <th scope="col">Prix</th>
                     <th scope="col">Stock</th>
                     <th scope="col"></th> <!--Action-->
 
