@@ -52,13 +52,39 @@ class Produits extends CI_Controller {
 
                 // On recupere le lien de la premiere image du produit
                 $produit->img_url = url_images_in_folder("/assets/images/produits/produit_" . $produit->idProduitType . "/", true)[0];
-                $liste_produits[] = $produit;
 
+
+                // Gestion de la taille max de la description
                 $longueur_max_description = 100;
                 $produit->descriptionProduitType = substr($produit->descriptionProduitType, 0, $longueur_max_description);
                 if (strlen($produit->descriptionProduitType) >= $longueur_max_description) {
                     $produit->descriptionProduitType .= '...';
                 }
+
+                // On reccupere les prix des variantes
+                $whereProduit = array(
+                    "idProduitType" => $produit->idProduitType,
+                );
+                $prix_variantes = $this->Produit_variante_model->read("prixProduitVariante", $whereProduit);
+
+                // Formate le prix
+                if (count($prix_variantes) >= 2) {
+                    
+                    foreach ($prix_variantes as $prix) {
+                        $p = $prix->prixProduitVariante;
+                        if (!isset($min) || $p <= $min) {
+                            $min = $p;
+                        }
+                        if (!isset($max) || $p >= $max) {
+                            $max = $p;
+                        }
+                    }
+                    $produit->prixProduitType = $min . ' - ' . $max;
+                } else {
+                    $produit->prixProduitType = $prix_variantes[0]->prixProduitVariante;
+                }
+
+                $liste_produits[] = $produit;
             }
             $data = array(
                 "produits" => $liste_produits,
@@ -115,7 +141,7 @@ class Produits extends CI_Controller {
             if ($commerce) {
                 $produit->commerce = $commerce[0];
             }
-            
+
             if ($variante_select->descriptionProduitVariante == $produit->descriptionProduitType) {
                 $variante_select->descriptionProduitVariante = "";
             }
