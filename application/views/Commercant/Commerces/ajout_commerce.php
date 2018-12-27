@@ -51,7 +51,7 @@
             <div class="form-group">
                 <label for="inputLivrable">Possibilité de livraison des produits :</label>
                 <select class="form-control" name="livrable" id="inputLivrable">
-                    <option value=""></option>
+                    
                     <option value="Oui">Oui</option>
                     <option value="Non">Non</option>
                 </select>
