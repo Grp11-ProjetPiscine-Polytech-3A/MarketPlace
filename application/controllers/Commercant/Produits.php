@@ -248,7 +248,7 @@ class Produits extends Commercant {
                     foreach ($produits as $p) {
 
                         // Ajoute aux donnees du produit l'url de l'image 
-                        $image_url = url_files_in_folder("/assets/images/produits/produit_" . $p->idProduitType . "/") [0];
+                        $image_url = url_images_in_folder("/assets/images/produits/produit_" . $p->idProduitType . "/", true) [0];
                         $p->image_url = $image_url;
 
                         // Ajout le nom du commerce au donnees du produit

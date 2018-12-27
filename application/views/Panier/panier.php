@@ -21,9 +21,9 @@
             <tbody>
                 <?php foreach ($produits as $p): ?>
                     <tr>
-                        <td>
+                        <td style="display:flex; justify-content: center">
                             <a href="<?php echo site_url('/Produits/fiche_produit/' . $p->idProduitType . '/' . $p->idProduitVariante) ?>">
-                                <img src="<?php echo $p->image_url ?>" style="height:80px;width:80px">
+                                <img src="<?php echo $p->image_url ?>" style="height:80px;width:auto">
                             </a>
                         <td>
                             <a href="<?php echo site_url('/Produits/fiche_produit/' . $p->idProduitType . '/' . $p->idProduitVariante) ?>">

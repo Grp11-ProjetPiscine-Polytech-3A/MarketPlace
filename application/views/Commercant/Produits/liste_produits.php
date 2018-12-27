@@ -22,13 +22,13 @@
 
                 <?php foreach ($produits as $p): ?>
                     <tr>
-                        <td>
-                            <img src="<?php echo $p->image_url ?>" style="height:80px;width:80px">
+                        <td style = "display:flex; justify-content:center">
+                            <img src="<?php echo $p->image_url ?>" style="height:80px;width:auto">
                         <td>
                             <?php echo $p->nomProduitType ?>
                         </td>
                         <td>    
-                                <?php echo $p->nomCommerce ?>
+                            <?php echo $p->nomCommerce ?>
                         </td>
                         <td>
                             <?php echo $p->prixProduitType ?> €
