@@ -47,7 +47,7 @@ class Produits extends CI_Controller {
             foreach ($result as $produit) {
 
                 // On recupere le lien de la premiere image du produit
-                $produit->img_url = url_files_in_folder("/assets/images/produits/produit_" . $produit->idProduitType . "/")[0];
+                $produit->img_url = url_images_in_folder("/assets/images/produits/produit_" . $produit->idProduitType . "/", true)[0];
                 $liste_produits[] = $produit;
             }
             $data = array(
@@ -72,20 +72,9 @@ class Produits extends CI_Controller {
         if ($result) {
             $produit = $result[0];
 
-            // Reccupere la liste des url des images du dossier
-            $images_url = url_files_in_folder("/assets/images/produits/produit_" . $id_Produit . "/");
-
-            $whereCommerce = array(
-                'siretCommerce' => $produit->siretCommerce,
-            );
-            $commerce = $this->Commerce_model->read('*', $whereCommerce);
-
-            if ($commerce) {
-                $produit->commerce = $commerce[0];
-            }
-            
+            // Reccupere les variantes et leur donnees
             $variantes = $this->Produit_variante_model->read("idProduitVariante, nomProduitVariante", $whereProduit);
-            
+
             $verif_variante = false;
             foreach ($variantes as $v) {
                 if ($v->idProduitVariante == $id_variante) {
@@ -96,7 +85,20 @@ class Produits extends CI_Controller {
                 $id_variante = $variantes[0]->idProduitVariante;
             }
             $variante_select = $this->Produit_variante_model->read("*", ["idProduitVariante" => $id_variante])[0];
-           
+
+            // Reccupere la liste des url des images du produit type ET de la variante 
+            $img_paths = ["/assets/images/produits/produit_" . $id_Produit,
+                "/assets/images/produits/produit_" . $id_Produit . "/variante_" . $id_variante];
+            $images_url = url_images_in_folder($img_paths);
+
+            $whereCommerce = array(
+                'siretCommerce' => $produit->siretCommerce,
+            );
+            $commerce = $this->Commerce_model->read('*', $whereCommerce);
+
+            if ($commerce) {
+                $produit->commerce = $commerce[0];
+            }
 
             $data = array(
                 "produit" => $produit,

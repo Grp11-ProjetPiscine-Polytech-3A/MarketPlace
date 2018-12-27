@@ -78,12 +78,12 @@ if (!function_exists('url_images_in_folder')) {
      * @param mixed $folder    The path to the folder (relative to the root of the website) OR an array of paths to the folders
      * 
      */
-    function url_images_in_folder($folder) {
+    function url_images_in_folder($folder, $reccursive = false) {
         if (!is_array($folder)) {
             $folder = [$folder];
         }
         $files_url = array();
-        
+
         foreach ($folder as $f) {
             $path = FCPATH . $f;
 
@@ -92,6 +92,8 @@ if (!function_exists('url_images_in_folder')) {
                 for ($i = 2; $i < count($files); $i++) {
                     if (!is_dir($path . '/' . $files[$i])) {
                         $files_url[] = base_url($f . "/" . $files[$i]);
+                    } else if ($reccursive) {
+                        $files_url = array_merge($files_url, url_images_in_folder($f . "/" . $files[$i], true));
                     }
                 }
             }
@@ -103,3 +105,4 @@ if (!function_exists('url_images_in_folder')) {
     }
 
 }
+
