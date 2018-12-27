@@ -50,12 +50,11 @@
             </div>
             <div class="form-group">
                 <label for="inputLivrable">Possibilité de livraison des produits (cocher si vous pouvez) :</label>
-                <select class="form-control" name="produisLivrablesCommerce" id="inputLivrable">
-                    <option value=""></option>
-                    
-                    <option value="<?php echo set_value('produisLivrablesCommerce') ?>">Oui</option>
-                    <option value="<?php echo set_value('produisLivrablesCommerce') ?>">Non</option>
-                </select>
+                <input type="checkbox" name="Oui" value="<?php echo set_value('descriptionCommerce') ?>">
+            </div>
+            <div class="form-group">
+                <label for="description">Description du commerce :</label>
+                <textarea type="text" class="form-control" name="descriptionCommerce" id="inputCaract" placeholder="" rows="10"><?php echo set_value('descriptionCommerce') ?></textarea>
             </div>
        
             <button type="submit" class="btn btn-primary">Ajouter le commerce</button>
