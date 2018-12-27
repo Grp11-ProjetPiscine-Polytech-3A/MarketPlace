@@ -16,7 +16,7 @@
             </div>
             <div class="form-group">
                 <label for="inputMail">Mail :</label>
-                <input type="text" class="form-control" name="mailCommerce" id="inputMail" placeholder="" value="<?php echo set_value('MailCommerce') ?>">
+                <input type="text" class="form-control" name="mailCommerce" id="inputMail" placeholder="" value="<?php echo set_value('mailCommerce') ?>">
             </div>
 
             <div class="form-group">
@@ -49,12 +49,12 @@
                 <input type="time" class="form-control" name="tempsReservationProduitsCommerce" id="inputTempsReservation" placeholder="" value="<?php echo set_value('tempsReservationProduitsCommerce') ?>">
             </div>
             <div class="form-group">
-                <label for="inputLivrable">Possibilité de livraison des produits :</label>
-                <select class="form-control" name="livrable" id="inputLivrable">
+                <label for="inputLivrable">Possibilité de livraison des produits (cocher si vous pouvez) :</label>
+                <select class="form-control" name="produisLivrablesCommerce" id="inputLivrable">
                     <option value=""></option>
                     
-                    <option value="oui">Oui</option>
-                    <option value="non">Non</option>
+                    <option value="<?php echo set_value('produisLivrablesCommerce') ?>">Oui</option>
+                    <option value="<?php echo set_value('produisLivrablesCommerce') ?>">Non</option>
                 </select>
             </div>
        
