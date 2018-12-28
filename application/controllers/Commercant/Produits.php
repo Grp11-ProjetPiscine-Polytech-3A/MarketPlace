@@ -151,7 +151,7 @@ class Produits extends Commercant {
                     // Enregistrement de l'image
                     // Configurer les fichiers acceptés
                     $config['file_name'] = 'img';
-                    $config['upload_path'] = 'assets/images/produits/produit_' . $idProduitType . '/variante_' . $idProduitVariante;
+                    $config['upload_path'] = get_absolute_path('assets/images/produits/produit_' . $idProduitType . '/variante_' . $idProduitVariante);
                     $config['allowed_types'] = 'gif|jpg|jpeg|png';
                     $config['max_size'] = 10000;
                     $config['max_width'] = 1024;
@@ -469,7 +469,7 @@ class Produits extends Commercant {
             $idProduitType = $id_produit;
             // Recuperer les données du formulaire pour creer le produit type
             $data_post = $this->input->post();
-            
+
             // Recuperer les données du formulaire pour creer le produit variante
             $table_produit_variante = array(
                 "nomProduitVariante" => $data_post["nomProduit"],
@@ -480,18 +480,54 @@ class Produits extends Commercant {
             );
             $resultProduitVariante = $this->Produit_variante_model->create($table_produit_variante);
 
-            
-            
-            
-            // TODO : Upload les images ET enregistrer les caracteristiques 
-            
-            
-            
-            
             if ($resultProduitVariante) {
-                $data = array(
-                    'message_display' => "La variante a bien été enregistrée",
-                );
+                $idProduitVariante = $this->db->insert_id();
+
+                // Ajout des caracteristiques
+                if (array_key_exists("carac", $data_post) && array_key_exists("carac_text", $data_post)) {
+                    $carac = $data_post["carac"];
+                    $carac_text = $data_post["carac_text"];
+                    for ($i = 0; $i < count($carac); $i++) {
+                        if ($carac_text[$i] != "") {
+                            $table_carac = array(
+                                "idProduitVariante" => $idProduitVariante,
+                                "idCaracteristique" => $carac[$i], // TODO verif si la carac existe bien
+                                "contenuCaracteristique" => $carac_text[$i],
+                            );
+                            $this->Produit_variante_caracteristique_model->create($table_carac);
+                        }
+                    }
+                }
+
+                // Enregistrement des images 
+                // Création du dossier accueillant l'image de la variante
+                if (!file_exists('assets/images/produits/produit_' . $id_produit . '/variante_' . $idProduitVariante)) {
+                    mkdir('assets/images/produits/produit_' . $id_produit . '/variante_' . $idProduitVariante, 0755, true);
+                }
+
+
+                // Configurer les fichiers acceptés
+                $config['file_name'] = 'img';
+                $config['upload_path'] = get_absolute_path('assets/images/produits/produit_' . $id_produit . '/variante_' . $idProduitVariante);
+                $config['allowed_types'] = 'gif|jpg|jpeg|png';
+                $config['max_size'] = 10000;
+                $config['max_width'] = 1024;
+                $config['max_height'] = 768;
+
+                // Effectue l'upload
+                $upload = upload_files_from_form($config);
+
+                if (!$upload) {
+                    $data = array(
+                        'error_message' => "Erreur lors de l'upload des images : " . $this->upload->display_errors() . '<br/>Veuillez réessayer.',
+                        'message_display' => $data_post["nomProduit"] . ' ajouté a vos produits ',
+                    );
+                } else {
+                    $data = array(
+                        'message_display' => "La variante a bien été enregistrée",
+                    );
+                }
+                $this->layout->views('template/error_display', $data);
                 $this->layout->views('template/message_display', $data);
                 $this->fiche_produit_type($id_produit);
             } else {

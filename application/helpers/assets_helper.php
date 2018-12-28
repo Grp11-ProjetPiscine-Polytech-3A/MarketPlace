@@ -141,6 +141,7 @@ if (!function_exists('upload_files_from_form')) {
      */
     function upload_files_from_form($config = array()) {
         $errors = false;
+        $files = [];
         if ($_FILES) {
             if (empty($config)) {
                 // Configurer les fichiers acceptés
