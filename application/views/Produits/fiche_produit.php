@@ -38,17 +38,34 @@
         </div>
         <!--endCarroussel-->
 
-        <!--Description du produit-->
-        <div class="col-lg-7 col-md-7 mb-6"> 
+        <div class="col-lg-7 col-md-7 mb-6" style="word-wrap: break-word;"> 
             <!--Choix des variantes-->
-            <div id="choix_variante">
+            <div id="choix_variante" class="choix-variante">
                 <?php foreach ($variantes as $v): ?>
-                    <a class="btn <?php ($v->idProduitVariante == $variante->idProduitVariante) ? print 'btn-dark' : print 'btn-secondary' ?>  choix-variante" href="<?php echo base_url('/Produits/fiche_produit/' . $produit->idProduitType . '/' . $v->idProduitVariante) ?>">
+                    <a class="btn <?php ($v->idProduitVariante == $variante->idProduitVariante) ? print 'btn-dark' : print 'btn-secondary' ?> btn-variante" href="<?php echo base_url('/Produits/fiche_produit/' . $produit->idProduitType . '/' . $v->idProduitVariante) ?>">
                         <?php echo $v->nomProduitVariante ?>
                     </a>
                 <?php endforeach; ?>
             </div>
-            <!--Description generale-->
+            <!--Liste des caractéristiques-->
+            <div id="carac" class="col-12 container">
+                <h3>Caractéristiques</h3>
+                <div id="liste-carac" class="row">
+                    <?php foreach ($caracteristiques as $c): ?>
+                        <div class="carac col-lg-6">
+                            <h6><?php echo $c->nomCaracteristique ?></h6>
+                            <p class="card-text"><?php echo $c->contenuCaracteristique ?></p>
+                        </div>
+                    <?php endforeach; ?>
+                </div>
+            </div>
+
+
+        </div>
+
+        <!--Description du produit-->
+        <!--Description generale-->
+        <div id="description" class="col-12" style="word-wrap: break-word;">
             <div id="description_generale">
                 <h5><?php echo $variante->prixProduitVariante ?> €</h5>
                 <a href="<?php echo site_url("Commerces/fiche_commerce/" . $produit->commerce->siretCommerce) ?>"><?php echo $produit->commerce->nomCommerce ?></a>
@@ -62,18 +79,9 @@
                 <p class="card-text"><?php echo $variante->descriptionProduitVariante ?></p>
 
             </div>
-
         </div>
 
 
-        <!--Liste des caractéristiques-->
-        <div id="carac" class="col-12">
-            <h3>Caractéristiques</h3>
-            <?php foreach ($caracteristiques as $c): ?>
-                <h6><?php echo $c->nomCaracteristique ?></h6>
-                <p class="card-text"><?php echo $c->contenuCaracteristique ?></p>
-            <?php endforeach; ?>
-        </div>
 
         <!--Bouton d'ajout au panier-->
         <div id="ajout_panier" class="col-12">

@@ -89,41 +89,41 @@
 
     <div id="liste-variantes" style="margin-top:35px">
         <h3>Liste des variantes pour ce produit</h3>
-        <div class="table-responsive">
-            <table class="table">
-                <thead class="">
-                    <tr>
-                        <th scope="col"></th> <!--Image de l'objet-->
-                        <th scope="col">Désignation</th>
-                        <th scope="col">Description</th>
-                        <th scope="col">Prix</th>
-                        <th scope="col">Stock</th>
-                        <th scope="col"></th> <!--Action-->
+        <div class="table-responsive row">
+            <table class="table col-12" style="word-wrap: break-word; table-layout:fixed;">
+                <thead class="row">
+                    <tr class="d-flex col-12">
+                        <th scope="col" class="col-2"></th> <!--Image de l'objet-->
+                        <th scope="col" class="col-2">Désignation</th>
+                        <th scope="col" class="col-4">Description</th>
+                        <th scope="col" class="col-1">Prix</th>
+                        <th scope="col" class="col-1">Stock</th>
+                        <th scope="col" class="col-2"></th> <!--Action-->
 
                     </tr>
                 </thead>
                 <tbody>
                     <?php foreach ($variantes as $v): ?>
-                        <tr>
-                            <td style="display:flex; justify-content:center; min-width: max-content;" class="td-center" style="">
+                        <tr class="d-flex">
+                            <td style="display:flex; justify-content:center; min-width: max-content;" class="td-center col-2" style="">
                                 <img src="<?php echo $v->images_url[0] ?>" style="height:80px;width:auto">
                             </td>
-                            <td class="td-center">
+                            <td class="td-center col-2">
                                 <?php echo $v->nomProduitVariante ?>
                             </td>
 
-                            <td class="td-center">    
+                            <td class="td-center col-4">    
                                 <?php echo $v->descriptionProduitVariante ?>
                             </td>
 
-                            <td class="td-center">
+                            <td class="td-center col-1">
                                 <?php echo $v->prixProduitVariante ?> €
                             </td>
 
-                            <td class="td-center">
+                            <td class="td-center col-1">
                                 <?php echo $v->stockProduitVariante ?>
                             </td>
-                            <td class="td-center">
+                            <td class="td-center col-2">
                                 <a class="icon-fa" href="<?php echo site_url('Commercant/Produits/modifier_produit_variante/' . $v->idProduitVariante) ?>">
                                     <i class="fa fa-pencil-square-o"></i>                             
                                 </a>

@@ -172,3 +172,8 @@ td-center {
     display:flex;
     align-items: center;
 }
+
+.btn-variante{
+    margin-right:2px;
+    margin-bottom:4px;
+}
