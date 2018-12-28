@@ -156,7 +156,7 @@ class Produits extends Commercant {
                     $config['max_size'] = 10000;
                     $config['max_width'] = 1024;
                     $config['max_height'] = 768;
-                    
+
 
                     // Effectue l'upload
                     $upload = upload_files_from_form($config);
@@ -365,28 +365,6 @@ class Produits extends Commercant {
     }
 
     /**
-     * Verifie que le produit peut bien etre géré par ce commercant
-     * Si ce n'est pas le cas, arrete l'execution et affiche une erreur
-     * @param $idProduit    L'id du produit
-     * @return bool true si le commercant a le droit de modifier ce produit, false sinon
-     */
-    private function verif_produit($idProduit) {
-        $liste_produits = $this->Produit_type_model->getProduitsCommercant($this->session->logged_in['idCommercant']);
-        foreach ($liste_produits as $p) {
-            if ($p->idProduitType == $idProduit) {
-                return true;
-            }
-        }
-
-        // Si la fonction n'a pas retourne, c'est a dire si l'id du produit renseigne ne correspond a aucun produits pouvant gere par le commercant
-        $data = array(
-            'error_message' => 'Vous ne possédez pas les droits pour accéder à cette page',
-        );
-        echo $this->layout->view('template/error_display', $data, true);
-        die();
-    }
-
-    /**
      * Retourne la liste des produits pouvant etre geree par ce commercant (connecte)
      * @return Array La liste des produits
      */
@@ -443,6 +421,29 @@ class Produits extends Commercant {
         }
 
         return $liste_produits;
+    }
+
+    /**
+     * Affiche le formulaire pour ajouter une variante au produit type
+     * @param type $id_produit
+     */
+    public function ajouter_produit_variante($id_produit = 0) {
+        $this->verif_produit($id_produit);
+
+        $where = ["idProduitType" => $id_produit];
+        $produit = $this->Produit_type_model->read("*", $where, 1) [0];
+        
+        if ($produit) {
+            $data = array(
+                'produit_type' => $produit,
+            );
+            $this->layout->view('Commercant/Produits/ajouter_produit_variante',$data);
+        } else {
+            $data = array(
+                'error_message' => "Erreur : Le produit demandé n'existe pas",
+            );
+            $this->layout->views('template/error_display', $data);
+        }
     }
 
     /**
@@ -520,6 +521,28 @@ class Produits extends Commercant {
         } else {
             return null;
         }
+    }
+
+    /**
+     * Verifie que le produit peut bien etre géré par ce commercant
+     * Si ce n'est pas le cas, arrete l'execution et affiche une erreur
+     * @param $idProduit    L'id du produit
+     * @return bool true si le commercant a le droit de modifier ce produit, false sinon
+     */
+    private function verif_produit($idProduit) {
+        $liste_produits = $this->Produit_type_model->getProduitsCommercant($this->session->logged_in['idCommercant']);
+        foreach ($liste_produits as $p) {
+            if ($p->idProduitType == $idProduit) {
+                return true;
+            }
+        }
+
+        // Si la fonction n'a pas retourne, c'est a dire si l'id du produit renseigne ne correspond a aucun produits pouvant gere par le commercant
+        $data = array(
+            'error_message' => 'Vous ne possédez pas les droits pour accéder à cette page',
+        );
+        echo $this->layout->view('template/error_display', $data, true);
+        die();
     }
 
 }
