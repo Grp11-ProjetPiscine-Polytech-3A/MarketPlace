@@ -5,7 +5,7 @@
                 <h3>Modifier le produit - <?php echo $produit_type->nomProduitType ?></h3>
                 <hr>
             </div>
-            <?php echo form_open_multipart('Commercant/Produits/modifier_produit_type_process/'.$produit_type->idProduitType); ?>
+            <?php echo form_open_multipart('Commercant/Produits/modifier_produit_type_process/' . $produit_type->idProduitType); ?>
             <div class="form-group">
                 <label for="Commerce">Commerce :</label>
                 <select class="form-control" name="commerce" id="commerce" required="true">
@@ -41,11 +41,23 @@
                 <textarea type="text" class="form-control" name="description" id="inputCaract" placeholder="" rows="10"><?php echo (set_value('description')) ? set_value('description') : $produit_type->descriptionProduitType ?></textarea>
             </div>
 
-            <div id ="ajout image">
-                <label for="Image">Image</label>
+            <div id="ajout image">
+                <label for="Image">Images</label>
                 <br />
-                <img src="<?php echo $produit_type->images_url[0] ?>" style="height:100px;width:auto">
-                <input type="file" name="userfile" size="20" />
+                <div id="images" class="row" style="display:flex; justify-content: center">
+                    <?php foreach ($produit_type->images_url as $img): ?>
+                        <img class="col" src="<?php echo $img ?>" style="max-height: 100px;width: auto;max-width: 100%;flex-grow:0">
+                    <?php endforeach; ?>
+                </div>
+                <div id="input-img">
+                    <div id="add_img_button" class="btn btn-secondary">
+                        Ajouter une image
+                    </div>
+                    </br>
+
+                </div>
+
+
             </div>
 
             <hr />
@@ -86,7 +98,9 @@
     var carac_array = <?php print(json_encode($caracteristiques)) ?>
 
     $("#add_carac_button").click(add_carac_field)
+    $("#add_img_button").click(add_img_field)
 
+    // Ajoute un champ de caracteristique 
     function add_carac_field() {
         var select_carac = document.createElement("select")
         select_carac.className = "form-control col-3"
@@ -113,4 +127,15 @@
         $("#carac").append("<br/>")
         $("#carac").append(div_carac)
     }
+
+    // Ajoute un champ input pour les images
+    function add_img_field() {
+        var input = document.createElement("input")
+        input.type = "file"
+        input.name = "image[]"
+        input.size = "20"
+
+        $("#input-img").append(input);
+    }
+
 </script>

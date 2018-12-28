@@ -20,6 +20,7 @@ class Produits extends Commercant {
         $this->load->model('Produit_variante_model');
         $this->load->model('Caracteristique_model');
         $this->load->model('Produit_variante_caracteristique_model');
+        $this->load->model('Produit_type_caracteristique_model');
 
         $this->layout->ajouter_menu_url('sideMenu', 'Liste des produits', 'Commercant/Produits/liste_produits');
         $this->layout->ajouter_menu_url('sideMenu', 'Ajouter un produit', 'Commercant/Produits/ajout_produit');
@@ -159,7 +160,7 @@ class Produits extends Commercant {
                     // Charger la librairie upload
                     $this->load->library('upload', $config);
 
-                    // Vérifier que l'upload s'est bien effectuer
+                    // Vérifier que l'upload s'est bien effectue
                     if (!$this->upload->do_upload('userfile')) {
                         $data = array(
                             'error_message' => $this->upload->display_errors(),
@@ -270,10 +271,54 @@ class Produits extends Commercant {
             // TODO enregistrer image + carac
             $resultProduitType = $this->Produit_type_model->update($id_produit, $table_produit_type);
             if ($resultProduitType) {
-                $data = ["message_display" => "Le produit a bien été modifié"];
 
-                $this->layout->views('template/message_display', $data);
-                $this->fiche_produit_type($id_produit);
+                // Ajout des caracteristiques
+                if (array_key_exists("carac", $data_post) && array_key_exists("carac_text", $data_post)) {
+                    $carac = $data_post["carac"];
+                    $carac_text = $data_post["carac_text"];
+                    for ($i = 0; $i < count($carac); $i++) {
+                        if ($carac_text[$i] != "") {
+                            $where_carac = array(
+                                "idProduitType" => $id_produit,
+                                "idCaracteristique" => $carac[$i],
+                            );
+                            $table_carac = array_merge($where_carac, ["contenuCaracteristique" => $carac_text[$i]]);
+                            if ($this->Produit_type_caracteristique_model->read("*", $where_carac)) {
+                                $this->Produit_type_caracteristique_model->update($table_carac);
+                            } else {
+                                $this->Produit_type_caracteristique_model->create($table_carac);
+                            }
+                        }
+                    }
+                }
+
+                // Enregistrement de l'image
+                // Configurer les fichiers acceptés
+                $config['file_name'] = 'img';
+                $config['upload_path'] = get_absolute_path('assets/images/produits/produit_' . $id_produit);
+                $config['allowed_types'] = 'gif|jpg|jpeg|png';
+                $config['max_size'] = 10000;
+                $config['max_width'] = 1024;
+                $config['max_height'] = 768;
+
+                // Effectue l'upload
+                $upload = upload_files_from_form($config);
+
+                if ($upload) {
+
+
+                    $data = ["message_display" => "Le produit a bien été modifié"];
+
+                    $this->layout->views('template/message_display', $data);
+                    $this->fiche_produit_type($id_produit);
+                } else {
+
+                    $data = array(
+                        'error_message' => "Erreur lors de l'envoi des images, veuillez réessayer : <br />"
+                    );
+                    $this->layout->views('template/error_display', $data);
+                    $this->modifier_produit_type($id_produit);
+                }
             }
         } else {
             $data = array(
