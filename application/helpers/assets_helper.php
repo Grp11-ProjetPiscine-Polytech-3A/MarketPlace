@@ -47,6 +47,14 @@ if (!function_exists('img')) {
 
 }
 
+if (!function_exists('get_absolute_path')) {
+
+    function get_absolute_path($path) {
+        return FCPATH . $path;
+    }
+
+}
+
 if (!function_exists('url_files_in_folder')) {
 
     /**
@@ -119,6 +127,72 @@ if (!function_exists('mb_ucfirst')) {
         }
         $str = $first_letter . $str_end;
         return $str;
+    }
+
+}
+
+
+if (!function_exists('upload_files_from_form')) {
+
+    /**
+     * Upload files sent from a form
+     * @param type $config
+     * @return false if there is an error, an array of files else
+     */
+    function upload_files_from_form($config = array()) {
+        $files = array();
+
+        if (empty($config)) {
+            // Configurer les fichiers acceptés
+            $config['upload_path'] = FCPATH . 'assets/images/';
+            $config['allowed_types'] = 'gif|jpg|jpeg|png';
+            $config['max_size'] = 10000;
+        }
+
+        $CI = & get_instance();
+        
+        $CI->load->library('upload', $config);
+        $CI->upload->initialize($config);
+        $errors = FALSE;
+
+        foreach ($_FILES as $key => $value) {
+            if (!empty($value['name'])) {
+                if (is_array($value['name'])) {
+                    for ($i = 0; $i < count($value['name']); $i++) {
+                        $t = array(
+                            'name' => $value['name'][$i],
+                            'type' => $value['type'][$i],
+                            'tmp_name' => $value['tmp_name'][$i],
+                            'error' => $value['error'][$i],
+                            'size' => $value['size'][$i],
+                        );
+                        $_FILES [$key . $i] = $t;
+                    }
+                    unset($_FILES[$key]);
+                }
+            }
+        }
+
+        foreach ($_FILES as $key => $value) {
+            if (!empty($value['name'])) {
+                if (!$CI->upload->do_upload($key)) {
+                    $errors = TRUE;
+                } else {
+                    // Build a file array from all uploaded files
+                    $files[] = $CI->upload->data();
+                }
+            }
+        }
+
+        // There was errors, we have to delete the uploaded files
+        if ($errors) {
+            foreach ($files as $key => $file) {
+                @unlink($file['full_path']);
+            }
+            return false;
+        } else {
+            return $files;
+        }
     }
 
 }
