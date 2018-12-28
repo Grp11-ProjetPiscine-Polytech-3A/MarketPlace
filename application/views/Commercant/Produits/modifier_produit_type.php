@@ -25,7 +25,7 @@
                 <select class="form-control" name="categorie" id="cat">
                     <option value=""></option>
                     <?php foreach ($categories as $c): ?>
-                        <option value="<?php echo $c->idCategorie ?>" <?php (set_value('categorie') == $c->idCategorie) ? print "selected" : ($produit_type->categ->idCategorie == $c->idCategorie) ? print "selected" : print ""; ?>>
+                        <option value="<?php echo $c->idCategorie ?>" <?php echo (set_value('categorie') == $c->idCategorie) ? "selected" : ($produit_type->categ->idCategorie == $c->idCategorie) ? "selected" : ""; ?>>
                             <?php echo mb_ucfirst($c->descriptionCategorie) ?>
                         </option>
                     <?php endforeach; ?>
