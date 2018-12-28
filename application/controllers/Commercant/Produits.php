@@ -150,20 +150,20 @@ class Produits extends Commercant {
 
                     // Enregistrement de l'image
                     // Configurer les fichiers acceptés
-                    $config['file_name'] = 'img1';
+                    $config['file_name'] = 'img';
                     $config['upload_path'] = 'assets/images/produits/produit_' . $idProduitType . '/variante_' . $idProduitVariante;
                     $config['allowed_types'] = 'gif|jpg|jpeg|png';
                     $config['max_size'] = 10000;
                     $config['max_width'] = 1024;
                     $config['max_height'] = 768;
+                    
 
-                    // Charger la librairie upload
-                    $this->load->library('upload', $config);
+                    // Effectue l'upload
+                    $upload = upload_files_from_form($config);
 
-                    // Vérifier que l'upload s'est bien effectue
-                    if (!$this->upload->do_upload('userfile')) {
+                    if (!$upload) {
                         $data = array(
-                            'error_message' => $this->upload->display_errors(),
+                            'error_message' => "Erreur lors de l'upload des images : " . $this->upload->display_errors(),
                             'message_display' => $data_post["nomProduit"] . ' ajouté a vos produits ',
                         );
                     } else {

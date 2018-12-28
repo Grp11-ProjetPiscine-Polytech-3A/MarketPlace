@@ -50,12 +50,16 @@
                 <textarea type="text" class="form-control" name="description" id="inputCaract" placeholder="" rows="10"><?php echo set_value('description') ?></textarea>
             </div>
 
-            <div id ="ajout image">
-                <label for="Image">Image</label>
+            <div id="ajout image">
+                <label for="Image">Images</label>
                 <br />
-                <?php echo $error; ?>
-                <?php echo form_open_multipart('Commercant/do_upload'); ?>
-                <input type="file" name="userfile" size="20" />
+                <div id="input-img">
+                    <div id="add_img_button" class="btn btn-secondary">
+                        Ajouter une image
+                    </div>
+                    </br>
+
+                </div>
             </div>
 
             <hr />
@@ -79,33 +83,5 @@
 
 <script>
     var carac_array = <?php print(json_encode($caracteristiques)) ?>
-
-    $("#add_carac_button").click(add_carac_field)
-
-    function add_carac_field() {
-        var select_carac = document.createElement("select")
-        select_carac.className = "form-control col-3"
-        select_carac.name = "carac[]"
-
-        for (var idcarac in carac_array) {
-            var opt = document.createElement("option")
-            opt.value = idcarac;
-            opt.innerHTML = carac_array[idcarac];
-            select_carac.append(opt)
-        }
-
-        var textarea_carac = document.createElement("textarea")
-        textarea_carac.name = "carac_text[]"
-        textarea_carac.className = "form-control col-12"
-
-        var div_carac = document.createElement("div")
-        div_carac.className = "carac"
-        div_carac.append("Sélectionner la caractéristique : ")
-        div_carac.append(select_carac)
-        div_carac.append("Contenu : ")
-        div_carac.append(textarea_carac)
-
-        $("#carac").append("<br/>")
-        $("#carac").append(div_carac)
-    }
 </script>
+<script type="text/javascript" src="<?php echo base_url('assets/js/Commercant/Produits/gestions_champs_form.js') ?>"></script>

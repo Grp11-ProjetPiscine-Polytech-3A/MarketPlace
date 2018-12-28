@@ -13,11 +13,12 @@
         </div>
     </div>
 
-    <div id="images-produit" style="display:flex; justify-content: center">
+    <div id="images-produit" class="row" style="display:flex; justify-content: center">
         <?php foreach ($produit_type->images_url as $img_url): ?>
-            <img src="<?php echo $img_url ?>" alt="image du produit" style="height:100px; width:auto">
+            <img src="<?php echo $img_url ?>" class="col" alt="image du produit" style="max-height: 100px;width: auto;max-width: 100%;flex-grow:0">
         <?php endforeach; ?>
     </div>
+    
     <div id="info-genereles">
         <table class="table">
             <tr class="row">
