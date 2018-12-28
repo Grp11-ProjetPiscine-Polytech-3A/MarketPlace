@@ -53,7 +53,7 @@ class Caracteristique_model extends MY_Model
 	}*/
 	
 	/**
-	 *	Retourne une liste de caracteristique
+	 *	Retourne une liste de caracteristique sous forme de tableau idCarac => nomCarac
 	 */
 	public function liste_caract()
 	{

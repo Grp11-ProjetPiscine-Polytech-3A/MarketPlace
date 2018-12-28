@@ -71,7 +71,7 @@ class Commercant extends CI_Controller {
     }
 
     /**
-     * Renvoie la liste des commerces geres pas ce commercant
+     * Renvoie la liste des commerces geres pas ce commercant (le commercant doit etre connecte et son id doit etre enregistre en session)
      * Il y aura deux categories de commerces : 
      * - "commerces" : les commerces dont ce commercant est propriétaire
      * - "commerces_geres" : Les commerces que le commercant gere mais dont il n'est pas proprio

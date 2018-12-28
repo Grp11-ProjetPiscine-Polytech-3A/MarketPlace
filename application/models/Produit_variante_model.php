@@ -42,7 +42,7 @@ class Produit_variante_model extends MY_Model {
     }
 
     public function getCaracteristiques($idProduitVariantes) {
-        $this->db->select('nomCaracteristique, contenuCaracteristique');
+        $this->db->select('caracteristiques.idCaracteristique, nomCaracteristique, contenuCaracteristique');
 
         $this->db->from('produit_variante_caracteristique');
 

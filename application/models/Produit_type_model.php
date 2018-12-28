@@ -62,6 +62,27 @@ class Produit_type_model extends MY_Model {
 
         return $query->result();
     }
+    
+    /**
+     * Retourne les caracteristiques pour ce produit type
+     * @param type $idProduitVariantes
+     * @return type
+     */
+     public function getCaracteristiques($idProduitType) {
+        $this->db->select('caracteristiques.idCaracteristique, nomCaracteristique, contenuCaracteristique');
+
+        $this->db->from('produit_type_caracteristique');
+
+        $this->db->join('produit_type', 'produit_type_caracteristique.idProduitType = produit_type.idProduitType');
+        $this->db->join('caracteristiques', 'caracteristiques.idCaracteristique = produit_type_caracteristique.idCaracteristique');
+
+        $this->db->where('produit_type.idProduitType', $idProduitType);
+
+
+        $query = $this->db->get();
+
+        return $query->result();
+    }
 
 }
 

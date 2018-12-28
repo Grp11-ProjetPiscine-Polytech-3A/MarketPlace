@@ -52,7 +52,7 @@
                     Commerce
                 </td>
                 <td class="col-8">
-                    <a href="<?php echo base_url("/Commerce/" . $produit_type->commerce->siretCommerce) ?>">
+                    <a href="<?php echo base_url("/Commerces/fiche_commerce/" . $produit_type->commerce->siretCommerce) ?>">
                         <?php echo $produit_type->commerce->nomCommerce ?>
                     </a>
                 </td>
