@@ -153,7 +153,7 @@ class Produits extends CI_Controller {
                 "images" => $images_url,
                 "variantes" => $variantes,
                 "variante" => $variante_select,
-                "caracteristiques" => $this->Produit_variante_model->getCaracteristiques($id_variante),
+                "caracteristiques" => array_merge($this->Produit_variante_model->getCaracteristiques($id_variante), $this->Produit_type_model->getCaracteristiques($produit->idProduitType)),
             );
             $this->layout->view('Produits/fiche_produit', $data);
         } else {

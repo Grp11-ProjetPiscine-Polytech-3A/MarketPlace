@@ -134,7 +134,8 @@
         input.type = "file"
         input.name = "image[]"
         input.size = "20"
-
+        
+        $("#input-img").append('<br/>');
         $("#input-img").append(input);
     }
 
