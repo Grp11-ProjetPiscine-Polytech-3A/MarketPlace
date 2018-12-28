@@ -29,6 +29,10 @@ class Produits extends Commercant {
         $this->liste_produits("");
     }
 
+    /**
+     * Affiche la liste des produits pouvant etre geres par ce commercant
+     * @param String $siretCommerce     Le siret du commerce pour trier les produits par commerce
+     */
     public function liste_produits($siretCommerce = null) {
         $commerces = $this->get_commerces();
         if ($siretCommerce) {
@@ -45,6 +49,9 @@ class Produits extends Commercant {
         $this->layout->view("Commercant/Produits/liste_produits", $data);
     }
 
+    /**
+     * Affiche le formulaire d'ajout de produit
+     */
     public function ajout_produit() {
         $categ = $this->Categorie_model->read('*');
         if (!$categ) {
@@ -66,10 +73,12 @@ class Produits extends Commercant {
     }
 
     /**
-     *
+     * Processus d'enregistrement du nouveau produit : Cree un produit type, un produit variante et enregistre les categories et images associees
+     * TODO Enregistrer les caracteristiques sur le produit type et non la variante
      * TODO Check que ce commercant a bien le droit d'ajouter un produit a ce commerce
      */
     public function ajout_produit_process() {
+
         $this->form_validation->set_rules('commerce', '"Commerce"', 'trim|required|encode_php_tags');
         $this->form_validation->set_rules('nomProduit', '"Nom du produit"', 'trim|required|encode_php_tags');
         $this->form_validation->set_rules('commerce', '"Catégorie"', 'trim|encode_php_tags');
@@ -161,29 +170,38 @@ class Produits extends Commercant {
                             'message_display' => $data_post["nomProduit"] . ' ajouté a vos produits',
                         );
                     }
+
+                    $this->layout->views('template/message_display', $data);
+                    $this->layout->views('template/error_display', $data);
+                    $this->fiche_produit_type($idProduitType);
                 } else {
                     $this->Produit_type_model->delete($table_produit_type);
                     $data = array(
                         'error_message' => "Une erreur s'est produite",
                     );
+                    $this->layout->views('template/error_display', $data);
+                    $this->ajout_produit();
                 }
             } else {
                 $data = array(
                     'error_message' => "Une erreur s'est produite",
                 );
-
+                $this->layout->views('template/error_display', $data);
                 $this->ajout_produit();
             }
         } else {
             $data = array(
                 'error_message' => "Erreur dans le formulaire : <br />" . $this->form_validation->error_string()
             );
+            $this->layout->views('template/error_display', $data);
+            $this->ajout_produit();
         }
-        $this->layout->views('template/error_display', $data);
-        $this->layout->views('template/message_display', $data);
-        $this->layout->view('Commercant/espace_commercant', $data);
     }
 
+    /**
+     * Affiche les informations du produit type dans le menu commercant
+     * @param Int $id_produit    L'id du produit a afficher
+     */
     public function fiche_produit_type($id_produit = 0) {
         $this->verif_produit($id_produit);
         $data = $this->get_data_produit_type($id_produit);
@@ -197,10 +215,80 @@ class Produits extends Commercant {
         }
     }
 
-    public function modifier_produit_process() {
-        // TODO
+    /**
+     * Affiche le formulaire de modification d'un produit type
+     * @param type $id_produit
+     */
+    public function modifier_produit_type($id_produit = 0) {
+        $this->verif_produit($id_produit);
+        $data = $this->get_data_produit_type($id_produit);
+        if ($data) {
+
+            $categ = $this->Categorie_model->read('*');
+            if (!$categ) {
+                $categ = array();
+            }
+
+            $caracteristiques = $this->Caracteristique_model->liste_caract();
+            if (!$caracteristiques) {
+                $caracteristiques = array();
+            }
+
+            $data["categories"] = $categ;
+            $data["commerces"] = $this->get_raw_commerces();
+            $data["caracteristiques"] = $caracteristiques;
+
+            $this->layout->view('Commercant/Produits/modifier_produit_type', $data);
+        } else {
+            $data = array(
+                'error_message' => "Erreur : Le produit demandé n'existe pas",
+            );
+            $this->layout->views('template/error_display', $data);
+        }
     }
 
+    public function modifier_produit_type_process($id_produit = 0) {
+        $this->verif_produit($id_produit);
+
+        $this->form_validation->set_rules('commerce', '"Commerce"', 'trim|required|encode_php_tags');
+        $this->form_validation->set_rules('nomProduit', '"Nom du produit"', 'trim|required|encode_php_tags');
+        $this->form_validation->set_rules('commerce', '"Catégorie"', 'trim|encode_php_tags');
+        $this->form_validation->set_rules('seuil', '"Seuil de stock"', 'trim|integer|encode_php_tags');
+        $this->form_validation->set_rules('description', '"Description du produit"', 'trim|required|encode_php_tags');
+
+        if ($this->form_validation->run()) {
+            // Recuperer les données du formulaire pour creer le produit type
+            $data_post = $this->input->post();
+            $table_produit_type = array(
+                "nomProduitType" => $data_post["nomProduit"],
+                "descriptionProduitType" => $data_post["description"],
+                "seuilStockProduitType" => $data_post["seuil"],
+                "idCategorie" => $data_post["categorie"],
+                "siretCommerce" => $data_post["commerce"],
+            );
+            // Creer la ligne dans Produit Type
+            // TODO enregistrer image + carac
+            $resultProduitType = $this->Produit_type_model->update($id_produit, $table_produit_type);
+            if ($resultProduitType) {
+                $data = ["message_display" => "Le produit a bien été modifié"];
+
+                $this->layout->views('template/message_display', $data);
+                $this->fiche_produit_type($id_produit);
+            }
+        } else {
+            $data = array(
+                'error_message' => "Erreur dans le formulaire : <br />" . $this->form_validation->error_string()
+            );
+            $this->layout->views('template/error_display', $data);
+            $this->modifier_produit_type($id_produit);
+        }
+    }
+
+    /**
+     * Supprimele produit type
+     * TODO Supprimer aussi les variantes, demander confirmation
+     * @param type $id_produit
+     */
     public function supprimer_produit($id_produit = 0) {
         if ($id_produit != 0) {
             $liste_produits = $this->liste_produit();
@@ -253,6 +341,10 @@ class Produits extends Commercant {
         die();
     }
 
+    /**
+     * Retourne la liste des produits pouvant etre geree par ce commercant (connecte)
+     * @return Array La liste des produits
+     */
     private function liste_produit() {
         $commerces = $this->get_commerces();
 
@@ -309,10 +401,10 @@ class Produits extends Commercant {
     }
 
     /**
-     * Retourne un tableau contenant les informations relatives a ce produit : produit_type, categorie, commerce, tableau des variantes
+     * Retourne un tableau contenant les informations relatives a ce produit : produit_type, categorie, commerce, tableau des variantes, caracteristiques
      * @param int $id_produit
-     * @return array  un tableau contenant les infos sur le produit type dans l'index 'produit_type' et le tableau des variantes dans l'index 'variantes'
-     * @return null si le produit type n'a pas été trouvé
+     * @return array un tableau contenant les infos sur le produit type dans l'index 'produit_type' et le tableau des variantes dans l'index 'variantes'
+     * @return null  si le produit type n'a pas été trouvé
      */
     private function get_data_produit_type($id_produit) {
         $where = ['idProduitType' => $id_produit];
@@ -342,9 +434,38 @@ class Produits extends Commercant {
             // Reccuperation du commerce
             $whereCom = ['siretCommerce' => $produitType->siretCommerce];
             $com = $this->Commerce_model->read('*', $whereCom, 1)[0];
-            
+
             $produitType->commerce = $com;
-            
+
+            // Reccuperation des caracteristiques
+            $carac = $this->Produit_type_model->getCaracteristiques($id_produit);
+            $produitType->caracteristiques = $carac;
+
+
+            // Reccuperation du prix 
+            // On reccupere les prix des variantes
+            $whereProduit = array(
+                "idProduitType" => $produitType->idProduitType,
+            );
+            $prix_variantes = $this->Produit_variante_model->read("prixProduitVariante", $whereProduit);
+
+            // Formate le prix
+            if (count($prix_variantes) >= 2) {
+
+                foreach ($prix_variantes as $prix) {
+                    $pr = $prix->prixProduitVariante;
+                    if (!isset($min) || $pr <= $min) {
+                        $min = $pr;
+                    }
+                    if (!isset($max) || $pr >= $max) {
+                        $max = $pr;
+                    }
+                }
+                $produitType->prixProduitType = $min . ' - ' . $max;
+            } else {
+                $produitType->prixProduitType = $prix_variantes[0]->prixProduitVariante;
+            }
+
             // Construction du tableau
             $data = [
                 "produit_type" => $produitType,

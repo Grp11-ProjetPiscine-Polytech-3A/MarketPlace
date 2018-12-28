@@ -5,7 +5,7 @@
                 <h3>Modifier le produit - <?php echo $produit_type->nomProduitType ?></h3>
                 <hr>
             </div>
-            <?php echo form_open_multipart('Commercant/Produits/modifier_produit_type_process'); ?>
+            <?php echo form_open_multipart('Commercant/Produits/modifier_produit_type_process/'.$produit_type->idProduitType); ?>
             <div class="form-group">
                 <label for="Commerce">Commerce :</label>
                 <select class="form-control" name="commerce" id="commerce" required="true">
@@ -74,7 +74,7 @@
             </div>
             <hr />
 
-            <button type="submit" class="btn btn-primary">Ajouter le produit</button>
+            <button type="submit" class="btn btn-primary">Modifier le produit</button>
 
             <?php echo form_close(); ?>
         </div>
