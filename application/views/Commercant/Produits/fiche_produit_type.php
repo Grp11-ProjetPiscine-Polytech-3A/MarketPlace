@@ -43,7 +43,7 @@
                     Catégorie
                 </td>
                 <td class="col-8">
-                    <?php echo "TODO" ?>
+                    <?php echo mb_ucfirst($produit_type->categ->descriptionCategorie) ?>
                 </td>
             </tr>
 
@@ -52,7 +52,9 @@
                     Commerce
                 </td>
                 <td class="col-8">
-                    <?php echo "TODO" ?>
+                    <a href="<?php echo base_url("/Commerce/" . $produit_type->commerce->siretCommerce) ?>">
+                        <?php echo $produit_type->commerce->nomCommerce ?>
+                    </a>
                 </td>
             </tr>
 
@@ -79,7 +81,7 @@
     <div id="modifier-produit-type" style="display:flex; justify-content: center">
 
         <div>
-            <a class="btn btn-primary" role="button" href= "<?php echo base_url('Commercant/Produits/modifier_produit_type') ?>" style="padding:6px">Modifier les informations générales pour ce produit</a>
+            <a class="btn btn-primary" role="button" href= "<?php echo base_url('Commercant/Produits/modifier_produit_type/' . $produit_type->idProduitType) ?>" style="padding:6px">Modifier les informations générales pour ce produit</a>
         </div>
 
     </div>
@@ -100,7 +102,7 @@
                     </tr>
                 </thead>
                 <tbody>
-                     <?php foreach ($variantes as $v): ?>
+                    <?php foreach ($variantes as $v): ?>
                         <tr>
                             <td style="display:flex; justify-content:center; min-width: max-content;" class="td-center" style="">
                                 <img src="<?php echo $v->images_url[0] ?>" style="height:80px;width:auto">

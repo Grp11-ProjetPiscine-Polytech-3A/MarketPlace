@@ -186,29 +186,8 @@ class Produits extends Commercant {
 
     public function fiche_produit_type($id_produit = 0) {
         $this->verif_produit($id_produit);
-
-        $where = ['idProduitType' => $id_produit];
-        $produitType = $this->Produit_type_model->read('*', $where);
-        if ($produitType) {
-            $produitType = $produitType [0];
-
-            // Reccuperation des url des images du produit
-            $produitType->images_url = url_images_in_folder("/assets/images/produits/produit_" . $produitType->idProduitType);
-
-            // Reccupere les variantes et leur donnees
-            $variantes = $this->Produit_variante_model->read("*", $where);
-
-            $array_variantes = array();
-            // Reccuperation des url des images des variantes 
-            foreach ($variantes as $v) {
-                $v->images_url = url_images_in_folder("/assets/images/produits/produit_" . $produitType->idProduitType . '/variante_' . $v->idProduitVariante);
-                $array_variantes[] = $v;
-            }
-
-            $data = [
-                "produit_type" => $produitType,
-                "variantes" => $array_variantes,
-            ];
+        $data = $this->get_data_produit_type($id_produit);
+        if ($data) {
             $this->layout->view('Commercant/Produits/fiche_produit_type', $data);
         } else {
             $data = array(
@@ -327,6 +306,54 @@ class Produits extends Commercant {
         }
 
         return $liste_produits;
+    }
+
+    /**
+     * Retourne un tableau contenant les informations relatives a ce produit : produit_type, categorie, commerce, tableau des variantes
+     * @param int $id_produit
+     * @return array  un tableau contenant les infos sur le produit type dans l'index 'produit_type' et le tableau des variantes dans l'index 'variantes'
+     * @return null si le produit type n'a pas été trouvé
+     */
+    private function get_data_produit_type($id_produit) {
+        $where = ['idProduitType' => $id_produit];
+        $produitType = $this->Produit_type_model->read('*', $where);
+        if ($produitType) {
+            $produitType = $produitType [0];
+
+            // Reccuperation des url des images du produit
+            $produitType->images_url = url_images_in_folder("/assets/images/produits/produit_" . $produitType->idProduitType);
+
+            // Reccupere les variantes et leur donnees
+            $variantes = $this->Produit_variante_model->read("*", $where);
+
+            $array_variantes = array();
+            // Reccuperation des url des images des variantes 
+            foreach ($variantes as $v) {
+                $v->images_url = url_images_in_folder("/assets/images/produits/produit_" . $produitType->idProduitType . '/variante_' . $v->idProduitVariante);
+                $array_variantes[] = $v;
+            }
+
+            // Reccuperation de la categorie
+            $whereCateg = ['idCategorie' => $produitType->idCategorie];
+            $categ = $this->Categorie_model->read('*', $whereCateg, 1)[0];
+
+            $produitType->categ = $categ;
+
+            // Reccuperation du commerce
+            $whereCom = ['siretCommerce' => $produitType->siretCommerce];
+            $com = $this->Commerce_model->read('*', $whereCom, 1)[0];
+            
+            $produitType->commerce = $com;
+            
+            // Construction du tableau
+            $data = [
+                "produit_type" => $produitType,
+                "variantes" => $array_variantes,
+            ];
+            return $data;
+        } else {
+            return null;
+        }
     }
 
 }

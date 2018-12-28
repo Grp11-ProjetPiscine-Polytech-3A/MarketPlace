@@ -164,35 +164,6 @@ class Produits extends CI_Controller {
         }
     }
 
-    public function tri_produits_categorie() {
-        $where = array();
-        if ($id_Categ > 0) {
-            $where['idCategorie'] = $id_Categ;
-        }
-        $result = $this->Produit_type_model->read('*', $where);
-        if ($result) {
-
-            $liste_produits = array();
-            foreach ($result as $produit) {
-
-                // On recupere le lien de la premiere image du produit
-                $produit->img_url = url_files_in_folder("/assets/images/produits/produit_" . $produit->idProduitType . "/")[0];
-                $liste_produits[] = $produit;
-            }
-
-            $data = array(
-                "produits" => $liste_produits,
-            );
-            $this->layout->views('Produits/title_not_commercant');
-            $this->layout->view('Produits/liste_produits', $data);
-        } else {
-            $data = array(
-                'message_display' => 'Il n\'y a pas de produits correspondant à cette catégorie pour le moment',
-            );
-            $this->layout->view('template/message_display', $data);
-        }
-    }
-
 }
 
 ?>
