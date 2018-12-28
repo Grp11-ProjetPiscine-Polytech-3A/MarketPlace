@@ -432,17 +432,81 @@ class Produits extends Commercant {
 
         $where = ["idProduitType" => $id_produit];
         $produit = $this->Produit_type_model->read("*", $where, 1) [0];
-        
+
+        $caracteristiques = $this->Caracteristique_model->liste_caract();
+        if (!$caracteristiques) {
+            $caracteristiques = array();
+        }
+
         if ($produit) {
             $data = array(
                 'produit_type' => $produit,
+                'caracteristiques' => $caracteristiques,
             );
-            $this->layout->view('Commercant/Produits/ajouter_produit_variante',$data);
+            $this->layout->view('Commercant/Produits/ajouter_produit_variante', $data);
         } else {
             $data = array(
                 'error_message' => "Erreur : Le produit demandé n'existe pas",
             );
+            $this->layout->view('template/error_display', $data);
+        }
+    }
+
+    /**
+     * Processus d'ajout de la variante
+     * @param type $id_produit
+     */
+    public function ajouter_produit_variante_process($id_produit = 0) {
+        $this->verif_produit($id_produit);
+
+        $this->form_validation->set_rules('nomProduit', '"Nom de la variante"', 'trim|required|encode_php_tags');
+        $this->form_validation->set_rules('prix', '"Prix"', 'trim|numeric|required|encode_php_tags');
+        $this->form_validation->set_rules('stock', '"Stock"', 'trim|integer|encode_php_tags');
+        $this->form_validation->set_rules('description', '"Description du produit"', 'trim|required|encode_php_tags');
+
+        if ($this->form_validation->run()) {
+
+            $idProduitType = $id_produit;
+            // Recuperer les données du formulaire pour creer le produit type
+            $data_post = $this->input->post();
+            
+            // Recuperer les données du formulaire pour creer le produit variante
+            $table_produit_variante = array(
+                "nomProduitVariante" => $data_post["nomProduit"],
+                "descriptionProduitVariante" => $data_post["description"],
+                "prixProduitVariante" => $data_post["prix"],
+                "stockProduitVariante" => $data_post["stock"],
+                "idProduitType" => $idProduitType,
+            );
+            $resultProduitVariante = $this->Produit_variante_model->create($table_produit_variante);
+
+            
+            
+            
+            // TODO : Upload les images ET enregistrer les caracteristiques 
+            
+            
+            
+            
+            if ($resultProduitVariante) {
+                $data = array(
+                    'message_display' => "La variante a bien été enregistrée",
+                );
+                $this->layout->views('template/message_display', $data);
+                $this->fiche_produit_type($id_produit);
+            } else {
+                $data = array(
+                    'error_message' => 'Une erreur s\'est produite, veuillez réessayer',
+                );
+                $this->layout->views('template/error_display', $data);
+                $this->ajouter_produit_variante($id_produit);
+            }
+        } else {
+            $data = array(
+                'error_message' => "Erreur dans le formulaire : <br />" . $this->form_validation->error_string()
+            );
             $this->layout->views('template/error_display', $data);
+            $this->ajouter_produit_variante($id_produit);
         }
     }
 

@@ -5,13 +5,13 @@
                 <h3>Ajouter une variante - <?php echo $produit_type->nomProduitType ?></h3>
                 <hr>
             </div>
-            <?php echo form_open_multipart('Commercant/Produits/ajout_produit_process'); ?>
-          
+            <?php echo form_open_multipart('Commercant/Produits/ajouter_produit_variante_process/' . $produit_type->idProduitType); ?>
+
             <div class="form-group">
                 <label for="inputNom">Nom de la variante :</label>
                 <input class="form-control" name="nomProduit" id="inputNom" placeholder="" value="<?php echo set_value('nomProduit') ?>">
             </div>
-          
+
             <div class="form-group">
                 <label for="inputPrix">Prix (€) :</label>
                 <input class="form-control" name="prix" id="inputPrix" placeholder="" value="<?php echo set_value('prix') ?>">
