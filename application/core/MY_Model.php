@@ -51,7 +51,7 @@ class MY_Model extends CI_Model {
         //  Raccourci dans le cas où on sélectionne l'id
         //  TODO : Remplacer 'id' par une variable id, toute les tables (aucune en fait) n'a d'indentifiant s'appelant id
         if (is_integer($where)) {
-            $where = array('id' => $where);
+            $where = array($this->id => $where);
         }
 
         return (bool) $this->db->set($options_echappees)
