@@ -49,11 +49,11 @@
             </div>
             <!--Liste des caractéristiques-->
             <div id="carac" class="col-12 container">
-                <h3>Caractéristiques</h3>
+                <h5>Caractéristiques</h5>
                 <div id="liste-carac" class="row">
                     <?php foreach ($caracteristiques as $c): ?>
                         <div class="carac col-lg-6">
-                            <h6><?php echo $c->nomCaracteristique ?></h6>
+                            <h6 style="margin-bottom: 0px; margin-top:1px;"><?php echo $c->nomCaracteristique ?></h6>
                             <p class="card-text"><?php echo $c->contenuCaracteristique ?></p>
                         </div>
                     <?php endforeach; ?>
