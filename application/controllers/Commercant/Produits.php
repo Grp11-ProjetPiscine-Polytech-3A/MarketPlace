@@ -121,43 +121,11 @@ class Produits extends Commercant {
 
                     // Ajout des caracteristiques
                     if (array_key_exists("carac", $data_post) && array_key_exists("carac_text", $data_post)) {
-                        $carac = $data_post["carac"];
-                        $carac_text = $data_post["carac_text"];
-                        for ($i = 0; $i < count($carac); $i++) {
-                            if ($carac_text[$i] != "") {
-                                $table_carac = array(
-                                    "idProduitVariante" => $idProduitVariante,
-                                    "idCaracteristique" => $carac[$i],
-                                    "contenuCaracteristique" => $carac_text[$i],
-                                );
-                                $this->Produit_variante_caracteristique_model->create($table_carac);
-                            }
-                        }
+                        $this->enregistrer_caracteristiques_produit_type($idProduitType, $data_post["carac"], $data_post["carac_text"]);
                     }
 
-                    // Création du dossier accueillant l'image
-                    if (!file_exists('assets/images/produits/produit_' . $idProduitType)) {
-                        mkdir('assets/images/produits/produit_' . $idProduitType, 0755, true);
-                    }
-
-                    // Création du dossier accueillant l'image de la variante
-                    if (!file_exists('assets/images/produits/produit_' . $idProduitType . '/variante_' . $idProduitVariante)) {
-                        mkdir('assets/images/produits/produit_' . $idProduitType . '/variante_' . $idProduitVariante, 0755, true);
-                    }
-
-
-                    // Enregistrement de l'image
-                    // Configurer les fichiers acceptés
-                    $config['file_name'] = 'img';
-                    $config['upload_path'] = get_absolute_path('assets/images/produits/produit_' . $idProduitType . '/variante_' . $idProduitVariante);
-                    $config['allowed_types'] = 'gif|jpg|jpeg|png';
-                    $config['max_size'] = 10000;
-                    $config['max_width'] = 1024;
-                    $config['max_height'] = 768;
-
-
-                    // Effectue l'upload
-                    $upload = upload_files_from_form($config);
+                    // Upload des images
+                    $upload = $this->upload_images_produit($idProduitType, $idProduitVariante);
 
                     if (!$upload) {
                         $data = array(
@@ -272,41 +240,13 @@ class Produits extends Commercant {
 
                 // Ajout des caracteristiques
                 if (array_key_exists("carac", $data_post) && array_key_exists("carac_text", $data_post)) {
-                    $carac = $data_post["carac"];
-                    $carac_text = $data_post["carac_text"];
-                    for ($i = 0; $i < count($carac); $i++) {
-                        if ($carac_text[$i] != "") {
-                            $where_carac = array(
-                                "idProduitType" => $id_produit,
-                                "idCaracteristique" => $carac[$i],
-                            );
-
-                            if ($this->Produit_type_caracteristique_model->read("*", $where_carac)) {
-                                $setCarac = ["contenuCaracteristique" => $carac_text[$i]];
-                                $this->Produit_type_caracteristique_model->update($where_carac, $setCarac);
-                            } else {
-                                $table_carac = array_merge($where_carac, ["contenuCaracteristique" => $carac_text[$i]]);
-                                $this->Produit_type_caracteristique_model->create($table_carac);
-                            }
-                        }
-                    }
+                    $this->enregistrer_caracteristiques_produit_type($idProduitType, $data_post["carac"], $data_post["carac_text"]);
                 }
 
-                // Enregistrement de l'image
-                // Configurer les fichiers acceptés
-                $config['file_name'] = 'img';
-                $config['upload_path'] = get_absolute_path('assets/images/produits/produit_' . $id_produit);
-                $config['allowed_types'] = 'gif|jpg|jpeg|png';
-                $config['max_size'] = 10000;
-                $config['max_width'] = 1024;
-                $config['max_height'] = 768;
-
-                // Effectue l'upload
-                $upload = upload_files_from_form($config);
+                // Enregistrement des images
+                $upload = $this->upload_images_produit($idProduitType);
 
                 if ($upload) {
-
-
                     $data = ["message_display" => "Le produit a bien été modifié"];
 
                     $this->layout->views('template/message_display', $data);
@@ -491,37 +431,11 @@ class Produits extends Commercant {
 
                 // Ajout des caracteristiques
                 if (array_key_exists("carac", $data_post) && array_key_exists("carac_text", $data_post)) {
-                    $carac = $data_post["carac"];
-                    $carac_text = $data_post["carac_text"];
-                    for ($i = 0; $i < count($carac); $i++) {
-                        if ($carac_text[$i] != "") {
-                            $table_carac = array(
-                                "idProduitVariante" => $idProduitVariante,
-                                "idCaracteristique" => $carac[$i], // TODO verif si la carac existe bien
-                                "contenuCaracteristique" => $carac_text[$i],
-                            );
-                            $this->Produit_variante_caracteristique_model->create($table_carac);
-                        }
-                    }
+                    $this->enregistrer_caracteristiques_produit_variante($idProduitType, $data_post["carac"], $data_post["carac_text"]);
                 }
 
                 // Enregistrement des images 
-                // Création du dossier accueillant l'image de la variante
-                if (!file_exists('assets/images/produits/produit_' . $id_produit . '/variante_' . $idProduitVariante)) {
-                    mkdir('assets/images/produits/produit_' . $id_produit . '/variante_' . $idProduitVariante, 0755, true);
-                }
-
-
-                // Configurer les fichiers acceptés
-                $config['file_name'] = 'img';
-                $config['upload_path'] = get_absolute_path('assets/images/produits/produit_' . $id_produit . '/variante_' . $idProduitVariante);
-                $config['allowed_types'] = 'gif|jpg|jpeg|png';
-                $config['max_size'] = 10000;
-                $config['max_width'] = 1024;
-                $config['max_height'] = 768;
-
-                // Effectue l'upload
-                $upload = upload_files_from_form($config);
+                $upload = $this->upload_images_produit($id_produit, $idProduitVariante);
 
                 if (!$upload) {
                     $data = array(
@@ -550,6 +464,128 @@ class Produits extends Commercant {
             $this->layout->views('template/error_display', $data);
             $this->ajouter_produit_variante($id_produit);
         }
+    }
+
+    /**
+     * Ajoute la / les caracteristique(s) a ce produit type
+     * Dans le cas ou il s'agit de plusieurs caracteristiques, l'index du tableau idCarac doit correspondre a l'index du tableau contenucarac
+     * @param int $id_produit       L'id du produit
+     * @param Array $idCarac        Un tableau d'id de caracteristique OU juste l'id de la caracteristique
+     * @param Array $contenuCarac   Un tableau du contenu OU juste le contenu
+     * @return true si l'enregistrement s'est bien passé, false sinon
+     */
+    private function enregistrer_caracteristiques_produit_type($id_produit, $idCarac, $contenuCarac) {
+        if (!is_array($idCarac)) {
+            $idCarac = [$idCarac];
+        }
+        if (!is_array($contenuCarac)) {
+            $contenuCarac = [$contenuCarac];
+        }
+        $carac = $idCarac;
+        $carac_text = $contenuCarac;
+        if (count($carac_text) == count($carac)) {
+            $errors = false;
+            for ($i = 0; $i < count($carac); $i++) {
+                if ($carac_text[$i] != "") {
+                    $where_carac = array(
+                        "idProduitType" => $id_produit,
+                        "idCaracteristique" => $carac[$i],
+                    );
+
+                    if ($this->Produit_type_caracteristique_model->read("*", $where_carac)) {
+                        $setCarac = ["contenuCaracteristique" => $carac_text[$i]];
+                        $errors = $errors || !$this->Produit_type_caracteristique_model->update($where_carac, $setCarac);
+                    } else {
+                        $table_carac = array_merge($where_carac, ["contenuCaracteristique" => $carac_text[$i]]);
+                        $errors = $errors || !$this->Produit_type_caracteristique_model->create($table_carac);
+                    }
+                }
+            }
+            if (!$errors) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    /**
+     * Ajoute la / les caracteristique(s) a ce produit variante
+     * Dans le cas ou il s'agit de plusieurs caracteristiques, l'index du tableau idCarac doit correspondre a l'index du tableau contenucarac
+     * @param int $id_produit       L'id du produit
+     * @param Array $idCarac        Un tableau d'id de caracteristique OU juste l'id de la caracteristique
+     * @param Array $contenuCarac   Un tableau du contenu OU juste le contenu
+     * @return true si l'enregistrement s'est bien passé, false sinon
+     */
+    private function enregistrer_caracteristiques_produit_variante($id_produit, $idCarac, $contenuCarac) {
+        if (!is_array($idCarac)) {
+            $idCarac = [$idCarac];
+        }
+        if (!is_array($contenuCarac)) {
+            $contenuCarac = [$contenuCarac];
+        }
+        $carac = $idCarac;
+        $carac_text = $contenuCarac;
+        if (count($carac_text) == count($carac)) {
+            $errors = false;
+            for ($i = 0; $i < count($carac); $i++) {
+                if ($carac_text[$i] != "") {
+                    $where_carac = array(
+                        "idProduitVariante" => $id_produit,
+                        "idCaracteristique" => $carac[$i],
+                    );
+
+                    if ($this->Produit_variante_caracteristique_model->read("*", $where_carac)) {
+                        $setCarac = ["contenuCaracteristique" => $carac_text[$i]];
+                        $errors = $errors || !$this->Produit_variante_caracteristique_model->update($where_carac, $setCarac);
+                    } else {
+                        $table_carac = array_merge($where_carac, ["contenuCaracteristique" => $carac_text[$i]]);
+                        $errors = $errors || !$this->Produit_variante_caracteristique_model->create($table_carac);
+                    }
+                }
+            }
+            if (!$errors) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    /**
+     * Upload les image du produit en utilisant les données du formulaire
+     * @param type $idProduitType       L'id du produit type
+     * @param type $idProduitVariante   L'id du produit variante, s'il s'agit des images d'un produit type, laisser cette valeur a 0
+     * @return boolean  true si l'upload s'est bien passe, false sinon
+     *                  Retourne false si l'id produit type n'est pas renseigné
+     */
+    private function upload_images_produit($idProduitType, $idProduitVariante = 0) {
+        if ($idProduitType) {
+            $config = [];
+
+            // Configurer les fichiers acceptés
+            $config['file_name'] = 'img';
+            $config['allowed_types'] = 'gif|jpg|jpeg|png';
+            $config['max_size'] = 10000;
+            $config['max_width'] = 1024;
+            $config['max_height'] = 768;
+
+            // Création du dossier accueillant l'image
+            if (!file_exists('assets/images/produits/produit_' . $idProduitType)) {
+                mkdir('assets/images/produits/produit_' . $idProduitType, 0755, true);
+            }
+            if ($idProduitVariante) {
+                // Création du dossier accueillant l'image de la variante
+                if (!file_exists('assets/images/produits/produit_' . $idProduitType . '/variante_' . $idProduitVariante)) {
+                    mkdir('assets/images/produits/produit_' . $idProduitType . '/variante_' . $idProduitVariante, 0755, true);
+                }
+                $config['upload_path'] = get_absolute_path('assets/images/produits/produit_' . $idProduitType . '/variante_' . $idProduitVariante);
+            } else {
+                $config['upload_path'] = get_absolute_path('assets/images/produits/produit_' . $idProduitType);
+            }
+
+            // Effectue l'upload
+            return upload_files_from_form($config);
+        }
+        return false;
     }
 
     /**
