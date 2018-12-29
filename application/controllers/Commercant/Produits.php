@@ -4,8 +4,6 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
 include "Commercant.php";
 
-// TODO : Afficher la liste des produits TYPES dans liste de produits, et afficher les variantes lorsqu'on clique dessus, puis proposition de modifier les variantes ou modifier le produit type (description ...)
-
 class Produits extends Commercant {
     /*
       |===============================================================================
@@ -282,10 +280,12 @@ class Produits extends Commercant {
                                 "idProduitType" => $id_produit,
                                 "idCaracteristique" => $carac[$i],
                             );
-                            $table_carac = array_merge($where_carac, ["contenuCaracteristique" => $carac_text[$i]]);
+
                             if ($this->Produit_type_caracteristique_model->read("*", $where_carac)) {
-                                $this->Produit_type_caracteristique_model->update($table_carac);
+                                $setCarac = ["contenuCaracteristique" => $carac_text[$i]];
+                                $this->Produit_type_caracteristique_model->update($where_carac, $setCarac);
                             } else {
+                                $table_carac = array_merge($where_carac, ["contenuCaracteristique" => $carac_text[$i]]);
                                 $this->Produit_type_caracteristique_model->create($table_carac);
                             }
                         }
