@@ -173,16 +173,16 @@ class Produits extends Commercant {
         $this->verif_produit($id_produit);
         $data = $this->get_data_produit_type($id_produit, true);
         if ($data) {
-            
-             // Gestion de la taille max des descriptions des variantes
-            foreach ($data['variantes'] as $v) { 
+
+            // Gestion de la taille max des descriptions des variantes
+            foreach ($data['variantes'] as $v) {
                 $longueur_max_description = 100;
-                $v->descriptionProduitVariante= substr($v->descriptionProduitVariante, 0, $longueur_max_description);
+                $v->descriptionProduitVariante = substr($v->descriptionProduitVariante, 0, $longueur_max_description);
                 if (strlen($v->descriptionProduitVariante) >= $longueur_max_description) {
                     $v->descriptionProduitVariante .= '...';
                 }
             }
-            
+
             $this->layout->view('Commercant/Produits/fiche_produit_type', $data);
         } else {
             $data = array(
@@ -252,11 +252,11 @@ class Produits extends Commercant {
 
                 // Ajout des caracteristiques
                 if (array_key_exists("carac", $data_post) && array_key_exists("carac_text", $data_post)) {
-                    $this->enregistrer_caracteristiques_produit_type($idProduitType, $data_post["carac"], $data_post["carac_text"]);
+                    $this->enregistrer_caracteristiques_produit_type($id_produit, $data_post["carac"], $data_post["carac_text"]);
                 }
 
                 // Enregistrement des images
-                $upload = $this->upload_images_produit($idProduitType);
+                $upload = $this->upload_images_produit($id_produit);
 
                 if ($upload) {
                     $data = ["message_display" => "Le produit a bien été modifié"];
@@ -387,7 +387,7 @@ class Produits extends Commercant {
 
     /**
      * Processus d'ajout de la variante
-     * @param type $id_produit
+     * @param type $id_produit  L'id du produit Type
      */
     public function ajouter_produit_variante_process($id_produit = 0) {
         $this->verif_produit($id_produit);
@@ -481,6 +481,82 @@ class Produits extends Commercant {
                 'caracteristiques' => $caracteristiques,
             );
             $this->layout->view('Commercant/Produits/modifier_produit_variante', $data);
+        } else {
+            // La variante n'existe pas
+            $data = array(
+                'error_message' => "Cette variante n'existe pas"
+            );
+            $this->layout->view('template/error_display', $data);
+        }
+    }
+
+    public function modifier_produit_variante_process($idProduitVariante = 0) {
+
+        // Reccupere les donnees de la variante
+        $produitVariante = $this->get_data_produit_variante($idProduitVariante);
+
+        if ($produitVariante) {
+            $this->verif_produit($produitVariante->idProduitType);
+
+            $this->form_validation->set_rules('nomProduit', '"Nom de la variante"', 'trim|required|encode_php_tags');
+            $this->form_validation->set_rules('prix', '"Prix"', 'trim|numeric|required|encode_php_tags');
+            $this->form_validation->set_rules('stock', '"Stock"', 'trim|integer|encode_php_tags');
+            $this->form_validation->set_rules('description', '"Description du produit"', 'trim|required|encode_php_tags');
+
+            if ($this->form_validation->run()) {
+                // Recuperer les données du formulaire pour creer le produit type
+                $data_post = $this->input->post();
+
+
+                $whereVariante = array(
+                    "idProduitVariante" => $idProduitVariante,
+                );
+                // Recuperer les données du formulaire pour creer le produit variante
+                $setVariante = array(
+                    "nomProduitVariante" => $data_post["nomProduit"],
+                    "descriptionProduitVariante" => $data_post["description"],
+                    "prixProduitVariante" => $data_post["prix"],
+                    "stockProduitVariante" => $data_post["stock"],
+                );
+                $updateProduitVariante = $this->Produit_variante_model->update($whereVariante, $setVariante);
+
+                if ($updateProduitVariante) {
+
+                    // Ajout des caracteristiques
+                    if (array_key_exists("carac", $data_post) && array_key_exists("carac_text", $data_post)) {
+                        $this->enregistrer_caracteristiques_produit_variante($idProduitVariante, $data_post["carac"], $data_post["carac_text"]);
+                    }
+
+                    // Enregistrement des images 
+                    $upload = $this->upload_images_produit($produitVariante->idProduitType, $idProduitVariante);
+
+                    if (!$upload) {
+                        $data = array(
+                            'error_message' => "Erreur lors de l'upload des images : " . $this->upload->display_errors() . '<br/>Veuillez réessayer.',
+                            'message_display' => 'La variante a bien été modifiée',
+                        );
+                    } else {
+                        $data = array(
+                            'message_display' => "La variante a bien été modifiée",
+                        );
+                    }
+                    $this->layout->views('template/error_display', $data);
+                    $this->layout->views('template/message_display', $data);
+                    $this->fiche_produit_type($produitVariante->idProduitType);
+                } else {
+                    $data = array(
+                        'error_message' => "Une erreur s'est produite, veuillez réessayer.",
+                    );
+                    $this->layout->views('template/error_display', $data);
+                    $this->modifier_produit_variante($idProduitVariante);
+                }
+            } else {
+                $data = array(
+                    'error_message' => "Erreur dans le formulaire : <br />" . $this->form_validation->error_string(),
+                );
+                $this->layout->views('template/error_display', $data);
+                $this->modifier_produit_variante($idProduitVariante);
+            }
         } else {
             // La variante n'existe pas
             $data = array(
@@ -674,7 +750,7 @@ class Produits extends Commercant {
         $produitVariante = $this->Produit_variante_model->read('*', $whereVariante, 1);
 
         if ($produitVariante) {
-            $produitVariante= $produitVariante[0];
+            $produitVariante = $produitVariante[0];
             // Reccupere les url des images
             $produitVariante->images_url = $this->get_url_img_produit($produitVariante->idProduitType, $idProduitVariante);
 

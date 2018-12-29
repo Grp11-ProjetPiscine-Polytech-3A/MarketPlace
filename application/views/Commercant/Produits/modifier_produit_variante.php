@@ -2,10 +2,10 @@
     <div class="product-form">
         <div class="main-div">
             <div class="panel">
-                <h3>Ajouter une variante - <?php echo $produitType->nomProduitType ?></h3>
+                <h3>Modifier la variante - <?php echo $produitType->nomProduitType . ' - ' . $produitVariante->nomProduitVariante ?></h3>
                 <hr>
             </div>
-            <?php echo form_open_multipart('Commercant/Produits/modifier_produit_variante_process/' . $produitType->idProduitType); ?>
+            <?php echo form_open_multipart('Commercant/Produits/modifier_produit_variante_process/' . $produitVariante->idProduitVariante); ?>
 
             <div class="form-group">
                 <label for="inputNom">Nom de la variante :</label>
@@ -71,7 +71,7 @@
             <hr />
 
 
-            <button type="submit" class="btn btn-primary">Ajouter la variante au produit</button>
+            <button type="submit" class="btn btn-primary">Modifier la variante</button>
 
             <?php echo form_close(); ?>
         </div>

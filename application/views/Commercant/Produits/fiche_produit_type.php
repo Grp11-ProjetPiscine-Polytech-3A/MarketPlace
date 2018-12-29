@@ -6,7 +6,7 @@
                     <h3><?php echo $produit_type->nomProduitType ?></h3>
                 </div>
                 <div id="button" class="col-sm-2">
-                    <a href="<?php echo base_url('Produits/fiche_produit/' . $produit_type->idProduitType) ?>" class="btn btn-success" role="button"> <span class="glyphicon glyphicon-plus"></span>Voir la fiche en magasin</a>
+                    <a href="<?php echo base_url('Produits/fiche_produit/' . $produit_type->idProduitType) ?>" target="_blank" class="btn btn-success" role="button"> <span class="glyphicon glyphicon-plus"></span>Voir la fiche en magasin</a>
                 </div>
             </div>
             <hr>

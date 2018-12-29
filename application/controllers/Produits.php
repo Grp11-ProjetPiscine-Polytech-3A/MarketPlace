@@ -109,8 +109,8 @@ class Produits extends CI_Controller {
             $variante_select = $this->Produit_variante_model->read("*", ["idProduitVariante" => $id_variante])[0];
 
             // Reccupere la liste des url des images du produit type ET de la variante 
-            $img_paths = ["/assets/images/produits/produit_" . $id_Produit,
-                "/assets/images/produits/produit_" . $id_Produit . "/variante_" . $id_variante];
+            $img_paths = ["/assets/images/produits/produit_" . $id_Produit . "/variante_" . $id_variante,
+                "/assets/images/produits/produit_" . $id_Produit];
             $images_url = url_images_in_folder($img_paths);
 
             $whereCommerce = array(
