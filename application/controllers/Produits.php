@@ -69,7 +69,14 @@ class Produits extends CI_Controller {
 
                 // Formate le prix
                 if (count($prix_variantes) >= 2) {
-                    
+                    if (isset($min)) {
+                        unset($min);
+                    }
+                    if (isset($max)) {
+                        unset($max);
+                    }
+
+
                     foreach ($prix_variantes as $prix) {
                         $p = $prix->prixProduitVariante;
                         if (!isset($min) || $p <= $min) {

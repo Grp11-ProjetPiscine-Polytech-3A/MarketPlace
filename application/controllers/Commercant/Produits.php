@@ -398,6 +398,12 @@ class Produits extends Commercant {
 
                         // Formate le prix
                         if (count($prix_variantes) >= 2) {
+                            if (isset($min)) {
+                                unset($min);
+                            }
+                            if (isset($max)) {
+                                unset($max);
+                            }
 
                             foreach ($prix_variantes as $prix) {
                                 $pr = $prix->prixProduitVariante;
