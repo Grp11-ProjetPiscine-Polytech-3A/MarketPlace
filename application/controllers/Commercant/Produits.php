@@ -173,6 +173,16 @@ class Produits extends Commercant {
         $this->verif_produit($id_produit);
         $data = $this->get_data_produit_type($id_produit, true);
         if ($data) {
+            
+             // Gestion de la taille max des descriptions des variantes
+            foreach ($data['variantes'] as $v) { 
+                $longueur_max_description = 100;
+                $v->descriptionProduitVariante= substr($v->descriptionProduitVariante, 0, $longueur_max_description);
+                if (strlen($v->descriptionProduitVariante) >= $longueur_max_description) {
+                    $v->descriptionProduitVariante .= '...';
+                }
+            }
+            
             $this->layout->view('Commercant/Produits/fiche_produit_type', $data);
         } else {
             $data = array(
@@ -191,11 +201,13 @@ class Produits extends Commercant {
         $data = $this->get_data_produit_type($id_produit);
         if ($data) {
 
+            // Reccupere la liste des categories
             $categ = $this->Categorie_model->read('*');
             if (!$categ) {
                 $categ = array();
             }
 
+            // Reccupere la liste des caracteristique
             $caracteristiques = $this->Caracteristique_model->liste_caract();
             if (!$caracteristiques) {
                 $caracteristiques = array();
@@ -442,6 +454,43 @@ class Produits extends Commercant {
     }
 
     /**
+     * Affiche le formulaire de modification de la variante
+     * Redirige vers une erreur si l'utilisateur n'a pas le droit de modifier cette variante
+     * @param type $idProduitVariante
+     */
+    public function modifier_produit_variante($idProduitVariante = 0) {
+        // Reccupere les donnees de la variante
+        $produitVariante = $this->get_data_produit_variante($idProduitVariante);
+
+        if ($produitVariante) {
+            $this->verif_produit($produitVariante->idProduitType);
+
+            // Reccupere les donnees du produit type
+            $whereProduitType = ['idProduitType' => $produitVariante->idProduitType];
+            $produit_type = $this->Produit_type_model->read("*", $whereProduitType, 1)[0];
+
+            // Reccupere la liste des carac
+            $caracteristiques = $this->Caracteristique_model->liste_caract();
+            if (!$caracteristiques) {
+                $caracteristiques = array();
+            }
+
+            $data = array(
+                'produitVariante' => $produitVariante,
+                'produitType' => $produit_type,
+                'caracteristiques' => $caracteristiques,
+            );
+            $this->layout->view('Commercant/Produits/modifier_produit_variante', $data);
+        } else {
+            // La variante n'existe pas
+            $data = array(
+                'error_message' => "Cette variante n'existe pas"
+            );
+            $this->layout->view('template/error_display', $data);
+        }
+    }
+
+    /**
      * Ajoute la / les caracteristique(s) a ce produit type
      * Dans le cas ou il s'agit de plusieurs caracteristiques, l'index du tableau idCarac doit correspondre a l'index du tableau contenucarac
      * @param int $id_produit       L'id du produit
@@ -572,7 +621,7 @@ class Produits extends Commercant {
      */
     private function get_data_produit_type($id_produit, $short_derscription = false) {
         $where = ['idProduitType' => $id_produit];
-        $produitType = $this->Produit_type_model->read('*', $where);
+        $produitType = $this->Produit_type_model->read('*', $where, 1);
         if ($produitType) {
             $produitType = $produitType [0];
 
@@ -619,6 +668,26 @@ class Produits extends Commercant {
         }
     }
 
+    private function get_data_produit_variante($idProduitVariante = 0) {
+        // Reccupere les donnees de la variante
+        $whereVariante = ['idProduitVariante' => $idProduitVariante];
+        $produitVariante = $this->Produit_variante_model->read('*', $whereVariante, 1);
+
+        if ($produitVariante) {
+            $produitVariante= $produitVariante[0];
+            // Reccupere les url des images
+            $produitVariante->images_url = $this->get_url_img_produit($produitVariante->idProduitType, $idProduitVariante);
+
+            // Reccuperation des caracteristiques
+            $carac = $this->Produit_variante_model->getCaracteristiques($idProduitVariante);
+            $produitVariante->caracteristiques = $carac;
+
+            return $produitVariante;
+        } else {
+            return null;
+        }
+    }
+
     /**
      * Verifie que le produit peut bien etre géré par ce commercant
      * Si ce n'est pas le cas, arrete l'execution et affiche une erreur
@@ -639,6 +708,21 @@ class Produits extends Commercant {
         );
         echo $this->layout->view('template/error_display', $data, true);
         die();
+    }
+
+    /**
+     * Retourne un tableau d'url des images du produit
+     * @param type $idProduitType       L'id du produit Type
+     * @param type $idProduitVariante   L'id de la variante, laisser a 0 si ce produit n'est pas une variante
+     * @param type $reccursive          Si vous souhaitez reccuperer toutes les images du produit type, mettez cette valeur a true
+     * @return type
+     */
+    private function get_url_img_produit($idProduitType, $idProduitVariante = 0, $reccursive = false) {
+        if ($idProduitVariante && !$reccursive) {
+            return url_images_in_folder("/assets/images/produits/produit_" . $idProduitType . '/variante_' . $idProduitVariante);
+        } else {
+            return url_images_in_folder("/assets/images/produits/produit_" . $idProduitType, true);
+        }
     }
 
 }
