@@ -62,13 +62,13 @@ class Produit_type_model extends MY_Model {
 
         return $query->result();
     }
-    
+
     /**
      * Retourne les caracteristiques pour ce produit type
      * @param type $idProduitVariantes
      * @return type
      */
-     public function getCaracteristiques($idProduitType) {
+    public function getCaracteristiques($idProduitType) {
         $this->db->select('caracteristiques.idCaracteristique, nomCaracteristique, contenuCaracteristique');
 
         $this->db->from('produit_type_caracteristique');
@@ -82,6 +82,41 @@ class Produit_type_model extends MY_Model {
         $query = $this->db->get();
 
         return $query->result();
+    }
+
+    public function getRangePrice($idProduitType) {
+        // On reccupere les prix des variantes
+        $CI = & get_instance();
+        $CI->load->model('Produit_variante_model');
+        $whereProduit = array(
+            "idProduitType" => $idProduitType,
+        );
+        $prix_variantes = $CI->Produit_variante_model->read("prixProduitVariante", $whereProduit);
+
+        // Formate le prix
+        if (count($prix_variantes) >= 2) {
+            if (isset($min)) {
+                unset($min);
+            }
+            if (isset($max)) {
+                unset($max);
+            }
+
+
+            foreach ($prix_variantes as $prix) {
+                $p = $prix->prixProduitVariante;
+                if (!isset($min) || $p <= $min) {
+                    $min = $p;
+                }
+                if (!isset($max) || $p >= $max) {
+                    $max = $p;
+                }
+            }
+            $prix = $min . ' - ' . $max;
+        } else {
+            $prix = $prix_variantes[0]->prixProduitVariante;
+        }
+        return $prix;
     }
 
 }

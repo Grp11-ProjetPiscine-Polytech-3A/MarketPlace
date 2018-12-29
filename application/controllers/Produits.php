@@ -61,35 +61,8 @@ class Produits extends CI_Controller {
                     $produit->descriptionProduitType .= '...';
                 }
 
-                // On reccupere les prix des variantes
-                $whereProduit = array(
-                    "idProduitType" => $produit->idProduitType,
-                );
-                $prix_variantes = $this->Produit_variante_model->read("prixProduitVariante", $whereProduit);
-
-                // Formate le prix
-                if (count($prix_variantes) >= 2) {
-                    if (isset($min)) {
-                        unset($min);
-                    }
-                    if (isset($max)) {
-                        unset($max);
-                    }
-
-
-                    foreach ($prix_variantes as $prix) {
-                        $p = $prix->prixProduitVariante;
-                        if (!isset($min) || $p <= $min) {
-                            $min = $p;
-                        }
-                        if (!isset($max) || $p >= $max) {
-                            $max = $p;
-                        }
-                    }
-                    $produit->prixProduitType = $min . ' - ' . $max;
-                } else {
-                    $produit->prixProduitType = $prix_variantes[0]->prixProduitVariante;
-                }
+                // On reccupere le prix 
+                $produit->prixProduitType = $this->Produit_type_model->getRangePrice($produit->idProduitType);
 
                 $liste_produits[] = $produit;
             }

@@ -171,7 +171,7 @@ class Produits extends Commercant {
      */
     public function fiche_produit_type($id_produit = 0) {
         $this->verif_produit($id_produit);
-        $data = $this->get_data_produit_type($id_produit);
+        $data = $this->get_data_produit_type($id_produit, true);
         if ($data) {
             $this->layout->view('Commercant/Produits/fiche_produit_type', $data);
         } else {
@@ -270,6 +270,7 @@ class Produits extends Commercant {
     }
 
     /**
+     * @deprecated 
      * Supprimele produit type
      * TODO Supprimer aussi les variantes, demander confirmation
      * @param type $id_produit
@@ -330,34 +331,8 @@ class Produits extends Commercant {
                         // Ajout le nom du commerce au donnees du produit
                         $p->nomCommerce = $c->nomCommerce;
 
-                        // On reccupere les prix des variantes
-                        $whereProduit = array(
-                            "idProduitType" => $p->idProduitType,
-                        );
-                        $prix_variantes = $this->Produit_variante_model->read("prixProduitVariante", $whereProduit);
-
-                        // Formate le prix
-                        if (count($prix_variantes) >= 2) {
-                            if (isset($min)) {
-                                unset($min);
-                            }
-                            if (isset($max)) {
-                                unset($max);
-                            }
-
-                            foreach ($prix_variantes as $prix) {
-                                $pr = $prix->prixProduitVariante;
-                                if (!isset($min) || $pr <= $min) {
-                                    $min = $pr;
-                                }
-                                if (!isset($max) || $pr >= $max) {
-                                    $max = $pr;
-                                }
-                            }
-                            $p->prixProduitType = $min . ' - ' . $max;
-                        } else {
-                            $p->prixProduitType = $prix_variantes[0]->prixProduitVariante;
-                        }
+                        // On reccupere le prix 
+                        $p->prixProduitType = $this->Produit_type_model->getRangePrice($p->idProduitType);
 
                         // Ajoute le produit avec les donnees completés à la liste
                         $liste_produits[] = $p;
@@ -591,10 +566,11 @@ class Produits extends Commercant {
     /**
      * Retourne un tableau contenant les informations relatives a ce produit : produit_type, categorie, commerce, tableau des variantes, caracteristiques
      * @param int $id_produit
+     * @paramm boolean  $short_derscription    True si on veut que les descrption des variantes soient raccourcies
      * @return array un tableau contenant les infos sur le produit type dans l'index 'produit_type' et le tableau des variantes dans l'index 'variantes'
      * @return null  si le produit type n'a pas été trouvé
      */
-    private function get_data_produit_type($id_produit) {
+    private function get_data_produit_type($id_produit, $short_derscription = false) {
         $where = ['idProduitType' => $id_produit];
         $produitType = $this->Produit_type_model->read('*', $where);
         if ($produitType) {
@@ -629,30 +605,8 @@ class Produits extends Commercant {
             $carac = $this->Produit_type_model->getCaracteristiques($id_produit);
             $produitType->caracteristiques = $carac;
 
-
             // Reccuperation du prix 
-            // On reccupere les prix des variantes
-            $whereProduit = array(
-                "idProduitType" => $produitType->idProduitType,
-            );
-            $prix_variantes = $this->Produit_variante_model->read("prixProduitVariante", $whereProduit);
-
-            // Formate le prix
-            if (count($prix_variantes) >= 2) {
-
-                foreach ($prix_variantes as $prix) {
-                    $pr = $prix->prixProduitVariante;
-                    if (!isset($min) || $pr <= $min) {
-                        $min = $pr;
-                    }
-                    if (!isset($max) || $pr >= $max) {
-                        $max = $pr;
-                    }
-                }
-                $produitType->prixProduitType = $min . ' - ' . $max;
-            } else {
-                $produitType->prixProduitType = $prix_variantes[0]->prixProduitVariante;
-            }
+            $produitType->prixProduitType = $this->Produit_type_model->getRangePrice($produitType->idProduitType);
 
             // Construction du tableau
             $data = [
