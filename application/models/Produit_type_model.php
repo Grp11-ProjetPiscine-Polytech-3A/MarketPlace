@@ -84,6 +84,11 @@ class Produit_type_model extends MY_Model {
         return $query->result();
     }
 
+    /**
+     * Reccupere la fourchette des prix des variantes du produit
+     * @param type $idProduitType
+     * @return String la fourchette de prix
+     */
     public function getRangePrice($idProduitType) {
         // On reccupere les prix des variantes
         $CI = & get_instance();
