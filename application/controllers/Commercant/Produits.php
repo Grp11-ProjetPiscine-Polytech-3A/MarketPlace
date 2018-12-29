@@ -431,7 +431,7 @@ class Produits extends Commercant {
 
                 // Ajout des caracteristiques
                 if (array_key_exists("carac", $data_post) && array_key_exists("carac_text", $data_post)) {
-                    $this->enregistrer_caracteristiques_produit_variante($idProduitType, $data_post["carac"], $data_post["carac_text"]);
+                    $this->enregistrer_caracteristiques_produit_variante($idProduitVariante, $data_post["carac"], $data_post["carac_text"]);
                 }
 
                 // Enregistrement des images 
