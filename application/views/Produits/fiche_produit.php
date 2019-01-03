@@ -39,6 +39,15 @@
         <!--endCarroussel-->
 
         <div class="col-lg-7 col-md-7 mb-6" style="word-wrap: break-word;">
+            <!--Bouton d'ajout au panier-->
+            <div id="ajout_panier" class="col-12 container">
+                <a class="passer_commande btn btn-primary" href="<?php echo site_url('Panier/ajouter_panier/' . $variante->idProduitVariante) ?>">
+                    Ajouter au panier
+                </a>
+            </div>
+            <!-- Info général sur le produit (prix, commerce)-->
+            <h5><?php echo $variante->prixProduitVariante ?> €</h5>
+            <a href="<?php echo site_url("Commerces/fiche_commerce/" . $produit->commerce->siretCommerce) ?>"><?php echo $produit->commerce->nomCommerce ?></a>
             <!--Choix des variantes-->
             <div id="choix_variante" class="choix-variante">
                 <?php foreach ($variantes as $v): ?>
@@ -67,8 +76,6 @@
         <!--Description generale-->
         <div id="description" class="col-12" style="word-wrap: break-word;">
             <div id="description_generale">
-                <h5><?php echo $variante->prixProduitVariante ?> €</h5>
-                <a href="<?php echo site_url("Commerces/fiche_commerce/" . $produit->commerce->siretCommerce) ?>"><?php echo $produit->commerce->nomCommerce ?></a>
                 <p class="card-text"><?php echo $produit->descriptionProduitType ?></p>
             </div>
 
@@ -83,12 +90,7 @@
 
 
 
-        <!--Bouton d'ajout au panier-->
-        <div id="ajout_panier" class="col-12">
-            <a class="passer_commande btn btn-primary" href="<?php echo site_url('Panier/ajouter_panier/' . $variante->idProduitVariante) ?>">
-                Ajouter au panier
-            </a>
-        </div>
+
 
         <!--zone commentaire-->
         <?php foreach $commentaire ?>
