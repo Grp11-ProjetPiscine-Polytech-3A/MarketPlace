@@ -19,15 +19,15 @@ class Produit_variante_model extends MY_Model {
             'idProduitType' => $idProduitType
         );
 
-        return $this->create($data);
+        return $this -> create($data);
     }
 
     public function getIdProduitVariante($nomProduit) {
-        $this->db->select('idProduitVariante');
-        $this->db->from('produit_variante');
-        $this->db->where('produit_variante.nomProduitVariante', $nomProduit);
-        $query = $this->db->get();
-        return $query->result();
+        $this -> db -> select('idProduitVariante');
+        $this -> db -> from('produit_variante');
+        $this -> db -> where('produit_variante.nomProduitVariante', $nomProduit);
+        $query = $this -> db -> get();
+        return $query -> result();
     }
 
     /**
@@ -38,25 +38,35 @@ class Produit_variante_model extends MY_Model {
         $where = array(
             'idProduitType' => $idProduitType,
         );
-        return $this->read("*", $where);
+        return $this -> read("*", $where);
     }
 
     public function getCaracteristiques($idProduitVariantes) {
-        $this->db->select('caracteristiques.idCaracteristique, nomCaracteristique, contenuCaracteristique');
+        $this -> db -> select('caracteristiques.idCaracteristique, nomCaracteristique, contenuCaracteristique');
 
-        $this->db->from('produit_variante_caracteristique');
+        $this -> db -> from('produit_variante_caracteristique');
 
-        $this->db->join('produit_variante', 'produit_variante_caracteristique.idProduitVariante = produit_variante.idProduitVariante');
-        $this->db->join('caracteristiques', 'caracteristiques.idCaracteristique = produit_variante_caracteristique.idCaracteristique');
+        $this -> db -> join('produit_variante', 'produit_variante_caracteristique.idProduitVariante = produit_variante.idProduitVariante');
+        $this -> db -> join('caracteristiques', 'caracteristiques.idCaracteristique = produit_variante_caracteristique.idCaracteristique');
 
-        $this->db->where('produit_variante.idProduitVariante', $idProduitVariantes);
+        $this -> db -> where('produit_variante.idProduitVariante', $idProduitVariantes);
 
 
-        $query = $this->db->get();
+        $query = $this -> db -> get();
 
-        return $query->result();
+        return $query -> result();
     }
 
+    public function getProductPrice($idProduitVariante) {
+
+      $this -> db -> select('prixProduitVariante');
+      $this -> db -> from('produit_variante');
+      $this -> db -> where('idProduitVariante', $idProduitVariante);
+
+      $query = $this -> db -> get();
+
+      return $query -> result()[0] -> prixProduitVariante;
+    }
 }
 
 /* End of file produit_variante_model.php */

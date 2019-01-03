@@ -18,10 +18,10 @@ class Caracteristique_model extends MY_Model
             $data = array(
                 'nomCaracteristique' => $nomCar
                 );
-            
+
             return $this->create($data);
 	}
-	
+
 	/**
 	 *	Édite une caracteristique déjà existante
 	 *	@param  integer 	$id			L'id de la caracteristique à modifier
@@ -40,7 +40,7 @@ class Caracteristique_model extends MY_Model
 
 		return $this->db->update($this->table);
 	}*/
-	
+
 	/**
 	 *	Supprime une caracteristique
 	 *	@param integer 		$id			L'id de la caracteristique à supprimer
@@ -51,7 +51,7 @@ class Caracteristique_model extends MY_Model
 		$this->db->where('idCaracteristique' (int) $id),
 		return $this->db->delete($this->table);
 	}*/
-	
+
 	/**
 	 *	Retourne une liste de caracteristique sous forme de tableau idCarac => nomCarac
 	 */

@@ -1,3 +1,4 @@
+<!-- TODO : Ajouter nbPoint-->
 <div id="panier">
     <h2>Liste des produits</h2>
     <hr/>
@@ -74,7 +75,7 @@
     </div>
     <div class="row justify-content-end">
         <div class="col-lg-3">
-            <a class="passer_commande btn btn-primary" role="button" href= "<?php echo base_url('Client/Commandes/afficher_commandes')?>">Passer Commande</a>
+            <a class="passer_commande btn btn-primary" role="button" href= "<?php echo base_url('Client/Commandes/ajouter_commandes')?>">Passer Commande</a>
         </div>
     </div>
 </div>
