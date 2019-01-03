@@ -38,7 +38,16 @@
         </div>
         <!--endCarroussel-->
 
-        <div class="col-lg-7 col-md-7 mb-6" style="word-wrap: break-word;"> 
+        <div class="col-lg-7 col-md-7 mb-6" style="word-wrap: break-word;">
+            <!--Bouton d'ajout au panier-->
+            <div id="ajout_panier" class="col-12 container">
+                <a class="passer_commande btn btn-primary" href="<?php echo site_url('Panier/ajouter_panier/' . $variante->idProduitVariante) ?>">
+                    Ajouter au panier
+                </a>
+            </div>
+            <!-- Info général sur le produit (prix, commerce)-->
+            <h5><?php echo $variante->prixProduitVariante ?> €</h5>
+            <a href="<?php echo site_url("Commerces/fiche_commerce/" . $produit->commerce->siretCommerce) ?>"><?php echo $produit->commerce->nomCommerce ?></a>
             <!--Choix des variantes-->
             <div id="choix_variante" class="choix-variante">
                 <?php foreach ($variantes as $v): ?>
@@ -67,8 +76,6 @@
         <!--Description generale-->
         <div id="description" class="col-12" style="word-wrap: break-word;">
             <div id="description_generale">
-                <h5><?php echo $variante->prixProduitVariante ?> €</h5>
-                <a href="<?php echo site_url("Commerces/fiche_commerce/" . $produit->commerce->siretCommerce) ?>"><?php echo $produit->commerce->nomCommerce ?></a>
                 <p class="card-text"><?php echo $produit->descriptionProduitType ?></p>
             </div>
 
@@ -83,15 +90,22 @@
 
 
 
-        <!--Bouton d'ajout au panier-->
-        <div id="ajout_panier" class="col-12">
-            <a class="passer_commande btn btn-primary" href="<?php echo site_url('Panier/ajouter_panier/' . $variante->idProduitVariante) ?>">
-                Ajouter au panier
-            </a>
+
+
+        <!--zone commentaire-->
+        <?php foreach $commentaire ?>
+        <div id="commentaire" class="media">
+            <div>
+                <div> <!-- TODO afficher le nom de l'utilisateur qui a posté le commentaire -->
+                </div>
+                Date: <!-- TODO Afficher la date du commmentaire-->
+            </div>
+            <div class="media-body">
+                <h5 class="mt-0">  <!-- TODO afficher le titre du commentaire--></h5><!--TODO afficher la note du produit averc des étoiles ★ ★ ★ ★ ☆-->
+                <p> <!--TODO afficher le corps du commentaire--></p>
+            </div>
         </div>
-
     </div>
-
 
 
 </div>
