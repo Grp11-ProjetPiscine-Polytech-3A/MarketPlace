@@ -38,7 +38,7 @@
         </div>
         <!--endCarroussel-->
 
-        <div class="col-lg-7 col-md-7 mb-6" style="word-wrap: break-word;"> 
+        <div class="col-lg-7 col-md-7 mb-6" style="word-wrap: break-word;">
             <!--Choix des variantes-->
             <div id="choix_variante" class="choix-variante">
                 <?php foreach ($variantes as $v): ?>
@@ -90,8 +90,20 @@
             </a>
         </div>
 
+        <!--zone commentaire-->
+        <?php foreach $commentaire ?>
+        <div id="commentaire" class="media">
+            <div>
+                <div> <!-- TODO afficher le nom de l'utilisateur qui a posté le commentaire -->
+                </div>
+                Date: <!-- TODO Afficher la date du commmentaire-->
+            </div>
+            <div class="media-body">
+                <h5 class="mt-0">  <!-- TODO afficher le titre du commentaire--></h5><!--TODO afficher la note du produit averc des étoiles ★ ★ ★ ★ ☆-->
+                <p> <!--TODO afficher le corps du commentaire--></p>
+            </div>
+        </div>
     </div>
-
 
 
 </div>
