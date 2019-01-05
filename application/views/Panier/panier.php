@@ -75,6 +75,15 @@
     </div>
     <div class="row justify-content-end">
         <div class="col-lg-3">
+            <span class="pull-right lead"> Vous avez <?php echo $pointsFidelitesClient ?> points </span>
+            <div class="form-group">
+                <label for="inputNumAdresse"> Nombre de points à utiliser : </label>
+                <input type="number" class="form-control" name="nbpoints" id="inputNbpoints" min="0" placeholder="" value="<?php echo set_value('nbpoints') ?>">
+            </div>
+        </div>
+    </div>
+    <div class="row justify-content-end">
+        <div class="col-lg-3">
             <a class="passer_commande btn btn-primary" role="button" href= "<?php echo base_url('Client/Commandes/ajouter_commandes')?>">Passer Commande</a>
         </div>
     </div>
