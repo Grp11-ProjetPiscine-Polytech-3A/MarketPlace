@@ -93,7 +93,7 @@
 
 
         <!--zone commentaire-->
-        <?php foreach $commentaire ?>
+        <!--<?php //foreach $commentaire ?>-->
         <div id="commentaire" class="media">
             <div>
                 <div> <!-- TODO afficher le nom de l'utilisateur qui a posté le commentaire -->
