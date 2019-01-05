@@ -25,7 +25,7 @@ class Produits extends CI_Controller {
         $this -> load -> model('Commerce_model');
         $this -> load -> model('Commercant_model');
         $this -> load -> model('User_admin_model');
-        $this -> load -> model('Client_donner_avis_model')
+        $this -> load -> model('Client_donner_avis_model');
 
         $categ = $this -> Categorie_model -> read('*');
 
