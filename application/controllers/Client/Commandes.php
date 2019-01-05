@@ -40,7 +40,7 @@ class Commandes extends CI_Controller {
                 'produits' => $this -> Commande_model -> produits_commande(),
             );
 
-            $this->layout->view('Client/Commandes/commandes', $data);
+            $this-> layout ->view('Client/Commandes/commandes', $data);
         } else {
             $data = array(
                 'error_message' => 'Vous n\'êtes pas connecté',
@@ -77,7 +77,7 @@ class Commandes extends CI_Controller {
                 );
                 $result = $this -> Ligne_commande_model -> create($data);
               }
-              // TODO : Vider Panier
+              // TODO : Vider Panier (Je ne suis pas sur de comment le faire proprement, sacahnt que je ne peux pas appeler une fonction provenant d'un autre controller ...)
               $this -> afficher_commandes();
           } else {
             //annuler_commande
@@ -105,7 +105,7 @@ class Commandes extends CI_Controller {
      * @param int $quantite     La quantite a supprimer, si la quantite est <= 0 ou est plus grande que la quantite actuelle, supprime tout.
      */
     public function annuler_commande($idProduit, $quantite = 1) {
-      // TODO : Faire fonction annuler commande quand l'ajout seras finalisé
+        // TODO : Faire fonction annuler commande quand l'ajout seras finalisé
         $this -> afficher_commandes();
     }
 }
