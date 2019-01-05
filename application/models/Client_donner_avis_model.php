@@ -20,6 +20,20 @@ class Client_donner_avis_model extends MY_Model
             
             return $this->create($data);
 	}
+
+    public function getCommentaires($idProduitType) {
+
+        $this -> db -> select('commentaire');
+        $this -> db -> from('client_donner_avis');
+        
+        $this -> db -> join('produit_variante', 'produit_variante.idProduitVariante = client_donner_avis.idProduitVariante');
+
+        $this -> db -> where('produit_variante.idProduitType', $idProduitType);
+        
+        $query = $this -> db -> get();
+
+        return $query -> result();
+    }
 }
 
 

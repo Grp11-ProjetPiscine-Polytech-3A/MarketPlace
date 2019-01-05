@@ -40,6 +40,7 @@ class Commandes extends CI_Controller {
                 foreach ($result as $ligne) {
                     $produit = array();
                     $produit['img_url'] = url_images_in_folder("/assets/images/produits/produit_" . $ligne -> idProduitType . "/", true)[0];
+                    $produit['idCommande'] = $ligne -> idCommande;
                     $produit['nomProduitVariante'] = $ligne -> nomProduitVariante;
                     $produit['idProduitType'] = $ligne -> idProduitType;
                     $produit['designation'] = $ligne -> nomProduitVariante;
@@ -127,8 +128,9 @@ class Commandes extends CI_Controller {
      * @param int $idProduit    l'id du produit a supprimer des commandes
      * @param int $quantite     La quantite a supprimer, si la quantite est <= 0 ou est plus grande que la quantite actuelle, supprime tout.
      */
-    public function annuler_commande($idProduit, $quantite = 1) {
+    public function annuler_commande($idCommande) {
         // TODO : Faire fonction annuler commande quand l'ajout seras finalisé
+        // NOTE : Il faut vérifier que la commande appartient bien a l'utilisateur connecté
         $this -> afficher_commandes();
     }
 }

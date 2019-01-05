@@ -13,6 +13,7 @@
                     <th scope="col">Prix unitaire</th>
                     <th scope="col">Quantité</th>
                     <th scope="col">Prix total</th>
+                    <th scope="col">Annuler</th>
                 </tr>
             </thead>
 
@@ -57,7 +58,13 @@
 
                             <!-- Prix Total-->
                             <td>
-                                <?php echo $p['prixAchatProduit']*$p['quantité'] ?> €
+                                <?php echo $p['prixAchatProduit']*$p['quantité'] ?>
+                            </td>
+
+                            <td>
+                                <a href="<?php echo site_url('/Client/Commandes/annuler_commande/' . $p['idCommande'] . '/')?>">
+                                    <i class="fa fa-trash-o"></i>
+                                </a>
                             </td>
                         </tr>
                     <?php endforeach; ?>

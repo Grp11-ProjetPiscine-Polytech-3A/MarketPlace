@@ -1,4 +1,4 @@
-<?php
+    <?php
 
 defined('BASEPATH') OR exit('No direct script access allowed');
 
@@ -128,7 +128,7 @@ class Produits extends CI_Controller {
             }
             $variante_select -> descriptionProduitVariante = nl2br($variante_select -> descriptionProduitVariante);
             $produit -> descriptionProduitType = nl2br($produit -> descriptionProduitType);
-            $commentaire = $this -> Client_donner_avis_model -> getCommentaires();
+            $commentaire = $this -> Client_donner_avis_model -> getCommentaires($id_Produit);
             $data = array(
                 "produit" => $produit,
                 "images" => $images_url,
