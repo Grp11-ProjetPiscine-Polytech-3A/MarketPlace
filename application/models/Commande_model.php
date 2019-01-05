@@ -27,6 +27,8 @@ class Commande_model extends MY_Model
         $this -> db -> join('ligne_commande', 'client_commande_effectuer.idCommande = ligne_commande.idCommande');
         $this -> db -> join('produit_variante', 'ligne_commande.idProduitVariante = produit_variante.idProduitVariante');
         $this -> db -> join('produit_type', 'produit_variante.idProduitType = produit_type.idProduitType');
+        $this -> db -> join('commerce', 'commerce.siretCommerce = produit_type.siretCommerce');
+        
         $query = $this -> db -> get();
 
         return $query -> result();

@@ -33,21 +33,44 @@ class Commandes extends CI_Controller {
      * Page du panier
      */
     public function afficher_commandes() {
-
         if (isset($this -> session -> logged_in['username'])) {
+            $result = $this -> Commande_model -> produits_commande();
+            if ($result && count($result) > 0) {
+                $produits = array();
+                foreach ($result as $ligne) {
+                    $produit = array();
+                    $produit['img_url'] = url_images_in_folder("/assets/images/produits/produit_" . $ligne -> idProduitType . "/", true)[0];
+                    $produit['nomProduitVariante'] = $ligne -> nomProduitVariante;
+                    $produit['idProduitType'] = $ligne -> idProduitType;
+                    $produit['designation'] = $ligne -> nomProduitVariante;
+                    $produit['nomCommerce'] = $ligne -> nomCommerce;
+                    $produit['etatReservationLigneCommande'] = $ligne -> etatReservationLigneCommande;
+                    $produit['prixProduitVariante'] = $ligne -> prixProduitVariante;
+                    $produit['quantité'] = $ligne -> quantité;
+                    $produit['designation'] = $ligne -> nomProduitVariante;
+                    $produit['prixAchatProduit'] = $ligne -> prixAchatProduit;
+                    array_push($produits, $produit);
+                }
 
-            $data = array(
-                'produits' => $this -> Commande_model -> produits_commande(),
-            );
+                $data = array (
+                    'produits' => $produits,    
+                );
 
-            $this-> layout ->view('Client/Commandes/commandes', $data);
+                $this -> layout -> views('template/message_display', $data);
+            } else {
+                $data = array(
+                    'message_display' => 'Aucun produit commandé',
+                );
+            $this -> layout -> views('template/message_display', $data);
+            }
         } else {
             $data = array(
                 'error_message' => 'Vous n\'êtes pas connecté',
             );
-            $this -> layout -> view('template/error_display', $data);
+            $this -> layout -> views('template/error_display', $data);
         }
-      }
+        $this -> layout -> view('Client/Commandes/commandes');
+    }
 
     /**
      * Ajoute le panier aux commandes
