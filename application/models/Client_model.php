@@ -38,7 +38,7 @@ class Client_model extends MY_Model {
         $this -> db -> where('client.idUser', $idClient);
         $query = $this -> db -> get();
 
-        return $query -> result();
+        return $query -> result()[0];
     }
 
     public function get_nb_point_client($idClient){

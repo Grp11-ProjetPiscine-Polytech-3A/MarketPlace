@@ -34,13 +34,17 @@ class Panier extends CI_Controller {
      * Page du panier
      */
     public function afficher_panier() {
-        $idClient = $this -> session -> logged_in['idClient'];
-        $pointsFidelitesClient = $this -> Client_model -> get_nb_point_client($idClient) -> pointsFidelitesClient;
+        $idClient = $this -> session -> logged_in['idClient'];        
         $data = array(
             'produits' => array(),
-            'pointsFidelitesClient' => $pointsFidelitesClient,
         );
 
+        if (!is_null($idClient)) {
+            $pointsFidelitesClient = $this -> Client_model -> get_nb_point_client($idClient) -> pointsFidelitesClient;
+            $data['pointsFidelitesClient'] = $pointsFidelitesClient;
+        } else {
+            $data['pointsFidelitesClient'] = 0;
+        }
         $somme_prix = 0;
 
         if ($this -> session -> has_userdata('panier')) {
