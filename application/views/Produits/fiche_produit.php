@@ -39,15 +39,8 @@
         <!--endCarroussel-->
 
         <div class="col-lg-7 col-md-7 mb-6" style="word-wrap: break-word;">
-            <!--Bouton d'ajout au panier-->
-            <div id="ajout_panier" class="col-12 container">
-                <a class="passer_commande btn btn-primary" href="<?php echo site_url('Panier/ajouter_panier/' . $variante->idProduitVariante) ?>">
-                    Ajouter au panier
-                </a>
-            </div>
-            <!-- Info général sur le produit (prix, commerce)-->
-            <h5><?php echo $variante->prixProduitVariante ?> €</h5>
-            <a href="<?php echo site_url("Commerces/fiche_commerce/" . $produit->commerce->siretCommerce) ?>"><?php echo $produit->commerce->nomCommerce ?></a>
+
+
             <!--Choix des variantes-->
             <div id="choix_variante" class="choix-variante">
                 <?php foreach ($variantes as $v): ?>
@@ -55,6 +48,11 @@
                         <?php echo $v->nomProduitVariante ?>
                     </a>
                 <?php endforeach; ?>
+            </div>
+            <!-- Infos générales sur le produit (prix, commerce)-->
+            <div class="col-12 mb-2">
+                <h5><?php echo $variante->prixProduitVariante ?> €</h5>
+                <a href="<?php echo site_url("Commerces/fiche_commerce/" . $produit->commerce->siretCommerce) ?>"><?php echo $produit->commerce->nomCommerce ?></a>
             </div>
             <!--Liste des caractéristiques-->
             <div id="carac" class="col-12 container">
@@ -71,12 +69,19 @@
 
 
         </div>
+        
+                <!--Bouton d'ajout au panier-->
+        <div id="ajout_panier" class="col-12 container mb-4 mt-2">
+            <a class="passer_commande btn btn-primary" href="<?php echo site_url('Panier/ajouter_panier/' . $variante->idProduitVariante) ?>">
+                Ajouter au panier
+            </a>
+        </div>
 
         <!--Description du produit-->
         <!--Description generale-->
         <div id="description" class="col-12" style="word-wrap: break-word;">
             <div id="description_generale">
-                <h3>Description :</h3>
+                <h5>Description :</h5>
                 <p class="card-text"><?php echo $produit->descriptionProduitType ?></p>
             </div>
 
@@ -94,33 +99,35 @@
 
 
 
+
+
         <!--zone commentaire-->
         <div class="container">
-            <h3>Commentaires :</h3>
+            <h5>Commentaires :</h5>
             <div class="row">
                 <?php foreach ($commentaire as $aComment): ?>
                     <div class="col-sm-5">
                         <div class="panel panel-default">
                             <div class="panel">
-                                <strong><?php echo $aComment -> loginUser ?></strong>
+                                <strong><?php echo $aComment->loginUser ?></strong>
                                 <!-- OPT afficher le nombre de jour écoulé depuis le commentaire -->
                                 <!--span class="text-muted">Commenté il y a 5 jours</span-->
                             </div>
                             <div class = "panel-body">
 
                                 <!-- Affichage des étoile de la note pleines -->
-                                <?php for($i=1; $i <= $aComment->note; $i++): ?>
+                                <?php for ($i = 1; $i <= $aComment->note; $i++): ?>
                                     <i class="fa fa-star"></i>
                                 <?php endfor; ?>
 
                                 <!-- Affichage des étoile de la note vides -->
-                                <?php for($i=$aComment->note; $i < 5; $i++): ?>
+                                <?php for ($i = $aComment->note; $i < 5; $i++): ?>
                                     <i class="fa fa-star-o"></i>
                                 <?php endfor; ?>
 
                             </div>
                             <div class="panel-body">
-                                <p><?php echo $aComment -> commentaire ?></p>
+                                <p><?php echo $aComment->commentaire ?></p>
                             </div><!-- /panel-body -->
                         </div><!-- /panel panel-default -->
                     </div><!-- /col-sm-5 -->
