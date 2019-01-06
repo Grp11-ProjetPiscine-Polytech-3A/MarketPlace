@@ -69,8 +69,8 @@
 
 
         </div>
-        
-                <!--Bouton d'ajout au panier-->
+
+        <!--Bouton d'ajout au panier-->
         <div id="ajout_panier" class="col-12 container mb-4 mt-2">
             <a class="passer_commande btn btn-primary" href="<?php echo site_url('Panier/ajouter_panier/' . $variante->idProduitVariante) ?>">
                 Ajouter au panier

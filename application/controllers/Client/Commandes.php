@@ -30,7 +30,7 @@ class Commandes extends CI_Controller {
     }
 
     /**
-     * Page du panier
+     * Page de la commande
      */
     public function afficher_commandes() {
         if (isset($this -> session -> logged_in['username'])) {
