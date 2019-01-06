@@ -23,10 +23,13 @@ class Client_donner_avis_model extends MY_Model
 
     public function getCommentaires($idProduitType) {
 
-        $this -> db -> select('commentaire');
+        $this -> db -> select('*');
         $this -> db -> from('client_donner_avis');
         
         $this -> db -> join('produit_variante', 'produit_variante.idProduitVariante = client_donner_avis.idProduitVariante');
+        $this -> db -> join('client', 'client.idClient = client_donner_avis.idClient');
+        $this -> db -> join('user', 'user.idUser = client.idUser');
+
 
         $this -> db -> where('produit_variante.idProduitType', $idProduitType);
         

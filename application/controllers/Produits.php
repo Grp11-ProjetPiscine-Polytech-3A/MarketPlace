@@ -34,6 +34,7 @@ class Produits extends CI_Controller {
             $this -> layout -> ajouter_menu_url('sideMenu', $intitule, 'Produits/liste_produits/' . $c -> idCategorie);
         }
 
+        $this -> layout -> ajouter_css("ficheProduit");
         $this -> layout -> setNomSideMenu("Categories");
     }
 
@@ -128,20 +129,21 @@ class Produits extends CI_Controller {
             }
             $variante_select -> descriptionProduitVariante = nl2br($variante_select -> descriptionProduitVariante);
             $produit -> descriptionProduitType = nl2br($produit -> descriptionProduitType);
-            $commentaire = $this -> Client_donner_avis_model -> getCommentaires($id_Produit);
             $data = array(
                 "produit" => $produit,
                 "images" => $images_url,
                 "variantes" => $variantes,
                 "variante" => $variante_select,
                 "caracteristiques" => array_merge($this -> Produit_variante_model -> getCaracteristiques($id_variante), $this -> Produit_type_model -> getCaracteristiques($produit -> idProduitType)),
-                "commentaire" => $commentaire,
+                "commentaire" => $this -> Client_donner_avis_model -> getCommentaires($id_Produit),
             );
+
             $this -> layout -> view('Produits/fiche_produit', $data);
         } else {
             $data = array(
                 'error_message' => 'Une erreur s\'est produite',
             );
+
             $this -> layout -> view('template/error_display', $data);
         }
     }

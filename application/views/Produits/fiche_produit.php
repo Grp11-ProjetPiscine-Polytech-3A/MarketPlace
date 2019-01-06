@@ -76,16 +76,18 @@
         <!--Description generale-->
         <div id="description" class="col-12" style="word-wrap: break-word;">
             <div id="description_generale">
+                <h3>Description :</h3>
                 <p class="card-text"><?php echo $produit->descriptionProduitType ?></p>
             </div>
 
-            <hr/>
+            <br/>
 
             <!--Description de la variante-->
             <div id="description_variante">
                 <p class="card-text"><?php echo $variante->descriptionProduitVariante ?></p>
-
             </div>
+
+            <hr/>
         </div>
 
 
@@ -93,19 +95,38 @@
 
 
         <!--zone commentaire-->
-        <!--<?php //foreach $commentaire ?>-->
-        <div id="commentaire" class="media">
-            <div>
-                <div> <!-- TODO afficher le nom de l'utilisateur qui a posté le commentaire -->
-                </div>
-                Date: <!-- TODO Afficher la date du commmentaire-->
-            </div>
-            <div class="media-body">
-                <h5 class="mt-0">  <!-- TODO afficher le titre du commentaire--></h5><!--TODO afficher la note du produit averc des étoiles ★ ★ ★ ★ ☆-->
-                <p> <!--TODO afficher le corps du commentaire--></p>
-            </div>
-        </div>
+        <div class="container">
+            <h3>Commentaires :</h3>
+            <div class="row">
+                <?php foreach ($commentaire as $aComment): ?>
+                    <div class="col-sm-5">
+                        <div class="panel panel-default">
+                            <div class="panel">
+                                <strong><?php echo $aComment -> loginUser ?></strong>
+                                <!-- OPT afficher le nombre de jour écoulé depuis le commentaire -->
+                                <!--span class="text-muted">Commenté il y a 5 jours</span-->
+                            </div>
+                            <div class = "panel-body">
+
+                                <!-- Affichage des étoile de la note pleines -->
+                                <?php for($i=1; $i <= $aComment->note; $i++): ?>
+                                    <i class="fa fa-star"></i>
+                                <?php endfor; ?>
+
+                                <!-- Affichage des étoile de la note vides -->
+                                <?php for($i=$aComment->note; $i < 5; $i++): ?>
+                                    <i class="fa fa-star-o"></i>
+                                <?php endfor; ?>
+
+                            </div>
+                            <div class="panel-body">
+                                <p><?php echo $aComment -> commentaire ?></p>
+                            </div><!-- /panel-body -->
+                        </div><!-- /panel panel-default -->
+                    </div><!-- /col-sm-5 -->
+                <?php endforeach; ?>
+            </div><!-- /row -->
+
+        </div><!-- /container -->
     </div>
-
-
 </div>
