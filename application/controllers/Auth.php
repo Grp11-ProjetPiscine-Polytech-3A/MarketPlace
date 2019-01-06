@@ -83,11 +83,18 @@ class Auth extends CI_Controller {
                 // Saves the data of the user in session
                 $username = $this->input->post('loginUser');
                 $idUser = $this->User_model->select_from_username($username)[0]->idUser;
-                $idClient = $this->Client_model->get_client_id($idUser)[0]->idClient;
-                
+                // Check if user have a clientId
+                $idClientBdd = $this->Client_model->get_client_id($idUser);
+                if (isset($idClientBdd->idClient)){
+                    $idClient = $idClientBdd->idClient;
+                } else {
+                    $idClient = null;
+                }
+
+
                 // Add the idCommercant if it exists
                 $data_commercant = $this->Commercant_model->get_commercant_iduser($idUser);
-                
+
 
                 if ($result != false) {
                     $session_data = array(
@@ -95,7 +102,7 @@ class Auth extends CI_Controller {
                         'idUser' => $idUser,
                         'idClient' => $idClient,
                     );
-                    
+
                     if ($data_commercant) {
                         $session_data['idCommercant'] = $data_commercant[0]->idCommercant;
                     }
@@ -176,8 +183,8 @@ class Auth extends CI_Controller {
                 if ($result) {
                     $idUser = $this->User_model->select_from_username($loginUser)[0]->idUser;
                     // Create the client profile
-                    
-                    // TODO : Ameliorrer le formulaire pour demander nom, prenom, mail, date de naissance et adresse
+
+                    // TODO : Ameliorer le formulaire pour demander nom, prenom, mail, date de naissance et adresse
                     $data_client = array(
                         "idUser" => $idUser,
                     );
@@ -189,8 +196,14 @@ class Auth extends CI_Controller {
                 if ($result) {
 
                     $username = $loginUser;
-                    
-                    $idClient = $this->Client_model->get_client_id($idUser)[0]->idClient;
+
+                    // Check if user have a clientId
+                    $idClientBdd = $this->Client_model->get_client_id($idUser);
+                    if (isset($idClientBdd->idClient)){
+                        $idClient = $idClientBdd->idClient;
+                    } else {
+                        $idClient = null;
+                    }
 
                     $session_data = array(
                         'username' => $loginUser,

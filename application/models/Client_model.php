@@ -25,20 +25,29 @@ class Client_model extends MY_Model {
             'pointsFidelitesClient' => $pointsFidelitesClient
         );
 
-        return $this->create($data);
+        return $this -> create($data);
     }
 
     /**
      * Renvoie les donnees du client en fonction de son idUser
-     * @param $id   L'id User du client
+     * @param $idClient   L'id User du client
      */
-    public function get_client_id($id) {
-        $this->db->select('idClient');
-        $this->db->from('client');
-        $this->db->where('client.idUser', $id);
-        $query = $this->db->get();
+    public function get_client_id($idClient) {
+        $this -> db -> select('idClient');
+        $this -> db -> from('client');
+        $this -> db -> where('client.idUser', $idClient);
+        $query = $this -> db -> get();
 
-        return $query->result();
+        return $query -> result()[0];
+    }
+
+    public function get_nb_point_client($idClient){
+        $this -> db -> select('pointsFidelitesClient');
+        $this -> db -> from('client');
+        $this -> db -> where('client.idClient', $idClient);
+        $query = $this -> db -> get();
+
+        return $query -> result()[0];
     }
 
 }

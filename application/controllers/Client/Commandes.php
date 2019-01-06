@@ -33,21 +33,45 @@ class Commandes extends CI_Controller {
      * Page du panier
      */
     public function afficher_commandes() {
-
         if (isset($this -> session -> logged_in['username'])) {
+            $result = $this -> Commande_model -> produits_commande();
+            if ($result && count($result) > 0) {
+                $produits = array();
+                foreach ($result as $ligne) {
+                    $produit = array();
+                    $produit['img_url'] = url_images_in_folder("/assets/images/produits/produit_" . $ligne -> idProduitType . "/", true)[0];
+                    $produit['idCommande'] = $ligne -> idCommande;
+                    $produit['nomProduitVariante'] = $ligne -> nomProduitVariante;
+                    $produit['idProduitType'] = $ligne -> idProduitType;
+                    $produit['designation'] = $ligne -> nomProduitVariante;
+                    $produit['nomCommerce'] = $ligne -> nomCommerce;
+                    $produit['etatReservationLigneCommande'] = $ligne -> etatReservationLigneCommande;
+                    $produit['prixProduitVariante'] = $ligne -> prixProduitVariante;
+                    $produit['quantité'] = $ligne -> quantité;
+                    $produit['designation'] = $ligne -> nomProduitVariante;
+                    $produit['prixAchatProduit'] = $ligne -> prixAchatProduit;
+                    array_push($produits, $produit);
+                }
 
-            $data = array(
-                'produits' => $this -> Commande_model -> produits_commande(),
-            );
+                $data = array (
+                    'produits' => $produits,    
+                );
 
-            $this->layout->view('Client/Commandes/commandes', $data);
+                $this -> layout -> views('template/message_display', $data);
+            } else {
+                $data = array(
+                    'message_display' => 'Aucun produit commandé',
+                );
+            $this -> layout -> views('template/message_display', $data);
+            }
         } else {
             $data = array(
                 'error_message' => 'Vous n\'êtes pas connecté',
             );
-            $this -> layout -> view('template/error_display', $data);
+            $this -> layout -> views('template/error_display', $data);
         }
-      }
+        $this -> layout -> view('Client/Commandes/commandes');
+    }
 
     /**
      * Ajoute le panier aux commandes
@@ -77,7 +101,7 @@ class Commandes extends CI_Controller {
                 );
                 $result = $this -> Ligne_commande_model -> create($data);
               }
-              // TODO : Vider Panier
+              // TODO : Vider Panier (Je ne suis pas sur de comment le faire proprement, sacahnt que je ne peux pas appeler une fonction provenant d'un autre controller ...)
               $this -> afficher_commandes();
           } else {
             //annuler_commande
@@ -104,8 +128,9 @@ class Commandes extends CI_Controller {
      * @param int $idProduit    l'id du produit a supprimer des commandes
      * @param int $quantite     La quantite a supprimer, si la quantite est <= 0 ou est plus grande que la quantite actuelle, supprime tout.
      */
-    public function annuler_commande($idProduit, $quantite = 1) {
-      // TODO : Faire fonction annuler commande quand l'ajout seras finalisé
+    public function annuler_commande($idCommande) {
+        // TODO : Faire fonction annuler commande quand l'ajout seras finalisé
+        // NOTE : Il faut vérifier que la commande appartient bien a l'utilisateur connecté
         $this -> afficher_commandes();
     }
 }
