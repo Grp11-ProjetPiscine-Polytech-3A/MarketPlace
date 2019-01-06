@@ -102,16 +102,19 @@ class Commerces extends Commercant {
             );
             // Creer la ligne dans commerce
             $resultCommerce = $this->Commerce_model->create($table_commerce);
-
+            $data = array(
+                'message_display' => "Le commerce a bien été créé",
+            );
             
         } else {
             $data = array(
                 'error_message' => "Erreur dans le formulaire : <br />" . $this->form_validation->error_string()
             );
         }
+        
         $this->layout->views('template/error_display', $data);
         $this->layout->views('template/message_display', $data);
-        $this->layout->view('Commercant/espace_commercant', $data);
+        $this->liste_commerces();
     }
     
 }
