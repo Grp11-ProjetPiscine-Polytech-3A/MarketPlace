@@ -35,10 +35,10 @@ class Produits extends Commercant {
     public function liste_produits($siretCommerce = null) {
         $commerces = $this->get_commerces();
         if ($siretCommerce) {
-            // TODO Tri des produits juste pour ce commerce. ATTENTION : Verifier que l'utilisateur gere bien ce commerce la
+// TODO Tri des produits juste pour ce commerce. ATTENTION : Verifier que l'utilisateur gere bien ce commerce la
         }
 
-        // Reccupere la liste des produits
+// Reccupere la liste des produits
         $liste_produits = $this->liste_produit();
 
         $data = array(
@@ -87,7 +87,7 @@ class Produits extends Commercant {
 
         if ($this->form_validation->run()) {
 
-            // Recuperer les données du formulaire pour creer le produit type
+// Recuperer les données du formulaire pour creer le produit type
             $data_post = $this->input->post();
             $table_produit_type = array(
                 "nomProduitType" => $data_post["nomProduit"],
@@ -96,16 +96,16 @@ class Produits extends Commercant {
                 "idCategorie" => $data_post["categorie"],
                 "siretCommerce" => $data_post["commerce"],
             );
-            // Creer la ligne dans Produit Type
+// Creer la ligne dans Produit Type
             $resultProduitType = $this->Produit_type_model->create($table_produit_type);
 
             if ($resultProduitType) {
-                // Aller chercher l'id du produit type créé
-                //$idProduitType = $this->Produit_type_model->getIdProduitType($data_post["nomProduit"])[0]->idProduitType;
-                //--- Alternative : 
+// Aller chercher l'id du produit type créé
+//$idProduitType = $this->Produit_type_model->getIdProduitType($data_post["nomProduit"])[0]->idProduitType;
+//--- Alternative : 
                 $idProduitType = $this->db->insert_id();
 
-                // Recuperer les données du formulaire pour creer le produit variante
+// Recuperer les données du formulaire pour creer le produit variante
                 $table_produit_variante = array(
                     "nomProduitVariante" => $data_post["nomProduit"],
                     "descriptionProduitVariante" => $data_post["description"],
@@ -116,15 +116,15 @@ class Produits extends Commercant {
                 $resultProduitVariante = $this->Produit_variante_model->create($table_produit_variante);
 
                 if ($resultProduitVariante) {
-                    // Recuperer les l'id du produit Variant pour l'integrer dans le nom de l'image
+// Recuperer les l'id du produit Variant pour l'integrer dans le nom de l'image
                     $idProduitVariante = $this->Produit_variante_model->getIdProduitVariante($data_post["nomProduit"])[0]->idProduitVariante;
 
-                    // Ajout des caracteristiques
+// Ajout des caracteristiques
                     if (array_key_exists("carac", $data_post) && array_key_exists("carac_text", $data_post)) {
                         $this->enregistrer_caracteristiques_produit_type($idProduitType, $data_post["carac"], $data_post["carac_text"]);
                     }
 
-                    // Upload des images
+// Upload des images
                     $upload = $this->upload_images_produit($idProduitType, $idProduitVariante);
 
                     if (!$upload) {
@@ -174,7 +174,7 @@ class Produits extends Commercant {
         $data = $this->get_data_produit_type($id_produit, true);
         if ($data) {
 
-            // Gestion de la taille max des descriptions des variantes
+// Gestion de la taille max des descriptions des variantes
             foreach ($data['variantes'] as $v) {
                 $longueur_max_description = 100;
                 $v->descriptionProduitVariante = substr($v->descriptionProduitVariante, 0, $longueur_max_description);
@@ -201,13 +201,13 @@ class Produits extends Commercant {
         $data = $this->get_data_produit_type($id_produit);
         if ($data) {
 
-            // Reccupere la liste des categories
+// Reccupere la liste des categories
             $categ = $this->Categorie_model->read('*');
             if (!$categ) {
                 $categ = array();
             }
 
-            // Reccupere la liste des caracteristique
+// Reccupere la liste des caracteristique
             $caracteristiques = $this->Caracteristique_model->liste_caract();
             if (!$caracteristiques) {
                 $caracteristiques = array();
@@ -236,7 +236,7 @@ class Produits extends Commercant {
         $this->form_validation->set_rules('description', '"Description du produit"', 'trim|required|encode_php_tags');
 
         if ($this->form_validation->run()) {
-            // Recuperer les données du formulaire pour creer le produit type
+// Recuperer les données du formulaire pour creer le produit type
             $data_post = $this->input->post();
             $table_produit_type = array(
                 "nomProduitType" => $data_post["nomProduit"],
@@ -245,17 +245,17 @@ class Produits extends Commercant {
                 "idCategorie" => $data_post["categorie"],
                 "siretCommerce" => $data_post["commerce"],
             );
-            // Creer la ligne dans Produit Type
-            // TODO enregistrer image + carac
+// Creer la ligne dans Produit Type
+// TODO enregistrer image + carac
             $resultProduitType = $this->Produit_type_model->update($id_produit, $table_produit_type);
             if ($resultProduitType) {
 
-                // Ajout des caracteristiques
+// Ajout des caracteristiques
                 if (array_key_exists("carac", $data_post) && array_key_exists("carac_text", $data_post)) {
                     $this->enregistrer_caracteristiques_produit_type($id_produit, $data_post["carac"], $data_post["carac_text"]);
                 }
 
-                // Enregistrement des images
+// Enregistrement des images
                 $upload = $this->upload_images_produit($id_produit);
 
                 if ($upload) {
@@ -298,11 +298,16 @@ class Produits extends Commercant {
             }
         }
         if ($id_produit_suppr != 0) {
+            $this->verif_produit($id_produit_suppr);
             $where = array(
                 "idProduitType" => $id_produit_suppr,
             );
             $res = $this->Produit_type_model->delete($where);
             if ($res) {
+
+                // Supprime les images
+                rrmdir(FCPATH . 'assets/images/produits/produit_' . $id_produit_suppr);
+
                 $data = array(
                     'message_display' => 'Le produit a bien été supprimé'
                 );
@@ -318,13 +323,61 @@ class Produits extends Commercant {
     }
 
     /**
+     * Supprime une variante
+     * @param type $idProduitVariante
+     */
+    public function supprimer_produit_variante($idProduitVariante = 0) {
+        if ($idProduitVariante != 0) {
+            // Reccupere les donnees de la variante
+            $produitVariante = $this->get_data_produit_variante($idProduitVariante);
+
+            if ($produitVariante) {
+                $this->verif_produit($produitVariante->idProduitType);
+                $idProduitType = $produitVariante->idProduitType;
+
+                // Supprime de la base de donneees
+                $where = array(
+                    "idProduitVariante" => $idProduitVariante,
+                );
+                $res = $this->Produit_variante_model->delete($where);
+                if ($res) {
+                    // Supprime les images
+                    rrmdir(FCPATH . 'assets/images/produits/produit_' . $idProduitType . '/variante_' . $idProduitVariante);
+
+                    $whereProduit = array(
+                        "idProduitType" => $idProduitType,
+                    );
+
+                    // supprime le produit type s'il n'existe plus de variantes
+                    $variantes = $this->Produit_variante_model->read("idProduitVariante", $whereProduit);
+                    if ($variantes && count($variantes) > 0) {
+                        $data = ["message_display" => "Le produit a bien été supprimé"];
+                        $this->layout->views('template/message_display', $data);
+                        $this->liste_produits();
+                    } else {
+                        $this->supprimer_produit($idProduitType);
+                    }
+                } else {
+                    $data = ["error_message" => "Erreur lors de la suppression du produit"];
+                    $this->layout->views('template/error_display', $data);
+                    $this->liste_produits();
+                }
+            }
+        } else {
+            $data = ["error_message" => "Cette variante n'existe pas"];
+            $this->layout->views('template/error_display', $data);
+            $this->liste_produits();
+        }
+    }
+
+    /**
      * Retourne la liste des produits pouvant etre geree par ce commercant (connecte)
      * @return Array La liste des produits
      */
     private function liste_produit() {
         $commerces = $this->get_commerces();
 
-        // Reccupere la liste des produits
+// Reccupere la liste des produits
         $liste_produits = array();
         foreach ($commerces as $com) {
             foreach ($com as $c) {
@@ -336,17 +389,17 @@ class Produits extends Commercant {
                 if ($produits) {
                     foreach ($produits as $p) {
 
-                        // Ajoute aux donnees du produit l'url de l'image 
+// Ajoute aux donnees du produit l'url de l'image 
                         $image_url = url_images_in_folder("/assets/images/produits/produit_" . $p->idProduitType . "/", true) [0];
                         $p->image_url = $image_url;
 
-                        // Ajout le nom du commerce au donnees du produit
+// Ajout le nom du commerce au donnees du produit
                         $p->nomCommerce = $c->nomCommerce;
 
-                        // On reccupere le prix 
+// On reccupere le prix 
                         $p->prixProduitType = $this->Produit_type_model->getRangePrice($p->idProduitType);
 
-                        // Ajoute le produit avec les donnees completés à la liste
+// Ajoute le produit avec les donnees completés à la liste
                         $liste_produits[] = $p;
                     }
                 }
@@ -400,10 +453,10 @@ class Produits extends Commercant {
         if ($this->form_validation->run()) {
 
             $idProduitType = $id_produit;
-            // Recuperer les données du formulaire pour creer le produit type
+// Recuperer les données du formulaire pour creer le produit type
             $data_post = $this->input->post();
 
-            // Recuperer les données du formulaire pour creer le produit variante
+// Recuperer les données du formulaire pour creer le produit variante
             $table_produit_variante = array(
                 "nomProduitVariante" => $data_post["nomProduit"],
                 "descriptionProduitVariante" => $data_post["description"],
@@ -416,12 +469,12 @@ class Produits extends Commercant {
             if ($resultProduitVariante) {
                 $idProduitVariante = $this->db->insert_id();
 
-                // Ajout des caracteristiques
+// Ajout des caracteristiques
                 if (array_key_exists("carac", $data_post) && array_key_exists("carac_text", $data_post)) {
                     $this->enregistrer_caracteristiques_produit_variante($idProduitVariante, $data_post["carac"], $data_post["carac_text"]);
                 }
 
-                // Enregistrement des images 
+// Enregistrement des images 
                 $upload = $this->upload_images_produit($id_produit, $idProduitVariante);
 
                 if (!$upload) {
@@ -459,17 +512,17 @@ class Produits extends Commercant {
      * @param type $idProduitVariante
      */
     public function modifier_produit_variante($idProduitVariante = 0) {
-        // Reccupere les donnees de la variante
+// Reccupere les donnees de la variante
         $produitVariante = $this->get_data_produit_variante($idProduitVariante);
 
         if ($produitVariante) {
             $this->verif_produit($produitVariante->idProduitType);
 
-            // Reccupere les donnees du produit type
+// Reccupere les donnees du produit type
             $whereProduitType = ['idProduitType' => $produitVariante->idProduitType];
             $produit_type = $this->Produit_type_model->read("*", $whereProduitType, 1)[0];
 
-            // Reccupere la liste des carac
+// Reccupere la liste des carac
             $caracteristiques = $this->Caracteristique_model->liste_caract();
             if (!$caracteristiques) {
                 $caracteristiques = array();
@@ -482,7 +535,7 @@ class Produits extends Commercant {
             );
             $this->layout->view('Commercant/Produits/modifier_produit_variante', $data);
         } else {
-            // La variante n'existe pas
+// La variante n'existe pas
             $data = array(
                 'error_message' => "Cette variante n'existe pas"
             );
@@ -492,7 +545,7 @@ class Produits extends Commercant {
 
     public function modifier_produit_variante_process($idProduitVariante = 0) {
 
-        // Reccupere les donnees de la variante
+// Reccupere les donnees de la variante
         $produitVariante = $this->get_data_produit_variante($idProduitVariante);
 
         if ($produitVariante) {
@@ -504,14 +557,14 @@ class Produits extends Commercant {
             $this->form_validation->set_rules('description', '"Description du produit"', 'trim|required|encode_php_tags');
 
             if ($this->form_validation->run()) {
-                // Recuperer les données du formulaire pour creer le produit type
+// Recuperer les données du formulaire pour creer le produit type
                 $data_post = $this->input->post();
 
 
                 $whereVariante = array(
                     "idProduitVariante" => $idProduitVariante,
                 );
-                // Recuperer les données du formulaire pour creer le produit variante
+// Recuperer les données du formulaire pour creer le produit variante
                 $setVariante = array(
                     "nomProduitVariante" => $data_post["nomProduit"],
                     "descriptionProduitVariante" => $data_post["description"],
@@ -522,12 +575,12 @@ class Produits extends Commercant {
 
                 if ($updateProduitVariante) {
 
-                    // Ajout des caracteristiques
+// Ajout des caracteristiques
                     if (array_key_exists("carac", $data_post) && array_key_exists("carac_text", $data_post)) {
                         $this->enregistrer_caracteristiques_produit_variante($idProduitVariante, $data_post["carac"], $data_post["carac_text"]);
                     }
 
-                    // Enregistrement des images 
+// Enregistrement des images 
                     $upload = $this->upload_images_produit($produitVariante->idProduitType, $idProduitVariante);
 
                     if (!$upload) {
@@ -558,7 +611,7 @@ class Produits extends Commercant {
                 $this->modifier_produit_variante($idProduitVariante);
             }
         } else {
-            // La variante n'existe pas
+// La variante n'existe pas
             $data = array(
                 'error_message' => "Cette variante n'existe pas"
             );
@@ -661,19 +714,19 @@ class Produits extends Commercant {
         if ($idProduitType) {
             $config = [];
 
-            // Configurer les fichiers acceptés
+// Configurer les fichiers acceptés
             $config['file_name'] = 'img';
             $config['allowed_types'] = 'gif|jpg|jpeg|png';
             $config['max_size'] = 10000;
             $config['max_width'] = 1024;
             $config['max_height'] = 768;
 
-            // Création du dossier accueillant l'image
+// Création du dossier accueillant l'image
             if (!file_exists('assets/images/produits/produit_' . $idProduitType)) {
                 mkdir('assets/images/produits/produit_' . $idProduitType, 0755, true);
             }
             if ($idProduitVariante) {
-                // Création du dossier accueillant l'image de la variante
+// Création du dossier accueillant l'image de la variante
                 if (!file_exists('assets/images/produits/produit_' . $idProduitType . '/variante_' . $idProduitVariante)) {
                     mkdir('assets/images/produits/produit_' . $idProduitType . '/variante_' . $idProduitVariante, 0755, true);
                 }
@@ -682,7 +735,7 @@ class Produits extends Commercant {
                 $config['upload_path'] = get_absolute_path('assets/images/produits/produit_' . $idProduitType);
             }
 
-            // Effectue l'upload
+// Effectue l'upload
             return upload_files_from_form($config);
         }
         return false;
@@ -701,39 +754,39 @@ class Produits extends Commercant {
         if ($produitType) {
             $produitType = $produitType [0];
 
-            // Reccuperation des url des images du produit
+// Reccuperation des url des images du produit
             $produitType->images_url = url_images_in_folder("/assets/images/produits/produit_" . $produitType->idProduitType);
 
-            // Reccupere les variantes et leur donnees
+// Reccupere les variantes et leur donnees
             $variantes = $this->Produit_variante_model->read("*", $where);
 
             $array_variantes = array();
-            // Reccuperation des url des images des variantes 
+// Reccuperation des url des images des variantes 
             foreach ($variantes as $v) {
                 $v->images_url = url_images_in_folder("/assets/images/produits/produit_" . $produitType->idProduitType . '/variante_' . $v->idProduitVariante);
                 $array_variantes[] = $v;
             }
 
-            // Reccuperation de la categorie
+// Reccuperation de la categorie
             $whereCateg = ['idCategorie' => $produitType->idCategorie];
             $categ = $this->Categorie_model->read('*', $whereCateg, 1)[0];
 
             $produitType->categ = $categ;
 
-            // Reccuperation du commerce
+// Reccuperation du commerce
             $whereCom = ['siretCommerce' => $produitType->siretCommerce];
             $com = $this->Commerce_model->read('*', $whereCom, 1)[0];
 
             $produitType->commerce = $com;
 
-            // Reccuperation des caracteristiques
+// Reccuperation des caracteristiques
             $carac = $this->Produit_type_model->getCaracteristiques($id_produit);
             $produitType->caracteristiques = $carac;
 
-            // Reccuperation du prix 
+// Reccuperation du prix 
             $produitType->prixProduitType = $this->Produit_type_model->getRangePrice($produitType->idProduitType);
 
-            // Construction du tableau
+// Construction du tableau
             $data = [
                 "produit_type" => $produitType,
                 "variantes" => $array_variantes,
@@ -745,16 +798,16 @@ class Produits extends Commercant {
     }
 
     private function get_data_produit_variante($idProduitVariante = 0) {
-        // Reccupere les donnees de la variante
+// Reccupere les donnees de la variante
         $whereVariante = ['idProduitVariante' => $idProduitVariante];
         $produitVariante = $this->Produit_variante_model->read('*', $whereVariante, 1);
 
         if ($produitVariante) {
             $produitVariante = $produitVariante[0];
-            // Reccupere les url des images
+// Reccupere les url des images
             $produitVariante->images_url = $this->get_url_img_produit($produitVariante->idProduitType, $idProduitVariante);
 
-            // Reccuperation des caracteristiques
+// Reccuperation des caracteristiques
             $carac = $this->Produit_variante_model->getCaracteristiques($idProduitVariante);
             $produitVariante->caracteristiques = $carac;
 
@@ -778,7 +831,7 @@ class Produits extends Commercant {
             }
         }
 
-        // Si la fonction n'a pas retourne, c'est a dire si l'id du produit renseigne ne correspond a aucun produits pouvant gere par le commercant
+// Si la fonction n'a pas retourne, c'est a dire si l'id du produit renseigne ne correspond a aucun produits pouvant gere par le commercant
         $data = array(
             'error_message' => 'Vous ne possédez pas les droits pour accéder à cette page',
         );
