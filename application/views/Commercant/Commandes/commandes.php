@@ -39,7 +39,7 @@
 
                             <!-- Client -->
                             <td>
-                                <a href="<?php echo site_url('/Clients/fiche_client/' . $c->idClient) ?>">
+                                <a href="<?php echo site_url('/Commercant/Clients/fiche_client/' . $c->idClient) ?>">
                                     <?php echo mb_ucfirst($c->nomClient) . ' ' . mb_ucfirst($c->prenomClient) ?>
                                 </a>
 
