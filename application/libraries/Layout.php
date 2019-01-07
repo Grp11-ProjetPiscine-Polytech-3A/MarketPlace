@@ -115,6 +115,7 @@ class Layout {
       | Méthodes pour ajouter des feuilles de CSS et de JavaScript
       |   . ajouter_css
       |   . ajouter_js
+      |   . ajouter_jquery
       |===============================================================================
      */
 
@@ -128,7 +129,7 @@ class Layout {
 
     public function ajouter_js($nom) {
         if (is_string($nom) AND ! empty($nom) AND file_exists('./assets/js/' . $nom . '.js')) {
-            $this->var['js'][] = js_url($nom);
+            $this->var['js'][] = site_url('assets/js/') . $nom . '.js';
             return true;
         }
         return false;
@@ -136,7 +137,7 @@ class Layout {
 
     public function ajouter_jquery($nom) {
         if (is_string($nom) AND ! empty($nom) AND file_exists('./assets/jquery/' . $nom . '.js')) {
-            $this->var['jquery'][] = js_url($nom);
+            $this->var['jquery'][] = site_url('assets/jquery/') . $nom . '.js';
             return true;
         }
         return false;
@@ -178,7 +179,7 @@ class Layout {
         $this->CI->load->library('session');
 
         // Ajoute a menu
-        //$this->ajouter_menu('menu', 'Accueil', '');
+        $this->ajouter_menu('menu', 'Accueil', '');
         $this->ajouter_menu('menu', 'Liste des Commerces', 'Commerces');
         $this->ajouter_menu('menu', 'Liste des Produits', 'Produits');
 

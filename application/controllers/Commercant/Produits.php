@@ -74,7 +74,6 @@ class Produits extends Commercant {
     /**
      * Processus d'enregistrement du nouveau produit : Cree un produit type, un produit variante et enregistre les categories et images associees
      * TODO Enregistrer les caracteristiques sur le produit type et non la variante
-     * TODO Check que ce commercant a bien le droit d'ajouter un produit a ce commerce
      */
     public function ajout_produit_process() {
 
@@ -246,7 +245,6 @@ class Produits extends Commercant {
                 "siretCommerce" => $data_post["commerce"],
             );
 // Creer la ligne dans Produit Type
-// TODO enregistrer image + carac
             $resultProduitType = $this->Produit_type_model->update($id_produit, $table_produit_type);
             if ($resultProduitType) {
 

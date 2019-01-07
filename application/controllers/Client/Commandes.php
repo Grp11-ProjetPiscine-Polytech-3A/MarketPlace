@@ -3,6 +3,9 @@
 defined('BASEPATH') OR exit('No direct script access allowed');
 
 class Commandes extends CI_Controller {
+
+    private $tauxGainPoints = 0.05;
+
     /*
       |===============================================================================
       | Constructeur
@@ -20,6 +23,7 @@ class Commandes extends CI_Controller {
         $this->load->library('Layout');
 
         $this->load->model('Commande_model');
+        $this->load->model('Client_model');
         $this->load->model('Client_commande_effectuer_model');
         $this->load->model('Ligne_commande_model');
         $this->load->model('Produit_variante_model');
@@ -86,48 +90,76 @@ class Commandes extends CI_Controller {
      */
     public function ajouter_commandes() {
         // Ajout de la commande
-        $result_commande = $this->Commande_model->creer_commande();
-        if (!is_null($result_commande)) {
-            $idCommande = $result_commande;
-            $idClient = $this->session->logged_in['idClient'];
-            // TODO : ajouter nbPoint depuis panier
-            $nbPoint = 0;
-            // Liaison de la commande avec le client
-            $result_client_commande = $this->Client_commande_effectuer_model->ajouter_client_commande_effectuer($idCommande, $idClient, $nbPoint);
-            if ($result_client_commande) {
-                // Si l'ajout s'est bien effectué
-                // Ajout des produits dans le panier aux commandes
-                foreach ($this->session->panier as $product) {
-                    $idProduit = (int) $product['idProduit'];
-                    $data = array(
-                        // TODO : Systeme de validation du commercant
-                        'etatReservationLigneCommande' => 'Commande passée non validée',
-                        'quantité' => $product['quantite'],
-                        'prixAchatProduit' => $this->Produit_variante_model->getProductPrice($idProduit),
-                        'idProduitVariante' => $product['idProduit'],
-                        'idCommande' => $idCommande,
-                    );
-                    $result = $this->Ligne_commande_model->create($data);
+        if (count($this->session->panier)) {
+            $result_commande = $this->Commande_model->creer_commande();
+            if (!is_null($result_commande)) {
+                $idCommande = $result_commande;
+                $idClient = $this->session->logged_in['idClient'];
+
+                $whereClient = ["idClient" => $idClient];
+                // Gestion du prix avec points de fidelite
+
+                $nbpoint = $this->input->post('nbpoints');
+                $ptsFidelitesClients = $this->Client_model->read('pointsFidelitesClient', $whereClient)[0]->pointsFidelitesClient;
+                if ($nbpoint > $ptsFidelitesClients) {
+                    $nbpoint = $ptsFidelitesClients;
                 }
 
-                // Supprime les donnees du panier
-                $this->session->set_userdata('panier', []);
-                $this->afficher_commandes();
+                $ptsFidelitesClients = $ptsFidelitesClients - $nbpoint;
+
+                // Liaison de la commande avec le client
+                $result_client_commande = $this->Client_commande_effectuer_model->ajouter_client_commande_effectuer($idCommande, $idClient, $nbpoint);
+                if ($result_client_commande) {
+                    // Si l'ajout s'est bien effectué
+                    // Ajout des produits dans le panier aux commandes
+
+                    $prixTotal = 0;
+
+                    $reduction = ($nbpoint / 100) / count($this->session->panier);
+
+                    foreach ($this->session->panier as $product) {
+                        $idProduit = (int) $product['idProduit'];
+                        $data = array(
+                            'etatReservationLigneCommande' => 'Commande passée non validée',
+                            'quantité' => $product['quantite'],
+                            'prixAchatProduit' => $this->Produit_variante_model->getProductPrice($idProduit) - $reduction,
+                            'idProduitVariante' => $product['idProduit'],
+                            'idCommande' => $idCommande,
+                        );
+                        $prixTotal += $data['prixAchatProduit'] * $data['quantité'];
+                        $result = $this->Ligne_commande_model->create($data);
+                    }
+
+                    // Calcul des points
+                    $pointsGagnes = (Int) $prixTotal * $this->tauxGainPoints;
+
+                    // Ajout des points
+                    $addPts = $this->Client_model->update($whereClient, ['pointsFidelitesClient' => $ptsFidelitesClients + $pointsGagnes]);
+
+                    // Supprime les donnees du panier
+                    $this->session->set_userdata('panier', []);
+                    $this->afficher_commandes();
+                } else {
+                    //annuler_commande
+                    $where = array(
+                        'idCommande' => $idCommande,
+                    );
+                    $this->Commande_model->delete($where);
+                    $this->Client_commande_effectuer_model->delete($where);
+                    $data = array(
+                        'error_message' => 'Echec de l\'ajout de la commande, suppression',
+                    );
+                    $this->layout->view('template/error_display', $data);
+                }
             } else {
-                //annuler_commande
-                $where = array(
-                    'idCommande' => $idCommande,
-                );
-                $this->Commande_model->delete($where);
-                $this->Client_commande_effectuer_model->delete($where);
                 $data = array(
-                    'error_message' => 'Echec de l\'ajout de la commande, suppression',
+                    'error_message' => 'Echec de l\'ajout de la commande',
                 );
                 $this->layout->view('template/error_display', $data);
             }
         } else {
             $data = array(
-                'error_message' => 'Echec de l\'ajout de la commande',
+                'error_message' => 'Votre panier est vide',
             );
             $this->layout->view('template/error_display', $data);
         }
@@ -150,7 +182,6 @@ class Commandes extends CI_Controller {
             // Supprime la ligne de commande
             $del = $this->Ligne_commande_model->delete($where);
 
-            // TODO suppression des points
             if ($del) {
 
 

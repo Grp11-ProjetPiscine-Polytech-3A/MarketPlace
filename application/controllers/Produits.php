@@ -25,6 +25,7 @@ class Produits extends CI_Controller {
         $this->load->model('Commerce_model');
         $this->load->model('Commercant_model');
         $this->load->model('User_admin_model');
+        $this->load->model('User_model');
         $this->load->model('Client_donner_avis_model');
 
         $categ = $this->Categorie_model->read('*');
@@ -34,7 +35,6 @@ class Produits extends CI_Controller {
             $this->layout->ajouter_menu_url('sideMenu', $intitule, 'Produits/liste_produits/' . $c->idCategorie);
         }
 
-        $this->layout->ajouter_css("ficheProduit");
         $this->layout->setNomSideMenu("Categories");
     }
 
@@ -96,7 +96,7 @@ class Produits extends CI_Controller {
         }
     }
 
-    public function fiche_produit($id_Produit, $id_variante = 0) {
+    public function fiche_produit($id_Produit, $id_variante = 0, $error_message = '', $message_display = '') {
         $whereProduit = array(
             "idProduitType" => $id_Produit,
         );
@@ -145,15 +145,63 @@ class Produits extends CI_Controller {
                 "caracteristiques" => array_merge($this->Produit_variante_model->getCaracteristiques($id_variante), $this->Produit_type_model->getCaracteristiques($produit->idProduitType)),
                 "commentaire" => $this->Client_donner_avis_model->getCommentaires($id_Produit),
             );
+            $this->layout->ajouter_css("ficheProduit");
+            $this->layout->ajouter_jquery("Produit/star_rating");
+
+            if ($error_message != '') {
+                $data['error_display'] = $error_message;
+                $this->layout->views('template/error_display', $data);
+            }
+            if ($message_display != '') {
+                $data['message_display'] = $message_display;
+                $this->layout->views('template/message_display', $data);
+            }
 
             $this->layout->view('Produits/fiche_produit', $data);
         } else {
             $data = array(
                 'error_message' => 'Une erreur s\'est produite',
             );
-
             $this->layout->view('template/error_display', $data);
         }
+    }
+
+    public function ajouter_commentaire($id_produit, $id_produit_variante) {
+        // Si le client a commandé le produit et note comprise entre 0 et 5 poster commentaire
+        $comment = $this->input->post('comment');
+        $note = $this->input->post('note');
+        $error_message = '';
+        $message_display = '';
+        if ($note >= 0 && $note <= 5) {
+            if ($this->User_model->a_commande($id_produit_variante)) {
+
+                // Update du comment
+                $where = [
+                    'idClient' => $this->session->logged_in['idClient'],
+                    'idProduitVariante' => $id_produit_variante,
+                ];
+                if (count($this->Client_donner_avis_model->read('*', $where)) > 0) {
+                    $set = [
+                    'commentaire' => $comment,
+                    'note' => $note,
+                    ];
+                    $result = $this->Client_donner_avis_model->update($where, $set);
+                } else {
+                    // Creation du comment
+                    $result = $this->Client_donner_avis_model->ajouter_client_donner_avis($id_produit_variante, $comment, $note);
+                }
+                if ($result) {
+                    $message_display = 'Message ajouté';
+                } else {
+                    $error_message = 'Erreur lors de l\'ajout du message';
+                }
+            } else {
+                $error_message = 'Vous n\'avez pas acheté ce produit';
+            }
+        } else {
+            $error_message = 'Note incorrecte';
+        }
+        $this->fiche_produit($id_produit, $id_produit_variante, $error_message, $message_display);
     }
 
 }
