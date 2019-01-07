@@ -4,6 +4,11 @@
     <hr/>
 
     <div class="table-responsive">
+        
+        <div class="col-md-2 offset-md-10" style="text-align: right">
+            <a href="<?php echo base_url('Panier/vider_panier/') ?>">Vider le panier</a>
+        </div>
+        
         <table class="table">
             <thead>
                 <tr>
