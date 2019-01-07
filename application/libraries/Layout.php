@@ -35,6 +35,8 @@ class Layout {
 
         $this->var['js'] = array();
 
+        $this->var['jquery'] = array();
+
         // Parametre les menus
         // Menu principal
         $this->var['menu'] = array();
@@ -125,8 +127,16 @@ class Layout {
     }
 
     public function ajouter_js($nom) {
-        if (is_string($nom) AND ! empty($nom) AND file_exists('./assets/javascript/' . $nom . '.js')) {
+        if (is_string($nom) AND ! empty($nom) AND file_exists('./assets/js/' . $nom . '.js')) {
             $this->var['js'][] = js_url($nom);
+            return true;
+        }
+        return false;
+    }
+
+    public function ajouter_jquery($nom) {
+        if (is_string($nom) AND ! empty($nom) AND file_exists('./assets/jquery/' . $nom . '.js')) {
+            $this->var['jquery'][] = js_url($nom);
             return true;
         }
         return false;

@@ -27,7 +27,13 @@
         <script src="<?php echo base_url('assets/jquery/jquery.min.js'); ?>"></script>
         <script src="<?php echo base_url('assets/js/bootstrap.bundle.min.js'); ?>"></script>
 
+        <?php foreach ($js as $url): ?>
+            <script src="<?php echo $url; ?>"></script>
+        <?php endforeach; ?>
 
+        <?php foreach ($jquery as $url): ?>
+            <script src="<?php echo $url; ?>"></script>
+        <?php endforeach; ?>
 
     </head>
 
@@ -37,7 +43,7 @@
         <div class="navbar-dark bg-dark top-navbar">
             <!--TopMenu-->
             <div id="topMenu" class="container">
-                <div class="row">                        
+                <div class="row">
                     <div class="col-md-12 right-nav">
 
                         <?php if (array_key_exists('Auth', $topMenu)): ?>
@@ -148,7 +154,7 @@
 
 
             <?php foreach ($js as $url): ?>
-                <script type="text/javascript" src="<?php echo $url; ?>"></script> 
+                <script type="text/javascript" src="<?php echo $url; ?>"></script>
             <?php endforeach; ?>
 
     </body>
