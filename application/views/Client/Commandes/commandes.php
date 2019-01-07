@@ -58,7 +58,7 @@
 
                             <!-- Prix Total-->
                             <td>
-                                <?php echo $p['prixAchatProduit']*$p['quantité'] ?>
+                                <?php echo $p['prixAchatProduit']*$p['quantité'] ?> €
                             </td>
 
                             <td>

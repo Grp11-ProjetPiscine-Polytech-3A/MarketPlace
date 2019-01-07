@@ -72,7 +72,7 @@
             </tbody>
         </table>
     </div>
-
+    <?php echo form_open_multipart(base_url('Client/Commandes/ajouter_commandes')); ?>
     <div class="row justify-content-end">
         <div class="col-lg-3">
             <span class="pull-right lead"> Total : <?php echo $somme_totale ?> € </span>
@@ -89,7 +89,9 @@
     </div>
     <div class="row justify-content-end">
         <div class="col-lg-3">
-            <a class="passer_commande btn btn-primary" role="button" href= "<?php echo base_url('Client/Commandes/ajouter_commandes')?>">Passer Commande</a>
+            <!--<a class="passer_commande btn btn-primary" role="button" href= "<?php echo base_url('Client/Commandes/ajouter_commandes')?>">Passer Commande</a>-->
+            <button class="passer_commande btn btn-primary" type="submit" class="btn btn-primary">Passer Commande</button>
         </div>
     </div>
+    <?php echo form_close(); ?>
 </div>
