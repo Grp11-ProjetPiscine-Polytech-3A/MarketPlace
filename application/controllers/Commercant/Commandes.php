@@ -42,22 +42,19 @@ class Commandes extends Commercant {
                 $c->img_url = url_images_in_folder("/assets/images/produits/produit_" . $c->idProduitType . '/variante_' . $c->idProduitVariante) [0];
                 if ($c->etatReservationLigneCommande != "Confirmée" && $c->etatReservationLigneCommande != "Refusée") {
                     $c->color = "#CCC";
-                }
-                else if ($c->etatReservationLigneCommande == "Confirmée"){
+                } else if ($c->etatReservationLigneCommande == "Confirmée") {
                     $c->color = "#AAFFAA";
                 } else {
                     $c->color = "#FFABAB";
                 }
             }
-
             $data = ['commandes' => $commandes];
-            $this->layout->view('Commercant/Commandes/commandes', $data);
         } else {
-            $data = array(
-                'error_message' => 'Aucunes commandes pour l\'instant',
-            );
-            $this->layout->view('template/error_display', $data);
+            $data = array();
         }
+
+
+        $this->layout->view('Commercant/Commandes/commandes', $data);
     }
 
     public function confirmer_commande($idLigne = 0) {

@@ -1,5 +1,5 @@
 <div id="commandes">
-    <h2>Liste des produits commandés</h2>
+    <h2>Liste des produits commandés par des clients</h2>
     <hr/>
 
     <div class="table-responsive">
