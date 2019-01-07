@@ -100,6 +100,9 @@ class Commandes extends CI_Controller {
                 // Gestion du prix avec points de fidelite
 
                 $nbpoint = $this->input->post('nbpoints');
+                if (!$nbpoint) {
+                    $nbpoint = 0;
+                }
                 $ptsFidelitesClients = $this->Client_model->read('pointsFidelitesClient', $whereClient)[0]->pointsFidelitesClient;
                 if ($nbpoint > $ptsFidelitesClients) {
                     $nbpoint = $ptsFidelitesClients;
