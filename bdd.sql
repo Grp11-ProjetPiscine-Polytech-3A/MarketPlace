@@ -228,11 +228,11 @@ INSERT INTO `commercant` (`idCommercant`, `nomCommercant`, `prenomCommercant`, `
 (3, 'Saimond', 'Etienne', '1996-12-16', '0666666666', 35),
 (4, 'Laurancy', 'Dorian', '2018-03-18', '000000000', 33),
 (5, 'ANDREU', 'Paola', '1997-04-29', '0654453432', 63),
-(6, 'jean', 'jules', '2001-03-14', '0987656789', 65),
-(7, 'dujardin', 'francois', '1976-03-19', '0654456238', 73),
-(8, 'morel', 'jacques', '1945-11-12', '0654567876', 72),
-(9, 'dupont', 'olivia', '1998-12-12', '0654456787', 66),
-(10, 'dusfour', 'julie', '1995-10-10', '0632456753', 68),
+(6, 'Jean', 'Jules', '2001-03-14', '0987656789', 65),
+(7, 'Dujardin', 'Francois', '1976-03-19', '0654456238', 73),
+(8, 'Morel', 'Jacques', '1945-11-12', '0654567876', 72),
+(9, 'Dupont', 'Olivia', '1998-12-12', '0654456787', 66),
+(10, 'Dusfour', 'Julie', '1995-10-10', '0632456753', 68),
 (11, 'nomCommercant', 'prenomCommercant', '1999-10-10', '0123456789', 75);
 
 -- --------------------------------------------------------
@@ -280,15 +280,16 @@ CREATE TABLE `commerce` (
 --
 
 INSERT INTO `commerce` (`siretCommerce`, `nomCommerce`, `mailCommerce`, `telCommerce`, `numAdresseCommerce`, `rueCommerce`, `codePostalCommerce`, `villeCommerce`, `complementAdresseCommerce`, `tempsReservationProduitsCommerce`, `produitsLivrablesCommerce`, `idCommercant`, `descriptionCommerce`) VALUES
-('0123456', 'MonCommerce', 'moncommerce@gmail.com', '0123456789', 1, 'rue du commerce', 34000, 'ma ville', 'etage du commerce', '00:00:00', 1, 11, 'La description de mon beau commerce'),
-('12345678912345', 'Le commerce de Dédé', 'comdedede@mail.com', '0612345678', 12, 'Rue du pont', 34000, 'Montpellier', '', '800:00:00', 0, 2, 'Un petit commerce sympatique'),
-('3456543', 'jules n co', 'julesnco@gmail.com', '0467543456', 4, 'rue des gourmets', 34000, 'Montpellier', 'boite 45', '838:59:59', 0, 6, 'mode homme'),
-('34567654', 'La cabane magique', 'lacabanemagique@gmail.com', '0654234567', 3, 'rue des lilas', 34000, 'Montpellier', 'boite 45', '838:59:59', 1, 5, 'magasin de jouets enfant'),
-('3566435', 'Julietta', 'julietta@gmail.com', '0467565432', 380, 'avenue des pouses', 34080, 'Montpellier', 'Boite 6', '838:59:59', 0, 6, 'magasin de mode femme'),
-('544567543', 'oli\'tech', 'olitech@gmail.com', '0654345896', 40, 'boulevard des arts', 34010, 'Montpellier', 'Boite 32', '838:59:59', 0, 9, 'Magnifique magasin situé dans l\'écusson \r\nVente de matériel informatique'),
-('765675490', 'la chocolaterie', 'lachocolaterie@gmail.com', '0467898765', 5, 'rue de la république', 34000, 'Montpellier', 'bat 11', '00:00:00', 1, 7, 'chocolaterie plein centre de Montpellier \r\nfabrication maison'),
-('9865345673', 'les jardins de jacques', 'lesjardinsdejacques@gmail.com', '0654567898', 6, 'avenue des toupets', 34070, 'Montpellier', 'Boite 45', '838:59:59', 0, 8, 'tout pour le jardinage'),
-('998574983', 'Les bijoux de julie', 'lesbijouxdejulie@gmail.com', '0467545678', 30, 'avenue du pere soulas', 34000, 'Montpellier', 'res 45', '00:00:00', 1, 10, 'bijouterie fait main');
+('998574983', 'Les bijoux de Julie', 'lesbijouxdejulie@gmail.com', '0467545678', 30, 'avenue du pere soulas', 34000, 'Montpellier', 'res 45', '00:00:00', 1, 10, 'Bijouterie fait main'),
+('12345678912345', 'La boulangerie', 'laboulangerie@mail.com', '0612345678', 12, 'Rue du pont', 34000, 'Montpellier', '', '800:00:00', 0, 2, 'Un petit commerce sympatique'),
+('3456543', 'Jules N Co', 'julesnco@gmail.com', '0467543456', 4, 'rue des gourmets', 34000, 'Montpellier', 'boite 45', '838:59:59', 0, 6, 'Mode homme'),
+('34567654', 'La cabane magique', 'lacabanemagique@gmail.com', '0654234567', 3, 'rue des lilas', 34000, 'Montpellier', 'boite 45', '838:59:59', 1, 5, 'Magasin de jouets enfant'),
+('3566435', 'Julietta', 'julietta@gmail.com', '0467565432', 380, 'avenue des pouses', 34080, 'Montpellier', 'Boite 6', '838:59:59', 0, 6, 'Magasin de mode femme'),
+('544567543', 'Oli tech', 'olitech@gmail.com', '0654345896', 40, 'boulevard des arts', 34010, 'Montpellier', 'Boite 32', '838:59:59', 0, 9, 'Magnifique magasin possédant les derniers outils à la pointe de la technologie \r\nVente de matériel informatique'),
+('765675490', 'La chocolaterie', 'lachocolaterie@gmail.com', '0467898765', 5, 'rue de la république', 34000, 'Montpellier', 'bat 11', '00:00:00', 1, 7, 'Chocolaterie plein centre de Montpellier \r\nfabrication maison'),
+('9865345673', 'Les jardins de Jacques', 'lesjardinsdejacques@gmail.com', '0654567898', 6, 'avenue des toupets', 34070, 'Montpellier', 'Boite 45', '838:59:59', 0, 8, 'Tout pour le jardinage'),
+('998574983', 'Les bijoux de Julie', 'lesbijouxdejulie@gmail.com', '0467545678', 30, 'avenue du pere soulas', 34000, 'Montpellier', 'res 45', '00:00:00', 1, 10, 'Bijouterie fait main')
+('0123456', 'MonCommerce', 'moncommerce@gmail.com', '0123456789', 1, 'rue du commerce', 34000, 'ma ville', 'etage du commerce', '00:00:00', 1, 11, 'La description de mon beau commerce');
 
 -- --------------------------------------------------------
 
@@ -367,7 +368,7 @@ INSERT INTO `produit_type` (`idProduitType`, `nomProduitType`, `descriptionProdu
 (57, 'Bague', 'Bague en argent\r\n\r\nPlaqué or blanc', 0, 4, 6, '998574983'),
 (58, 'Collier', 'Collier en or diamant brut', 0, 2, 6, '998574983'),
 (59, 'Boucles oreilles', 'Boucles oreille en argent massif \r\nCréateur parisien', 0, 3, 6, '998574983'),
-(60, 'Bracelet', 'Bracelet chaine prénom sur commande\r\nargent massif', 0, 40, 6, '998574983'),
+(60, 'Bracelet', 'Bracelet chaine prénom sur commande\r\nArgent massif', 0, 40, 6, '998574983'),
 (61, 'Chaussettes', 'Chaussettes femme dessin rose', 0, 3, 1, '3566435'),
 (62, 'Manteau', 'Manteau femme laine', 0, 2, 1, '3566435'),
 (63, 'Débardeur', 'Débardeur femme synthétique', 0, 10, 1, '3566435'),
@@ -391,35 +392,35 @@ CREATE TABLE `produit_type_caracteristique` (
 --
 
 INSERT INTO `produit_type_caracteristique` (`idProduitType`, `idCaracteristique`, `contenuCaracteristique`) VALUES
-(40, 2, 'unique'),
-(40, 3, 'bleu'),
-(41, 3, 'kaki'),
-(42, 3, 'camel'),
-(43, 2, 'unique'),
-(43, 3, 'gris'),
-(44, 1, '100 gr'),
-(45, 1, '200 gr'),
-(46, 1, '50 gr'),
+(40, 2, 'Unique'),
+(40, 3, 'Bleu'),
+(41, 3, 'Kaki'),
+(42, 3, 'Camel'),
+(43, 2, 'Unique'),
+(43, 3, 'Gris'),
+(44, 1, '100 g'),
+(45, 1, '200 g'),
+(46, 1, '50 g'),
 (48, 2, '1 m'),
 (49, 2, '1,15 m'),
 (51, 2, '5 m'),
 (53, 2, '1 m'),
 (54, 2, '30 cm'),
-(54, 3, 'noir'),
-(55, 3, 'noir'),
-(56, 3, 'bleu'),
+(54, 3, 'Noir'),
+(55, 3, 'Noir'),
+(56, 3, 'Bleu'),
 (57, 2, '60'),
 (58, 2, '30 cm'),
 (60, 2, '18 cm'),
 (61, 2, '36-38'),
 (62, 2, 'M'),
-(62, 3, 'gris'),
+(62, 3, 'Gris'),
 (63, 2, 'S'),
-(63, 3, 'noir'),
+(63, 3, 'Noir'),
 (64, 2, 'M'),
-(64, 3, 'noir'),
+(64, 3, 'Noir'),
 (65, 1, '20 L'),
-(65, 3, 'marron\r\n');
+(65, 3, 'Marron\r\n');
 
 -- --------------------------------------------------------
 
