@@ -20,7 +20,7 @@
             <tbody>
                 <?php if(isset($produits)): ?>
                     <?php foreach ($produits as $p): ?>
-                        <tr>
+                        <tr style="background: <?php echo $p['color'] ?>">
 
                             <!-- Image -->
                             <td>

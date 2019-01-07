@@ -52,13 +52,20 @@ class Commandes extends CI_Controller {
                     $produit['quantité'] = $ligne->quantité;
                     $produit['designation'] = $ligne->nomProduitVariante;
                     $produit['prixAchatProduit'] = $ligne->prixAchatProduit;
+
+                    if ($produit['etatReservationLigneCommande'] != "Confirmée" && $produit['etatReservationLigneCommande'] != "Refusée") {
+                        $produit['color'] = "#CCC";
+                    } else if ($produit['etatReservationLigneCommande'] == "Confirmée") {
+                        $produit['color'] = "#AAFFAA";
+                    } else {
+                        $produit['color'] = "#FFABAB";
+                    }
                     array_push($produits, $produit);
                 }
 
                 $data = array(
                     'produits' => $produits,
                 );
-
             } else {
                 $data = array(
                     'message_display' => 'Vous n\'avez commandé aucun produit',

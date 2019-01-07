@@ -54,7 +54,7 @@ class Commande_model extends MY_Model {
      * @param type $idCommercant
      * @return type
      */
-    public function commandes_commercant($idCommercant = 0) {
+    public function commandes_commercant($idCommercant = 0, $where = array()) {
 
         /**
           SELECT   pv.idProduitVariante, pv.nomProduitVariante, pt.idProduitType,
@@ -76,28 +76,31 @@ class Commande_model extends MY_Model {
             $id = $idCommercant;
         }
 
-        $this->db->select('pv.idProduitVariante, pv.nomProduitVariante, pt.idProduitType, pt.nomProduitType, com.siretCommerce, com.nomCommerce, cl.idClient, cl.nomClient, cl.prenomClient, co.idCommande, co.dateCommande, lc.prixAchatProduit, lc.etatReservationLigneCommande, lc.quantité');
+        $this->db->select('pv.idProduitVariante, pv.nomProduitVariante, pt.idProduitType, pt.nomProduitType, com.siretCommerce, com.nomCommerce, cl.idClient, cl.nomClient, cl.prenomClient, co.idCommande, co.dateCommande, lc.prixAchatProduit, lc.etatReservationLigneCommande, lc.quantité, lc.idLigneCommande');
         $this->db->from('commercant as c, commerce as com, produit_type as pt, produit_variante as pv, ligne_commande as lc, commande as co, client as cl, client_commande_effectuer as clcom, commercant_commerce_gerer ccg');
         $this->db->where('(c.idCommercant = com.idCommercant OR (c.idCommercant = ccg.idCommercant AND ccg.siretCommerce = com.siretCommerce)) AND com.siretCommerce = pt.siretCommerce AND pt.idProduitType = pv.idProduitType AND pv.idProduitVariante = lc.idProduitVariante AND co.idCommande = lc.idCommande AND clcom.idCommande = co.idCommande AND clcom.idClient = cl.idClient AND c.idCommercant = ' . $id);
 
+        if (count($where) > 0) {
+            $this->db->where($where);
+        }
+
         $this->db->order_by("co.dateCommande", "desc");
-        
+
         $query = $this->db->get();
 
         return $query->result();
     }
-    
-    public function lignes_commandes ($idCommande) {
+
+    public function lignes_commandes($idCommande) {
         /**
          * Select count(idLigneCommande)
-            from ligne_commande as lc, commande as c 
-            where c.idCommande = lc.idCommande AND c.idCommande=7
+          from ligne_commande as lc, commande as c
+          where c.idCommande = lc.idCommande AND c.idCommande=7
          */
-        
         $this->db->select('*');
         $this->db->from('ligne_commande as lc, commande as c');
-        $this->db->where('c.idCommande = lc.idCommande AND c.idCommande='.$idCommande);
-        
+        $this->db->where('c.idCommande = lc.idCommande AND c.idCommande=' . $idCommande);
+
         $query = $this->db->get();
 
         return $query->result();
