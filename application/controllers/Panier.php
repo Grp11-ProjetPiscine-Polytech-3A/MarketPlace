@@ -162,6 +162,19 @@ class Panier extends CI_Controller {
         $this->afficher_panier();
     }
 
+    public function vider_panier() {
+        $this->session->set_userdata('panier', []);
+
+        $data = array(
+            'message_display' => 'Le panier a été vidé',
+        );
+
+        // Load the logged_in view
+        $this->layout->views('template/message_display', $data);
+        
+        $this->afficher_panier();
+    }
+
     /**
      * Supprime un produit du panier
      * @param int $idProduit    l'id du produit a supprimer
