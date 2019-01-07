@@ -36,7 +36,7 @@ class User_model extends MY_Model {
      * @return boolean            TRUE if the informations given are correct, FALSE else
      */
     public function login($login, $password) {
-        // Check if the user exists. 
+        // Check if the user exists.
         $result = $this->select_from_username($login);
 
         // If it doesn't exist, return false
@@ -91,6 +91,11 @@ class User_model extends MY_Model {
         } else {
             return false;
         }
+    }
+
+    public function a_commande($id_produit_variante) {
+        // TODO
+        return true;
     }
 
 }
