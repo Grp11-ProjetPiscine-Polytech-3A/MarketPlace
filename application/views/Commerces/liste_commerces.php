@@ -1,4 +1,6 @@
 <div id="liste_commerces">
+    
+  
 
     <div class="row">
 
