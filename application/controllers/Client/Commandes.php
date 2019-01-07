@@ -39,11 +39,13 @@ class Commandes extends CI_Controller {
                 $produits = array();
                 foreach ($result as $ligne) {
                     $produit = array();
-                    $produit['img_url'] = url_images_in_folder("/assets/images/produits/produit_" . $ligne->idProduitType . "/", true)[0];
+                    $produit['img_url'] = url_images_in_folder("/assets/images/produits/produit_" . $ligne->idProduitType . "/variante_" . $ligne->idProduitVariante, true)[0];
+                    $produit['idLigneCommande'] = $ligne->idLigneCommande;
                     $produit['idCommande'] = $ligne->idCommande;
                     $produit['nomProduitVariante'] = $ligne->nomProduitVariante;
+                    $produit['idProduitVariante'] = $ligne->idProduitVariante;
                     $produit['idProduitType'] = $ligne->idProduitType;
-                    $produit['designation'] = $ligne->nomProduitVariante;
+                    $produit['designation'] = $ligne->nomProduitType . ' - ' . $ligne->nomProduitVariante;
                     $produit['nomCommerce'] = $ligne->nomCommerce;
                     $produit['etatReservationLigneCommande'] = $ligne->etatReservationLigneCommande;
                     $produit['prixProduitVariante'] = $ligne->prixProduitVariante;
@@ -57,10 +59,9 @@ class Commandes extends CI_Controller {
                     'produits' => $produits,
                 );
 
-                $this->layout->views('template/message_display', $data);
             } else {
                 $data = array(
-                    'message_display' => 'Aucun produit commandé',
+                    'message_display' => 'Vous n\'avez commandé aucun produit',
                 );
                 $this->layout->views('template/message_display', $data);
             }
@@ -70,7 +71,7 @@ class Commandes extends CI_Controller {
             );
             $this->layout->views('template/error_display', $data);
         }
-        $this->layout->view('Client/Commandes/commandes');
+        $this->layout->view('Client/Commandes/commandes', $data);
     }
 
     /**
@@ -130,9 +131,47 @@ class Commandes extends CI_Controller {
      * @param int $idProduit    l'id du produit a supprimer des commandes
      * @param int $quantite     La quantite a supprimer, si la quantite est <= 0 ou est plus grande que la quantite actuelle, supprime tout.
      */
-    public function annuler_commande($idCommande) {
-        // TODO : Faire fonction annuler commande quand l'ajout seras finalisé
-        // NOTE : Il faut vérifier que la commande appartient bien a l'utilisateur connecté
+    public function annuler_commande($idLigneCommande = 0) {
+
+        // Verif de la commande
+        $where = ["ligne_commande.idLigneCommande" => $idLigneCommande];
+        $commande_ok = $this->Commande_model->produits_commande(0, $where);
+
+        if ($commande_ok && count($commande_ok) > 0) {
+            $idCommande = $commande_ok[0]->idCommande;
+
+            // Supprime la ligne de commande
+            $del = $this->Ligne_commande_model->delete($where);
+
+            // TODO suppression des points
+            if ($del) {
+
+
+                // Supprime la commande s'il n'y a plus de lignes
+                $lignes_commande = $this->Commande_model->lignes_commandes($idCommande);
+
+                if ($lignes_commande && count($lignes_commande) == 0) {
+                    $where = ['idCommande' => $idCommande];
+                    $this->Commande_model->delete($where);
+                }
+
+                $data = array(
+                    'message_display' => 'Commande supprimée',
+                );
+
+                $this->layout->views('template/message_display', $data);
+            } else {
+                $data = array(
+                    'error_message' => 'Echec de la suppression de commande',
+                );
+                $this->layout->views('template/error_display', $data);
+            }
+        } else {
+            $data = array(
+                'error_message' => 'Echec de la suppression de commande',
+            );
+            $this->layout->views('template/error_display', $data);
+        }
         $this->afficher_commandes();
     }
 

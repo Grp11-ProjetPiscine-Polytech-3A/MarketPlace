@@ -24,14 +24,14 @@
 
                             <!-- Image -->
                             <td>
-                                <a href="<?php echo site_url('/Produits/fiche_produit/' . $p['idProduitType']) ?>">
+                                <a href="<?php echo site_url('/Produits/fiche_produit/' . $p['idProduitType'] . '/' . $p['idProduitVariante']) ?>">
                                     <img class="img-thumbnail" src="<?php echo $p['img_url'] ?>" alt="<?php echo $p['nomProduitVariante'] ?>" style="height:50px; width: auto;">
                                 </a>
                             </td>
 
                             <!-- Désignation -->
                             <td>
-                                <a href="<?php echo site_url('/Produits/fiche_produit/' . $p['idProduitType']) ?>">
+                                <a href="<?php echo site_url('/Produits/fiche_produit/' . $p['idProduitType'] . '/' . $p['idProduitVariante']) ?>">
                                     <?php echo $p['designation'] ?>
                                 </a>
                             </td>
@@ -62,14 +62,12 @@
                             </td>
 
                             <td>
-                                <a href="<?php echo site_url('/Client/Commandes/annuler_commande/' . $p['idCommande'] . '/')?>">
+                                <a href="<?php echo site_url('/Client/Commandes/annuler_commande/' . $p['idLigneCommande'] . '/')?>">
                                     <i class="fa fa-trash-o"></i>
                                 </a>
                             </td>
                         </tr>
                     <?php endforeach; ?>
-                <?php else: ?>
-                      <p> hum <p>
                 <?php endif; ?>
             </tbody>
         </table>

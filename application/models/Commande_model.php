@@ -23,7 +23,7 @@ class Commande_model extends MY_Model {
      * @param type $idClient
      * @return type
      */
-    public function produits_commande($idClient = 0) {
+    public function produits_commande($idClient = 0, $where = array()) {
         if (!$idClient) {
             $id = $this->session->logged_in['idClient'];
         } else {
@@ -33,11 +33,17 @@ class Commande_model extends MY_Model {
         $this->db->select('*');
         $this->db->from('client_commande_effectuer');
         $this->db->where('client_commande_effectuer.idClient', $id);
+
+        if (count($where) > 0) {
+            $this->db->where($where);
+        }
+
         $this->db->join('ligne_commande', 'client_commande_effectuer.idCommande = ligne_commande.idCommande');
         $this->db->join('produit_variante', 'ligne_commande.idProduitVariante = produit_variante.idProduitVariante');
         $this->db->join('produit_type', 'produit_variante.idProduitType = produit_type.idProduitType');
         $this->db->join('commerce', 'commerce.siretCommerce = produit_type.siretCommerce');
-
+        $this->db->join('commande', 'commande.idCommande = ligne_commande.idCommande');
+        $this->db->order_by("commande.dateCommande", "desc");
         $query = $this->db->get();
 
         return $query->result();
@@ -58,7 +64,7 @@ class Commande_model extends MY_Model {
 
           FROM     commercant as c, commerce as com, produit_type as pt, produit_variante as pv,
           ligne_commande as lc, commande as co, client as cl, client_commande_effectuer as clcom, commercant_commerce_gerer ccg
-         
+
           WHERE
           (c.idCommercant = com.idCommercant OR (c.idCommercant = ccg.idCommercant AND ccg.siretCommerce = com.siretCommerce)) AND com.siretCommerce = pt.siretCommerce
           AND pt.idProduitType = pv.idProduitType AND pv.idProduitVariante = lc.idProduitVariante
@@ -74,6 +80,24 @@ class Commande_model extends MY_Model {
         $this->db->from('commercant as c, commerce as com, produit_type as pt, produit_variante as pv, ligne_commande as lc, commande as co, client as cl, client_commande_effectuer as clcom, commercant_commerce_gerer ccg');
         $this->db->where('(c.idCommercant = com.idCommercant OR (c.idCommercant = ccg.idCommercant AND ccg.siretCommerce = com.siretCommerce)) AND com.siretCommerce = pt.siretCommerce AND pt.idProduitType = pv.idProduitType AND pv.idProduitVariante = lc.idProduitVariante AND co.idCommande = lc.idCommande AND clcom.idCommande = co.idCommande AND clcom.idClient = cl.idClient AND c.idCommercant = ' . $id);
 
+        $this->db->order_by("co.dateCommande", "desc");
+        
+        $query = $this->db->get();
+
+        return $query->result();
+    }
+    
+    public function lignes_commandes ($idCommande) {
+        /**
+         * Select count(idLigneCommande)
+            from ligne_commande as lc, commande as c 
+            where c.idCommande = lc.idCommande AND c.idCommande=7
+         */
+        
+        $this->db->select('*');
+        $this->db->from('ligne_commande as lc, commande as c');
+        $this->db->where('c.idCommande = lc.idCommande AND c.idCommande='.$idCommande);
+        
         $query = $this->db->get();
 
         return $query->result();
