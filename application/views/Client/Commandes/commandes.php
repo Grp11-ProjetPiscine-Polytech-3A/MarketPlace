@@ -31,7 +31,7 @@
 
                             <!-- Désignation -->
                             <td>
-                                <a href="<?php echo site_url('/Produits/fiche_produit/' . $p['designation']) ?>">
+                                <a href="<?php echo site_url('/Produits/fiche_produit/' . $p['idProduitType']) ?>">
                                     <?php echo $p['designation'] ?>
                                 </a>
                             </td>
