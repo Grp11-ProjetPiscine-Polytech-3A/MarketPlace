@@ -48,10 +48,11 @@ class Produits extends CI_Controller {
             $where['idCategorie'] = $id_Categ;
         }
         
-        $idClient = $this->session->logged_in['idUser'];
-        $whereCommercant = array();
-        $whereCommercant['idUser'] = $idClient;
-        $resultCommercant = $this->Commercant_model->read('*', $whereCommercant);
+        if (isset($this->session->logged_in['idUser'])){
+           if ($this->Commercant_model->isCommercant($this->session->logged_in['idUser'])) {
+                $this->layout->views('Produits/display_ajout_produit');
+            }
+        }
         
         $result = $this->Produit_type_model->read('*', $where);
         if ($result && count($result) > 0) {
@@ -78,12 +79,7 @@ class Produits extends CI_Controller {
                 "produits" => $liste_produits,
             );
             
-            if (count($resultCommercant) == 1){
-                $this->layout->views('Produits/display_ajout_produit');
-                
-            }
-            echo count($resultCommercant);
-            
+                  
             $this->layout->views('Produits/title_not_commercant');
             $this->layout->view('Produits/liste_produits', $data);
         } else {
