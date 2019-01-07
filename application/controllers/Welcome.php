@@ -24,6 +24,7 @@ class Welcome extends CI_Controller {
             
             $this->layout->activer_menu('');
             
-            $this->layout->view('index');
+            //$this->layout->view('index');
+            redirect('/Produits/');
 	}
 }

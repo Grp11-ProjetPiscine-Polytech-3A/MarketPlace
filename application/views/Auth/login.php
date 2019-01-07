@@ -4,11 +4,26 @@
     <hr/>
 
     <?php echo form_open('Auth/login_process'); ?>
-    <label>Login :</label>
-    <input type="text" name="loginUser" id="loginUser" placeholder="username"/><br /><br />
 
-    <label>Password :</label>
-    <input type="password" name="passUser" id="passUser" placeholder="**********"/><br/><br />
+    <div class="form-group row">
+        <div class="col-2">
+            <label>Nom d'utilisateur</label>
+        </div>
+        <div class="col-9">
+            <input type="text" name="loginUser" id="loginUser" placeholder="username" size="30"/>
+        </div>
+    </div>
+
+
+    <div class="form-group row">
+        <div class="col-2">
+            <label>Mot de passe</label>
+        </div>
+        <div class="col-9">
+            <input type="password" name="passUser" id="passUser" placeholder="**********" size="30"/>
+        </div>
+    </div>
+
 
     <input type="submit" value=" Login " name="submit"/><br />
 
