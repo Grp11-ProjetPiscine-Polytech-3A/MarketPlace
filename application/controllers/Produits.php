@@ -12,34 +12,34 @@ class Produits extends CI_Controller {
     public function __construct() {
         parent::__construct();
 
-        $this->load->helper('form');
-        $this->load->helper('assets');
+        $this -> load -> helper('form');
+        $this -> load -> helper('assets');
 
-        $this->load->library('form_validation');
-        $this->load->library('session');
-        $this->load->library('Layout');
+        $this -> load -> library('form_validation');
+        $this -> load -> library('session');
+        $this -> load -> library('Layout');
 
-        $this->load->model('Produit_type_model');
-        $this->load->model('Produit_variante_model');
-        $this->load->model('Categorie_model');
-        $this->load->model('Commerce_model');
-        $this->load->model('Commercant_model');
-        $this->load->model('User_admin_model');
-        $this->load->model('User_model');
-        $this->load->model('Client_donner_avis_model');
+        $this -> load -> model('Produit_type_model');
+        $this -> load -> model('Produit_variante_model');
+        $this -> load -> model('Categorie_model');
+        $this -> load -> model('Commerce_model');
+        $this -> load -> model('Commercant_model');
+        $this -> load -> model('User_admin_model');
+        $this -> load -> model('Client_commande_effectuer_model');
+        $this -> load -> model('Client_donner_avis_model');
 
-        $categ = $this->Categorie_model->read('*');
+        $categ = $this -> Categorie_model -> read('*');
 
         foreach ($categ as $c) {
-            $intitule = mb_strtoupper(mb_substr($c->descriptionCategorie, 0, 1)) . mb_substr($c->descriptionCategorie, 1);
-            $this->layout->ajouter_menu_url('sideMenu', $intitule, 'Produits/liste_produits/' . $c->idCategorie);
+            $intitule = mb_strtoupper(mb_substr($c -> descriptionCategorie, 0, 1)) . mb_substr($c -> descriptionCategorie, 1);
+            $this -> layout -> ajouter_menu_url('sideMenu', $intitule, 'Produits/liste_produits/' . $c -> idCategorie);
         }
 
-        $this->layout->setNomSideMenu("Categories");
+        $this -> layout -> setNomSideMenu("Categories");
     }
 
     public function index() {
-        $this->liste_produits();
+        $this -> liste_produits();
     }
 
     public function liste_produits($id_Categ = 0) {
@@ -47,41 +47,41 @@ class Produits extends CI_Controller {
         if ($id_Categ > 0) {
             $where['idCategorie'] = $id_Categ;
         }
-        
-        if (isset($this->session->logged_in['idUser'])){
-           if ($this->Commercant_model->isCommercant($this->session->logged_in['idUser'])) {
-                $this->layout->views('Produits/display_ajout_produit');
+
+        if (isset($this -> session -> logged_in['idUser'])){
+           if ($this -> Commercant_model -> isCommercant($this -> session -> logged_in['idUser'])) {
+                $this -> layout -> views('Produits/display_ajout_produit');
             }
         }
-        
-        $result = $this->Produit_type_model->read('*', $where);
+
+        $result = $this -> Produit_type_model -> read('*', $where);
         if ($result && count($result) > 0) {
             $liste_produits = array();
             foreach ($result as $produit) {
 
                 // On recupere le lien de la premiere image du produit
-                $produit->img_url = url_images_in_folder("/assets/images/produits/produit_" . $produit->idProduitType . "/", true)[0];
+                $produit -> img_url = url_images_in_folder("/assets/images/produits/produit_" . $produit -> idProduitType . "/", true)[0];
 
 
                 // Gestion de la taille max de la description
                 $longueur_max_description = 100;
-                $produit->descriptionProduitType = substr($produit->descriptionProduitType, 0, $longueur_max_description);
-                if (strlen($produit->descriptionProduitType) >= $longueur_max_description) {
-                    $produit->descriptionProduitType .= '...';
+                $produit -> descriptionProduitType = substr($produit -> descriptionProduitType, 0, $longueur_max_description);
+                if (strlen($produit -> descriptionProduitType) >= $longueur_max_description) {
+                    $produit -> descriptionProduitType .= '...';
                 }
 
                 // On reccupere le prix
-                $produit->prixProduitType = $this->Produit_type_model->getRangePrice($produit->idProduitType);
+                $produit -> prixProduitType = $this -> Produit_type_model -> getRangePrice($produit -> idProduitType);
 
                 $liste_produits[] = $produit;
             }
             $data = array(
                 "produits" => $liste_produits,
             );
-            
-                  
-            $this->layout->views('Produits/title_not_commercant');
-            $this->layout->view('Produits/liste_produits', $data);
+
+
+            $this -> layout -> views('Produits/title_not_commercant');
+            $this -> layout -> view('Produits/liste_produits', $data);
         } else {
             if ($id_Categ > 0) {
                 $data = array(
@@ -92,7 +92,7 @@ class Produits extends CI_Controller {
                     'error_message' => 'Une erreur s\'est produite',
                 );
             }
-            $this->layout->view('template/error_display', $data);
+            $this -> layout -> view('template/error_display', $data);
         }
     }
 
@@ -100,23 +100,23 @@ class Produits extends CI_Controller {
         $whereProduit = array(
             "idProduitType" => $id_Produit,
         );
-        $result = $this->Produit_type_model->read('*', $whereProduit, 1);
+        $result = $this -> Produit_type_model -> read('*', $whereProduit, 1);
         if ($result) {
             $produit = $result[0];
 
             // Reccupere les variantes et leur donnees
-            $variantes = $this->Produit_variante_model->read("idProduitVariante, nomProduitVariante", $whereProduit);
+            $variantes = $this -> Produit_variante_model -> read("idProduitVariante, nomProduitVariante", $whereProduit);
 
             $verif_variante = false;
             foreach ($variantes as $v) {
-                if ($v->idProduitVariante == $id_variante) {
+                if ($v -> idProduitVariante == $id_variante) {
                     $verif_variante = true;
                 }
             }
             if (!$verif_variante) {
-                $id_variante = $variantes[0]->idProduitVariante;
+                $id_variante = $variantes[0] -> idProduitVariante;
             }
-            $variante_select = $this->Produit_variante_model->read("*", ["idProduitVariante" => $id_variante])[0];
+            $variante_select = $this -> Produit_variante_model -> read("*", ["idProduitVariante" => $id_variante])[0];
 
             // Reccupere la liste des url des images du produit type ET de la variante
             $img_paths = ["/assets/images/produits/produit_" . $id_Produit . "/variante_" . $id_variante,
@@ -124,71 +124,71 @@ class Produits extends CI_Controller {
             $images_url = url_images_in_folder($img_paths);
 
             $whereCommerce = array(
-                'siretCommerce' => $produit->siretCommerce,
+                'siretCommerce' => $produit -> siretCommerce,
             );
-            $commerce = $this->Commerce_model->read('*', $whereCommerce);
+            $commerce = $this -> Commerce_model -> read('*', $whereCommerce);
 
             if ($commerce) {
-                $produit->commerce = $commerce[0];
+                $produit -> commerce = $commerce[0];
             }
 
-            if ($variante_select->descriptionProduitVariante == $produit->descriptionProduitType) {
-                $variante_select->descriptionProduitVariante = "";
+            if ($variante_select -> descriptionProduitVariante == $produit -> descriptionProduitType) {
+                $variante_select -> descriptionProduitVariante = "";
             }
-            $variante_select->descriptionProduitVariante = nl2br($variante_select->descriptionProduitVariante);
-            $produit->descriptionProduitType = nl2br($produit->descriptionProduitType);
+            $variante_select -> descriptionProduitVariante = nl2br($variante_select -> descriptionProduitVariante);
+            $produit -> descriptionProduitType = nl2br($produit -> descriptionProduitType);
             $data = array(
                 "produit" => $produit,
                 "images" => $images_url,
                 "variantes" => $variantes,
                 "variante" => $variante_select,
-                "caracteristiques" => array_merge($this->Produit_variante_model->getCaracteristiques($id_variante), $this->Produit_type_model->getCaracteristiques($produit->idProduitType)),
-                "commentaire" => $this->Client_donner_avis_model->getCommentaires($id_Produit),
+                "caracteristiques" => array_merge($this -> Produit_variante_model -> getCaracteristiques($id_variante), $this -> Produit_type_model -> getCaracteristiques($produit -> idProduitType)),
+                "commentaire" => $this -> Client_donner_avis_model -> getCommentaires($id_Produit),
             );
-            $this->layout->ajouter_css("ficheProduit");
-            $this->layout->ajouter_jquery("Produit/star_rating");
+            $this -> layout -> ajouter_css("ficheProduit");
+            $this -> layout -> ajouter_jquery("Produit/star_rating");
 
             if ($error_message != '') {
-                $data['error_display'] = $error_message;
-                $this->layout->views('template/error_display', $data);
+                $data['error_message'] = $error_message;
+                $this -> layout -> views('template/error_display', $data);
             }
             if ($message_display != '') {
                 $data['message_display'] = $message_display;
-                $this->layout->views('template/message_display', $data);
+                $this -> layout -> views('template/message_display', $data);
             }
 
-            $this->layout->view('Produits/fiche_produit', $data);
+            $this -> layout -> view('Produits/fiche_produit', $data);
         } else {
             $data = array(
                 'error_message' => 'Une erreur s\'est produite',
             );
-            $this->layout->view('template/error_display', $data);
+            $this -> layout -> view('template/error_display', $data);
         }
     }
 
     public function ajouter_commentaire($id_produit, $id_produit_variante) {
         // Si le client a commandé le produit et note comprise entre 0 et 5 poster commentaire
-        $comment = $this->input->post('comment');
-        $note = $this->input->post('note');
+        $comment = $this -> input -> post('comment');
+        $note = $this -> input -> post('note');
         $error_message = '';
         $message_display = '';
         if ($note >= 0 && $note <= 5) {
-            if ($this->User_model->a_commande($id_produit_variante)) {
+            if ($this -> Client_commande_effectuer_model -> a_commande($id_produit_variante)) {
 
                 // Update du comment
                 $where = [
-                    'idClient' => $this->session->logged_in['idClient'],
+                    'idClient' => $this -> session -> logged_in['idClient'],
                     'idProduitVariante' => $id_produit_variante,
                 ];
-                if (count($this->Client_donner_avis_model->read('*', $where)) > 0) {
+                if (count($this -> Client_donner_avis_model -> read('*', $where)) > 0) {
                     $set = [
                     'commentaire' => $comment,
                     'note' => $note,
                     ];
-                    $result = $this->Client_donner_avis_model->update($where, $set);
+                    $result = $this -> Client_donner_avis_model -> update($where, $set);
                 } else {
                     // Creation du comment
-                    $result = $this->Client_donner_avis_model->ajouter_client_donner_avis($id_produit_variante, $comment, $note);
+                    $result = $this -> Client_donner_avis_model -> ajouter_client_donner_avis($id_produit_variante, $comment, $note);
                 }
                 if ($result) {
                     $message_display = 'Message ajouté';
@@ -201,7 +201,7 @@ class Produits extends CI_Controller {
         } else {
             $error_message = 'Note incorrecte';
         }
-        $this->fiche_produit($id_produit, $id_produit_variante, $error_message, $message_display);
+        $this -> fiche_produit($id_produit, $id_produit_variante, $error_message, $message_display);
     }
 
 }
