@@ -117,7 +117,7 @@ class Produits extends Commercant {
 
                 if ($resultProduitVariante) {
 // Recuperer les l'id du produit Variant pour l'integrer dans le nom de l'image
-                    $idProduitVariante = $this->Produit_variante_model->getIdProduitVariante($data_post["nomProduit"])[0]->idProduitVariante;
+                    $idProduitVariante = $this->db->insert_id();
 
 // Ajout des caracteristiques
                     if (array_key_exists("carac", $data_post) && array_key_exists("carac_text", $data_post)) {
