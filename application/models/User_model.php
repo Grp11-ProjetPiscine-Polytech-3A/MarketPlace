@@ -92,12 +92,6 @@ class User_model extends MY_Model {
             return false;
         }
     }
-
-    public function a_commande($id_produit_variante) {
-        // TODO
-        return true;
-    }
-
 }
 
 /* End of file produit_variante_model.php */

@@ -32,7 +32,7 @@ class Commercant_model extends MY_Model {
         // Verification de l'existance de l'id de l'utilisateur dans la Table Commercant
         $this->db->select('*');
         $this->db->from('commercant');
-        $this->db->where('user.idUser', $id);
+        $this->db->where('user.idUser', $idUser);
         $this->db->join('user', 'commercant.idUser = user.idUser');
         $query = $this->db->get();
 

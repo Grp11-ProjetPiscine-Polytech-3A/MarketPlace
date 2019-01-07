@@ -17,6 +17,7 @@ class Commerces extends CI_Controller {
         $this->load->library('session');
         $this->load->library('Layout');
         $this->load->model('Commerce_model');
+        $this->load->model('Commercant_model');
         $this->load->model('User_admin_model');
     }
 
@@ -31,6 +32,12 @@ class Commerces extends CI_Controller {
                 "commerces" => $result,
             );
 
+            if (isset($this->session->logged_in['idUser'])){
+                if ($this->Commercant_model->isCommercant($this->session->logged_in['idUser'])) {
+                    $this->layout->views('Commerces/display_ajout_commerce');
+                }
+            }
+            
             // Affiche un bouton de rajout d'un commerce si l'utilisateur est un admin
             if (isset($this->session->logged_in['username'])){
                 if ($this->User_admin_model->isAdmin()) {
