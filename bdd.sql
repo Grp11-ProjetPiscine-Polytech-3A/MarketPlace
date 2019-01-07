@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Hôte : localhost:8889
--- Généré le :  lun. 07 jan. 2019 à 14:04
+-- Généré le :  lun. 07 jan. 2019 à 19:26
 -- Version du serveur :  5.6.35
 -- Version de PHP :  7.1.8
 
@@ -50,7 +50,7 @@ CREATE TABLE `categorie` (
 --
 
 INSERT INTO `categorie` (`idCategorie`, `descriptionCategorie`) VALUES
-(1, 'Textile'),
+(1, 'textile'),
 (2, 'High-Tech'),
 (3, 'Jardin'),
 (4, 'Alimentaire'),
@@ -89,17 +89,17 @@ INSERT INTO `client` (`idClient`, `nomClient`, `prenomClient`, `dateNaissanceCli
 (4, 'Poulain', 'Arthur', '2018-11-14', '0665987545', 'lemaildearthur@mail.fr', 6, 'Rue de Arthur', 19000, 'Tulle', '', 0, NULL),
 (5, 'SAIMOND', 'Etienne', '1996-12-16', '0760644462', 'etienne.saimond@etu.umontpellier.fr', 120, 'Avenue du professeur Emile Jeanbrau', 34090, 'Montpellier', '', 9999, 35),
 (18, 'ANDREU', 'Paola', '1997-04-29', '0956434567', 'paola.andreu@etu.umontpellier.fr', 20, 'rue des lavandes', 34570, 'Montarnaud', '', 9, 63),
-(19, 'Combes', 'Marie', '1993-09-10', '0456765432', 'marie@gmail.com', 2, 'rue des olives', 34560, 'Montbazin', '', 0, 64),
-(20, 'Jean', 'Jules', '2001-03-14', '0987656789', 'jules@gmail.com', 98, 'avenue charles flahaut', 34530, 'Juvignac', '', 2, 65),
-(21, 'Dupont', 'Olivia', '1998-12-12', '0654456787', 'dupont@gmail.com', 34, 'rue des oranges', 34090, 'Montpellier', '', 4, 66),
-(22, 'Dubary', 'Jean-pierre', '1978-06-06', '0654345754', 'dubary@gmail.com', 3, 'rue des lavandins', 34700, 'Gignac', '', 3, 67),
-(23, 'Dusfour', 'Julie', '1995-10-10', '0632456753', 'julie@gmail.com', 1, 'avenue des ours blancs', 34600, 'Vailhauques', 'Chemin bleu', 10, 68),
-(24, 'Durand', 'Kevin', '1990-01-01', '0754323456', 'keke@gmail.com', 11, 'chemin des bleuets', 34570, 'Saint paul et valmalle', '', 5, 69),
-(25, 'Tuche', 'Pierre', '1966-10-01', '0467545667', 'tuche@gmail.com', 345, 'avenue des moulins', 34000, 'Montpellier', '', 70, 70),
-(26, 'Debrume', 'Paul', '1999-09-09', '0676543456', 'paul@gmail.com', 3, 'avenue de Montmorency', 34070, 'Montpellier', '', 34, 71),
-(27, 'Morel', 'Jacques', '1945-11-12', '0654567876', 'morel@gmail.com', 9, 'rue du thym', 34410, 'sauvian', '', 54, 72),
-(28, 'Dujardin', 'Francois', '1976-03-19', '0654456238', 'dujardin@gmail.com', 8, 'avenue maréchal ferrand', 34410, 'Serignan', '', 15, 73),
-(29, 'Botineli', 'Safia', '1992-06-06', '0467854334', 'safia@gmail.com', 78, 'rue des églises', 34070, 'Montpellier', '', 9, 74),
+(19, 'combes', 'marie', '1993-09-10', '0456765432', 'marie@gmail.com', 2, 'rue des olives', 34560, 'Montbazin', '', 16, 64),
+(20, 'jean', 'jules', '2001-03-14', '0987656789', 'jules@gmail.com', 98, 'avenue charles flahaut', 34530, 'juvignac', '', 2, 65),
+(21, 'dupont', 'olivia', '1998-12-12', '0654456787', 'dupont@gmail.com', 34, 'rue des oranges', 34200, 'st georges d\'orques', '', 4, 66),
+(22, 'dubary', 'jean-pierre', '1978-06-06', '0654345754', 'dubary@gmail.com', 3, 'rue des lavandins', 34700, 'gignac', '', 3, 67),
+(23, 'dusfour', 'julie', '1995-10-10', '0632456753', 'julie@gmail.com', 1, 'avenue des ours blancs', 34600, 'Vailhauques', 'chemin bleu', 10, 68),
+(24, 'durand', 'kevin', '1990-01-01', '0754323456', 'keke@gmail.com', 11, 'chemin des bleuets', 34570, 'saint paul et valmalle', '', 7, 69),
+(25, 'tuche', 'pierre', '1966-10-01', '0467545667', 'tuche@gmail.com', 345, 'avenue des moulins', 34000, 'Montpellier', '', 70, 70),
+(26, 'debrume', 'paul', '1999-09-09', '0676543456', 'paul@gmail.com', 3, 'avenue de Montmorency', 34070, 'Montpellier', '', 36, 71),
+(27, 'morel', 'jacques', '1945-11-12', '0654567876', 'morel@gmail.com', 9, 'rue du thym', 34410, 'sauvian', '', 54, 72),
+(28, 'dujardin', 'francois', '1976-03-19', '0654456238', 'dujardin@gmail.com', 8, 'avenue maréchal ferrand', 34410, 'Serignan', '', 15, 73),
+(29, 'botineli', 'safia', '1992-06-06', '0467854334', 'safia@gmail.com', 78, 'rue des églises', 34070, 'Montpellier', '', 9, 74),
 (30, '', '', '0000-00-00', '', '', 0, '', 0, '', '', 0, 75),
 (31, '', '', '0000-00-00', '', '', 0, '', 0, '', '', 0, 76);
 
@@ -128,7 +128,11 @@ INSERT INTO `client_commande_effectuer` (`idCommande`, `idClient`, `nombrePoints
 (17, 25, 0),
 (18, 29, 0),
 (19, 22, 0),
-(20, 19, 0);
+(20, 19, 0),
+(21, 26, 0),
+(22, 26, 0),
+(23, 19, 0),
+(24, 24, 0);
 
 -- --------------------------------------------------------
 
@@ -142,6 +146,25 @@ CREATE TABLE `client_donner_avis` (
   `commentaire` text NOT NULL,
   `note` int(8) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Déchargement des données de la table `client_donner_avis`
+--
+
+INSERT INTO `client_donner_avis` (`idClient`, `idProduitVariante`, `commentaire`, `note`) VALUES
+(18, 36, 'ils tiennent bien chaud \r\nla laine est de bonne qualité', 3),
+(18, 61, 'Ce pull est bien taillé \r\nle tissu gratte un peu ... dommage', 3),
+(19, 39, 'elles sont délicieuses et pas trop sèches !! \r\n', 3),
+(19, 49, 'les touches se sont détachées au bout de 6 mois ... mais le prix reste abordable', 2),
+(19, 62, 'Le cuir est magnifique ! la qualité est dingue  ', 5),
+(22, 43, 'le manche s\'est cassé dès la deuxième utilisation ', 1),
+(22, 46, 'Bonne qualité, les embouts s\'adaptent à tout type de dimensions\r\n', 4),
+(22, 47, 'super taille haie ! le rapport qualité - prix est très bien ', 5),
+(24, 48, 'pioche de qualité, pas trop lourde, bonne prise en main ', 3),
+(24, 57, 'la chaine est trop belle !! j\'ai pu écrire mon nom sur la plaque', 4),
+(26, 32, 'Ce bonnet est très doux !!', 5),
+(26, 38, 'Ces truffes sont délicieuses ! Je les recommande :)', 4),
+(26, 45, 'brouette très pratique et légère \r\npetit bémol sur les points de rouille ...', 3);
 
 -- --------------------------------------------------------
 
@@ -202,7 +225,11 @@ INSERT INTO `commande` (`idCommande`, `dateCommande`) VALUES
 (17, '2019-01-07'),
 (18, '2019-01-07'),
 (19, '2019-01-07'),
-(20, '2019-01-07');
+(20, '2019-01-07'),
+(21, '2019-01-07'),
+(22, '2019-01-07'),
+(23, '2019-01-07'),
+(24, '2019-01-07');
 
 -- --------------------------------------------------------
 
@@ -228,11 +255,11 @@ INSERT INTO `commercant` (`idCommercant`, `nomCommercant`, `prenomCommercant`, `
 (3, 'Saimond', 'Etienne', '1996-12-16', '0666666666', 35),
 (4, 'Laurancy', 'Dorian', '2018-03-18', '000000000', 33),
 (5, 'ANDREU', 'Paola', '1997-04-29', '0654453432', 63),
-(6, 'Jean', 'Jules', '2001-03-14', '0987656789', 65),
-(7, 'Dujardin', 'Francois', '1976-03-19', '0654456238', 73),
-(8, 'Morel', 'Jacques', '1945-11-12', '0654567876', 72),
-(9, 'Dupont', 'Olivia', '1998-12-12', '0654456787', 66),
-(10, 'Dusfour', 'Julie', '1995-10-10', '0632456753', 68),
+(6, 'jean', 'jules', '2001-03-14', '0987656789', 65),
+(7, 'dujardin', 'francois', '1976-03-19', '0654456238', 73),
+(8, 'morel', 'jacques', '1945-11-12', '0654567876', 72),
+(9, 'dupont', 'olivia', '1998-12-12', '0654456787', 66),
+(10, 'dusfour', 'julie', '1995-10-10', '0632456753', 68),
 (11, 'nomCommercant', 'prenomCommercant', '1999-10-10', '0123456789', 75);
 
 -- --------------------------------------------------------
@@ -280,16 +307,15 @@ CREATE TABLE `commerce` (
 --
 
 INSERT INTO `commerce` (`siretCommerce`, `nomCommerce`, `mailCommerce`, `telCommerce`, `numAdresseCommerce`, `rueCommerce`, `codePostalCommerce`, `villeCommerce`, `complementAdresseCommerce`, `tempsReservationProduitsCommerce`, `produitsLivrablesCommerce`, `idCommercant`, `descriptionCommerce`) VALUES
-('998574983', 'Les bijoux de Julie', 'lesbijouxdejulie@gmail.com', '0467545678', 30, 'avenue du pere soulas', 34000, 'Montpellier', 'res 45', '00:00:00', 1, 10, 'Bijouterie fait main'),
-('12345678912345', 'La boulangerie', 'laboulangerie@mail.com', '0612345678', 12, 'Rue du pont', 34000, 'Montpellier', '', '800:00:00', 0, 2, 'Un petit commerce sympatique'),
-('3456543', 'Jules N Co', 'julesnco@gmail.com', '0467543456', 4, 'rue des gourmets', 34000, 'Montpellier', 'boite 45', '838:59:59', 0, 6, 'Mode homme'),
-('34567654', 'La cabane magique', 'lacabanemagique@gmail.com', '0654234567', 3, 'rue des lilas', 34000, 'Montpellier', 'boite 45', '838:59:59', 1, 5, 'Magasin de jouets enfant'),
-('3566435', 'Julietta', 'julietta@gmail.com', '0467565432', 380, 'avenue des pouses', 34080, 'Montpellier', 'Boite 6', '838:59:59', 0, 6, 'Magasin de mode femme'),
-('544567543', 'Oli tech', 'olitech@gmail.com', '0654345896', 40, 'boulevard des arts', 34010, 'Montpellier', 'Boite 32', '838:59:59', 0, 9, 'Magnifique magasin possédant les derniers outils à la pointe de la technologie \r\nVente de matériel informatique'),
-('765675490', 'La chocolaterie', 'lachocolaterie@gmail.com', '0467898765', 5, 'rue de la république', 34000, 'Montpellier', 'bat 11', '00:00:00', 1, 7, 'Chocolaterie plein centre de Montpellier \r\nfabrication maison'),
-('9865345673', 'Les jardins de Jacques', 'lesjardinsdejacques@gmail.com', '0654567898', 6, 'avenue des toupets', 34070, 'Montpellier', 'Boite 45', '838:59:59', 0, 8, 'Tout pour le jardinage'),
-('998574983', 'Les bijoux de Julie', 'lesbijouxdejulie@gmail.com', '0467545678', 30, 'avenue du pere soulas', 34000, 'Montpellier', 'res 45', '00:00:00', 1, 10, 'Bijouterie fait main')
-('0123456', 'MonCommerce', 'moncommerce@gmail.com', '0123456789', 1, 'rue du commerce', 34000, 'ma ville', 'etage du commerce', '00:00:00', 1, 11, 'La description de mon beau commerce');
+('0123456', 'MonCommerce', 'moncommerce@gmail.com', '0123456789', 1, 'rue du commerce', 34000, 'ma ville', 'etage du commerce', '00:00:00', 1, 11, 'La description de mon beau commerce'),
+('12345678912345', 'Le commerce de Dédé', 'comdedede@mail.com', '0612345678', 12, 'Rue du pont', 34000, 'Montpellier', '', '800:00:00', 0, 2, 'Un petit commerce sympatique'),
+('3456543', 'jules n co', 'julesnco@gmail.com', '0467543456', 4, 'rue des gourmets', 34000, 'Montpellier', 'boite 45', '838:59:59', 0, 6, 'mode homme'),
+('34567654', 'La cabane magique', 'lacabanemagique@gmail.com', '0654234567', 3, 'rue des lilas', 34000, 'Montpellier', 'boite 45', '838:59:59', 1, 5, 'magasin de jouets enfant'),
+('3566435', 'Julietta', 'julietta@gmail.com', '0467565432', 380, 'avenue des pouses', 34080, 'Montpellier', 'Boite 6', '838:59:59', 0, 6, 'magasin de mode femme'),
+('544567543', 'oli\'tech', 'olitech@gmail.com', '0654345896', 40, 'boulevard des arts', 34010, 'Montpellier', 'Boite 32', '838:59:59', 0, 9, 'Magnifique magasin situé dans l\'écusson \r\nVente de matériel informatique'),
+('765675490', 'la chocolaterie', 'lachocolaterie@gmail.com', '0467898765', 5, 'rue de la république', 34000, 'Montpellier', 'bat 11', '00:00:00', 1, 7, 'chocolaterie plein centre de Montpellier \r\nfabrication maison'),
+('9865345673', 'les jardins de jacques', 'lesjardinsdejacques@gmail.com', '0654567898', 6, 'avenue des toupets', 34070, 'Montpellier', 'Boite 45', '838:59:59', 0, 8, 'tout pour le jardinage'),
+('998574983', 'Les bijoux de julie', 'lesbijouxdejulie@gmail.com', '0467545678', 30, 'avenue du pere soulas', 34000, 'Montpellier', 'res 45', '00:00:00', 1, 10, 'bijouterie fait main');
 
 -- --------------------------------------------------------
 
@@ -325,7 +351,14 @@ INSERT INTO `ligne_commande` (`idLigneCommande`, `etatReservationLigneCommande`,
 (16, 'Commande passée non validée', 2, 30, 46, 19),
 (17, 'Commande passée non validée', 1, 40, 43, 19),
 (18, 'Commande passée non validée', 1, 100, 47, 19),
-(19, 'Commande passée non validée', 1, 10, 49, 20);
+(19, 'Commande passée non validée', 1, 10, 49, 20),
+(20, 'Commande passée non validée', 1, 12, 32, 21),
+(21, 'Commande passée non validée', 1, 15, 38, 21),
+(22, 'Commande passée non validée', 1, 30, 45, 22),
+(23, 'Commande passée non validée', 1, 20, 39, 23),
+(24, 'Commande passée non validée', 1, 300, 62, 23),
+(25, 'Commande passée non validée', 1, 30, 57, 24),
+(26, 'Commande passée non validée', 1, 10, 48, 24);
 
 -- --------------------------------------------------------
 
@@ -348,32 +381,32 @@ CREATE TABLE `produit_type` (
 --
 
 INSERT INTO `produit_type` (`idProduitType`, `nomProduitType`, `descriptionProduitType`, `prixProduitType`, `seuilStockProduitType`, `idCategorie`, `siretCommerce`) VALUES
-(40, 'Bonnet', 'Bonnet homme dernière nouveauté', 0, 10, 1, '3456543'),
-(41, 'Echarpe', 'Echarpe douce homme', 0, 5, 1, '3456543'),
-(42, 'Manteau', 'Manteau homme', 0, 4, 1, '3456543'),
-(43, 'Gants', 'Gants homme laine', 0, 3, 1, '3456543'),
-(44, 'Tablette', 'Tablette chocolat noir', 0, 5, 4, '765675490'),
-(45, 'Truffe', 'Truffes chocolat noir', 0, 10, 4, '765675490'),
-(46, 'Orangettes', 'Orangettes chocolat noir et orange de corse', 0, 2, 4, '765675490'),
-(47, 'Bonbons', 'Bonbons chocolat', 0, 5, 4, '765675490'),
-(48, 'Bêche', 'Bêche avec manche en bois', 0, 4, 3, '9865345673'),
-(49, 'Pelle', 'Pelle avec manche en bois', 0, 10, 3, '9865345673'),
-(50, 'Brouette', 'Brouette en fer \r\ndiametre roue : 50 cm', 0, 2, 3, '9865345673'),
-(51, 'Tuyau rrosage', 'Tuyau arrosage vert embout en laiton', 0, 6, 3, '9865345673'),
-(52, 'Taille haie', 'Taille haie à essence', 0, 5, 3, '9865345673'),
-(53, 'Pioche', 'Pioche avec manche en bois', 0, 4, 3, '9865345673'),
-(54, 'Clavier', 'Clavier\r\nPort usb', 0, 5, 2, '544567543'),
-(55, 'Ordinateur', 'Ordinateur portable\r\nVendu avec chargeur', 0, 3, 2, '544567543'),
-(56, 'Souris', 'Souris ordinateur', 0, 3, 2, '544567543'),
-(57, 'Bague', 'Bague en argent\r\n\r\nPlaqué or blanc', 0, 4, 6, '998574983'),
-(58, 'Collier', 'Collier en or diamant brut', 0, 2, 6, '998574983'),
-(59, 'Boucles oreilles', 'Boucles oreille en argent massif \r\nCréateur parisien', 0, 3, 6, '998574983'),
-(60, 'Bracelet', 'Bracelet chaine prénom sur commande\r\nArgent massif', 0, 40, 6, '998574983'),
-(61, 'Chaussettes', 'Chaussettes femme dessin rose', 0, 3, 1, '3566435'),
-(62, 'Manteau', 'Manteau femme laine', 0, 2, 1, '3566435'),
-(63, 'Débardeur', 'Débardeur femme synthétique', 0, 10, 1, '3566435'),
-(64, 'Pull', 'Pull femme', 0, 10, 1, '3566435'),
-(65, 'Sac', 'Sac à main femme cuir', 0, 4, 7, '3566435');
+(40, 'bonnet', 'bonnet homme dernière nouveauté', 0, 10, 1, '3456543'),
+(41, 'echarpe', 'echarpe douce homme', 0, 5, 1, '3456543'),
+(42, 'manteau', 'manteau homme', 0, 4, 1, '3456543'),
+(43, 'gants', 'gants homme laine', 0, 3, 1, '3456543'),
+(44, 'tablette', 'tablette chocolat noir', 0, 5, 4, '765675490'),
+(45, 'truffe', 'truffes chocolat noir', 0, 10, 4, '765675490'),
+(46, 'orangettes', 'orangettes chocolat noir et orange de corse', 0, 2, 4, '765675490'),
+(47, 'bonbons', 'bonbons chocolat', 0, 5, 4, '765675490'),
+(48, 'bêche', 'bêche avec manche en bois', 0, 4, 3, '9865345673'),
+(49, 'pelle', 'pelle avec manche en bois', 0, 10, 3, '9865345673'),
+(50, 'brouette', 'brouette en fer \r\ndiametre roue : 50 cm', 0, 2, 3, '9865345673'),
+(51, 'tuyau arrosage', 'tuyau arrosage vert embout en laiton', 0, 6, 3, '9865345673'),
+(52, 'taille haie', 'taille haie à essence', 0, 5, 3, '9865345673'),
+(53, 'pioche', 'pioche avec manche en bois', 0, 4, 3, '9865345673'),
+(54, 'clavier', 'clavier\r\nport usb', 0, 5, 2, '544567543'),
+(55, 'ordinateur', 'ordinateur portable\r\nvendu avec chargeur', 0, 3, 2, '544567543'),
+(56, 'souris', 'souris d\'ordinateur', 0, 3, 2, '544567543'),
+(57, 'bague', 'bague en argent\r\n\r\nplaqué or blanc', 0, 4, 6, '998574983'),
+(58, 'collier', 'collier en or diamant brut', 0, 2, 6, '998574983'),
+(59, 'boucles oreilles', 'boucles d\'oreille en argent massif \r\ncréateur parisien', 0, 3, 6, '998574983'),
+(60, 'bracelet', 'bracelet chaine prénom sur commande\r\nargent massif', 0, 40, 6, '998574983'),
+(61, 'chaussettes', 'chaussettes femme dessin rose', 0, 3, 1, '3566435'),
+(62, 'manteau', 'manteau femme laine', 0, 2, 1, '3566435'),
+(63, 'débardeur', 'débardeur femme synthétique', 0, 10, 1, '3566435'),
+(64, 'pull', 'pull femme', 0, 10, 1, '3566435'),
+(65, 'sac', 'sac à main femme cuir', 0, 4, 7, '3566435');
 
 -- --------------------------------------------------------
 
@@ -392,35 +425,35 @@ CREATE TABLE `produit_type_caracteristique` (
 --
 
 INSERT INTO `produit_type_caracteristique` (`idProduitType`, `idCaracteristique`, `contenuCaracteristique`) VALUES
-(40, 2, 'Unique'),
-(40, 3, 'Bleu'),
-(41, 3, 'Kaki'),
-(42, 3, 'Camel'),
-(43, 2, 'Unique'),
-(43, 3, 'Gris'),
-(44, 1, '100 g'),
-(45, 1, '200 g'),
-(46, 1, '50 g'),
+(40, 2, 'unique'),
+(40, 3, 'bleu'),
+(41, 3, 'kaki'),
+(42, 3, 'camel'),
+(43, 2, 'unique'),
+(43, 3, 'gris'),
+(44, 1, '100 gr'),
+(45, 1, '200 gr'),
+(46, 1, '50 gr'),
 (48, 2, '1 m'),
 (49, 2, '1,15 m'),
 (51, 2, '5 m'),
 (53, 2, '1 m'),
 (54, 2, '30 cm'),
-(54, 3, 'Noir'),
-(55, 3, 'Noir'),
-(56, 3, 'Bleu'),
+(54, 3, 'noir'),
+(55, 3, 'noir'),
+(56, 3, 'bleu'),
 (57, 2, '60'),
 (58, 2, '30 cm'),
 (60, 2, '18 cm'),
 (61, 2, '36-38'),
 (62, 2, 'M'),
-(62, 3, 'Gris'),
+(62, 3, 'gris'),
 (63, 2, 'S'),
-(63, 3, 'Noir'),
+(63, 3, 'noir'),
 (64, 2, 'M'),
-(64, 3, 'Noir'),
+(64, 3, 'noir'),
 (65, 1, '20 L'),
-(65, 3, 'Marron\r\n');
+(65, 3, 'marron\r\n');
 
 -- --------------------------------------------------------
 
@@ -442,37 +475,37 @@ CREATE TABLE `produit_variante` (
 --
 
 INSERT INTO `produit_variante` (`idProduitVariante`, `nomProduitVariante`, `descriptionProduitVariante`, `prixProduitVariante`, `stockProduitVariante`, `idProduitType`) VALUES
-(32, 'Bonnet', 'Bonnet homme dernière nouveauté', 12, 100, 40),
-(33, 'Echarpe', 'Echarpe douce homme', 30, 50, 41),
-(34, 'Echarpe', 'Echarpe douce homme', 30, 50, 41),
-(35, 'Manteau', 'Manteau homme', 100, 76, 42),
-(36, 'Gants', 'Gants homme laine', 7, 50, 43),
-(37, 'Tablette', 'Tablette chocolat noir', 10, 100, 44),
-(38, 'Truffe', 'Truffes chocolat noir', 15, 50, 45),
-(39, 'Orangettes', 'Orangettes chocolat noir et orange de corse', 20, 30, 46),
-(40, 'Bonbons', 'Bonbons chocolat', 10, 100, 47),
-(41, 'Tablette', 'Tablette chocolat lait', 10, 100, 44),
-(42, 'Tablette', 'Tablette chocolat blanc', 10, 100, 44),
-(43, 'Bêche', 'Bêche avec manche en bois', 40, 30, 48),
-(44, 'Pelle', 'Pelle avec manche en bois', 20, 20, 49),
-(45, 'Brouette', 'Brouette en fer \r\nDiametre roue : 50 cm', 30, 30, 50),
-(46, 'Tuyau arrosage', 'Tuyau arrosage vert embout en laiton', 30, 50, 51),
-(47, 'Taille haie', 'Taille haie à essence', 100, 40, 52),
-(48, 'Pioche', 'Pioche avec manche en bois', 10, 100, 53),
-(49, 'Clavier', 'Clavier\r\nPort usb', 10, 100, 54),
-(50, 'Ordinateur', 'Ordinateur portable\r\nVendu avec chargeur', 400, 30, 55),
-(51, 'Souris', 'Souris ordinateur', 20, 100, 56),
-(52, 'Souris sans fil', 'Souris ordinateur sans fil', 20, 100, 56),
-(53, 'Souris', 'Souris ordinateur', 20, 300, 56),
-(54, 'Bague', 'Bague en argent\r\n\r\nPlaqué or blanc', 300, 40, 57),
-(55, 'Collier', 'Collier en or diamant brut', 400, 20, 58),
-(56, 'Boucles oreilles', 'Boucles oreille en argent massif \r\nCréateur parisien', 250, 30, 59),
-(57, 'Bracelet', 'Bracelet chaine prénom sur commande\r\nArgent massif', 30, 200, 60),
-(58, 'Chaussettes', 'Chaussettes femme dessin rose', 10, 100, 61),
-(59, 'Manteau', 'Manteau femme laine', 150, 30, 62),
-(60, 'Débardeur', 'Débardeur femme synthétique', 30, 40, 63),
-(61, 'Pull', 'Pull femme', 40, 30, 64),
-(62, 'Sac', 'Sac à main femme cuir', 300, 34, 65);
+(32, 'bonnet', 'bonnet homme dernière nouveauté', 12, 100, 40),
+(33, 'echarpe', 'echarpe douce homme', 30, 50, 41),
+(34, 'echarpe', 'echarpe douce homme', 30, 50, 41),
+(35, 'manteau', 'manteau homme', 100, 76, 42),
+(36, 'gants', 'gants homme laine', 7, 50, 43),
+(37, 'tablette', 'tablette chocolat noir', 10, 100, 44),
+(38, 'truffe', 'truffes chocolat noir', 15, 50, 45),
+(39, 'orangettes', 'orangettes chocolat noir et orange de corse', 20, 30, 46),
+(40, 'bonbons', 'bonbons chocolat', 10, 100, 47),
+(41, 'tablette', 'tablette chocolat lait', 10, 100, 44),
+(42, 'tablette', 'tablette chocolat blanc', 10, 100, 44),
+(43, 'bêche', 'bêche avec manche en bois', 40, 30, 48),
+(44, 'pelle', 'pelle avec manche en bois', 20, 20, 49),
+(45, 'brouette', 'brouette en fer \r\ndiametre roue : 50 cm', 30, 30, 50),
+(46, 'tuyau arrosage', 'tuyau arrosage vert embout en laiton', 30, 50, 51),
+(47, 'taille haie', 'taille haie à essence', 100, 40, 52),
+(48, 'pioche', 'pioche avec manche en bois', 10, 100, 53),
+(49, 'clavier', 'clavier\r\nport usb', 10, 100, 54),
+(50, 'ordinateur', 'ordinateur portable\r\nvendu avec chargeur', 400, 30, 55),
+(51, 'souris', 'souris d\'ordinateur', 20, 100, 56),
+(52, 'souris sans fil', 'souris d\'ordinateur sans fil', 20, 100, 56),
+(53, 'souris', 'souris d\'ordinateur', 20, 300, 56),
+(54, 'bague', 'bague en argent\r\n\r\nplaqué or blanc', 300, 40, 57),
+(55, 'collier', 'collier en or diamant brut', 400, 20, 58),
+(56, 'boucles oreilles', 'boucles d\'oreille en argent massif \r\ncréateur parisien', 250, 30, 59),
+(57, 'bracelet', 'bracelet chaine prénom sur commande\r\nargent massif', 30, 200, 60),
+(58, 'chaussettes', 'chaussettes femme dessin rose', 10, 100, 61),
+(59, 'manteau', 'manteau femme laine', 150, 30, 62),
+(60, 'débardeur', 'débardeur femme synthétique', 30, 40, 63),
+(61, 'pull', 'pull femme', 40, 30, 64),
+(62, 'sac', 'sac à main femme cuir', 300, 34, 65);
 
 -- --------------------------------------------------------
 
@@ -722,7 +755,7 @@ ALTER TABLE `code_reduction`
 -- AUTO_INCREMENT pour la table `commande`
 --
 ALTER TABLE `commande`
-  MODIFY `idCommande` int(8) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=21;
+  MODIFY `idCommande` int(8) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=25;
 --
 -- AUTO_INCREMENT pour la table `commercant`
 --
@@ -732,7 +765,7 @@ ALTER TABLE `commercant`
 -- AUTO_INCREMENT pour la table `ligne_commande`
 --
 ALTER TABLE `ligne_commande`
-  MODIFY `idLigneCommande` int(8) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=20;
+  MODIFY `idLigneCommande` int(8) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=27;
 --
 -- AUTO_INCREMENT pour la table `produit_type`
 --
