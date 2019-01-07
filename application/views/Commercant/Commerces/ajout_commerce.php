@@ -49,7 +49,7 @@
                 <input type="time" class="form-control" name="tempsReservationProduitsCommerce" id="inputTempsReservation" placeholder="" value="<?php echo set_value('tempsReservationProduitsCommerce') ?>">
             </div>
             <div class="form-group">
-                <label for="inputLivrable">Possibilité de livraison des produits (cochez si vous souhaitez) :</label>
+                <label for="inputLivrable">Possibilité de livraison des produits (Oui si vous souhaitez livrer, Non sinon) :</label>
                 <select class="form-control" name="produitsLivrablesCommerce" id="inputLivrable">
                     <option value=""></option>
                     <option name="produitsLivrablesCommerce" value="<?php echo set_value('produitsLivrablesCommerce',1) ?>" >Oui</option>
