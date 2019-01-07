@@ -35,6 +35,8 @@ class Layout {
 
         $this->var['js'] = array();
 
+        $this->var['jquery'] = array();
+
         // Parametre les menus
         // Menu principal
         $this->var['menu'] = array();
@@ -74,7 +76,7 @@ class Layout {
 
     /*
      *  views permet de sauvegarder le contenu d'une ou plusieurs vues dans une variable,
-     *  sans l'afficher immédiatement. 
+     *  sans l'afficher immédiatement.
      *  Pour l'affichage, il faudra utiliser la méthode view.
      *  Ici on ajoute au contenue de output (vide ou non) le contenu d'une vue.
      */
@@ -125,8 +127,16 @@ class Layout {
     }
 
     public function ajouter_js($nom) {
-        if (is_string($nom) AND ! empty($nom) AND file_exists('./assets/javascript/' . $nom . '.js')) {
+        if (is_string($nom) AND ! empty($nom) AND file_exists('./assets/js/' . $nom . '.js')) {
             $this->var['js'][] = js_url($nom);
+            return true;
+        }
+        return false;
+    }
+
+    public function ajouter_jquery($nom) {
+        if (is_string($nom) AND ! empty($nom) AND file_exists('./assets/jquery/' . $nom . '.js')) {
+            $this->var['jquery'][] = js_url($nom);
             return true;
         }
         return false;
@@ -162,7 +172,7 @@ class Layout {
     }
 
     /**
-     * Initialise le menu de base 
+     * Initialise le menu de base
      */
     public function init_menu() {
         $this->CI->load->library('session');
@@ -174,10 +184,12 @@ class Layout {
 
         // Ajoute a topMenu
         if (isset($this->CI->session->logged_in['username'])) {
+            $this->ajouter_menu('topMenu', '<i class="fa fa-credit-card" aria-hidden="true"></i> Commandes', 'Client/Commandes');
             if (isset($this->CI->session->logged_in['idCommercant'])) {
                 $this->ajouter_menu('topMenu', '<i class="fa fa fa-cogs"></i> Espace commercant', 'Commercant/Commercant');
             }
             $this->ajouter_menu('topMenu', $this->CI->session->logged_in['username'], 'Auth');
+
         } else {
             $this->ajouter_menu('topMenu', 'Connexion', 'Auth');
         }

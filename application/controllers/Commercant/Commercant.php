@@ -42,9 +42,11 @@ class Commercant extends CI_Controller {
             $this->layout->ajouter_menu('topMenu', '<i class="fa fa-arrow-left"></i> Retour à l\'espace client', '');
 
             // Menu de gauche (gestion des produits, des commerces, Parametres...
+            $this->layout->ajouter_menu_url('menu', 'Accueil espace Commerçant', 'Commercant/Commercant');
+            $this->layout->ajouter_menu_url('menu', 'Commandes Clients', 'Commercant/Commandes');
             $this->layout->ajouter_menu_url('menu', 'Gerer vos Produits', 'Commercant/Produits');
             $this->layout->ajouter_menu_url('menu', 'Gerer vos Commerces', 'Commercant/Commerces');
-            $this->layout->ajouter_menu_url('menu', 'Paramètres', 'Commercant/Parametres');
+            //$this->layout->ajouter_menu_url('menu', 'Paramètres', 'Commercant/Parametres');
         }
     }
 

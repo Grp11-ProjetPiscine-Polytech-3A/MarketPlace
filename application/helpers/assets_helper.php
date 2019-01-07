@@ -196,3 +196,25 @@ if (!function_exists('upload_files_from_form')) {
     }
 
 }
+if (!function_exists('rrmdir')) {
+
+    /**
+     * Supprime reccursivement un dossier
+     * @param type $dir
+     */
+    function rrmdir($dir) {
+        if (is_dir($dir)) {
+            $objects = scandir($dir);
+            foreach ($objects as $object) {
+                if ($object != "." && $object != "..") {
+                    if (is_dir($dir . "/" . $object))
+                        rrmdir($dir . "/" . $object);
+                    else
+                        unlink($dir . "/" . $object);
+                }
+            }
+            rmdir($dir);
+        }
+    }
+
+}

@@ -23,6 +23,7 @@ class Panier extends CI_Controller {
         $this->load->model('Produit_variante_model');
         $this->load->model('User_model');
         $this->load->model('Commerce_model');
+        $this->load->model('Client_model');
     }
 
     public function index() {
@@ -33,10 +34,17 @@ class Panier extends CI_Controller {
      * Page du panier
      */
     public function afficher_panier() {
+        $idClient = $this->session->logged_in['idClient'];
         $data = array(
             'produits' => array(),
         );
 
+        if (!is_null($idClient)) {
+            $pointsFidelitesClient = $this->Client_model->get_nb_point_client($idClient)->pointsFidelitesClient;
+            $data['pointsFidelitesClient'] = $pointsFidelitesClient;
+        } else {
+            $data['pointsFidelitesClient'] = 0;
+        }
         $somme_prix = 0;
 
         if ($this->session->has_userdata('panier')) {
@@ -51,7 +59,7 @@ class Panier extends CI_Controller {
                     "idProduitVariante" => $id_Produit_variante,
                 );
                 $produit_variante = $this->Produit_variante_model->read('*', $where, 1)[0];
-                
+
                 if ($produit_variante) {
                     // Reccupere les donnees sur le produit Type
                     $where = array(
@@ -59,20 +67,20 @@ class Panier extends CI_Controller {
                     );
                     $produit_type = $this->Produit_type_model->read('*', $where, 1);
                 }
-                
+
                 // Si le produit existe, on l'ajoute au tableau
                 if ($produit_variante && isset($produit_type) && $produit_type) {
-                    // Rassemble les donnees du 
+                    // Rassemble les donnees du
                     $donnees_produit = (object) array_merge((array) $produit_type[0], (array) $produit_variante);
 
-                    // Ajoute aux donnees du produit l'url de l'image 
+                    // Ajoute aux donnees du produit l'url de l'image
                     $image_url = url_images_in_folder("/assets/images/produits/produit_" . $donnees_produit->idProduitType . '/variante_' . $id_Produit_variante) [0];
                     $donnees_produit->image_url = $image_url;
 
                     // Ajoute aux donnees du produit la quantite
                     $donnees_produit->quantite = $quantite;
 
-                    // Reccupere les donnees du commerce et les ajoutes
+                    // Recupère les donnees du commerce et les ajoutes
                     $where = array(
                         "siretCommerce" => $donnees_produit->siretCommerce,
                     );
@@ -146,7 +154,7 @@ class Panier extends CI_Controller {
     /**
      * Supprime un produit du panier et affiche le nouveau panier
      * @param int $idProduit    l'id du produit a supprimer
-     * @param int $quantite     La quantite a supprimer, si la quantite est <= 0 ou est plus grande que la quantite actuelle, supprime tout. 
+     * @param int $quantite     La quantite a supprimer, si la quantite est <= 0 ou est plus grande que la quantite actuelle, supprime tout.
      */
     public function supprimer_panier($idProduit, $quantite = 1) {
         $this->supprimer_produit_sesssion($idProduit, $quantite);
@@ -154,10 +162,23 @@ class Panier extends CI_Controller {
         $this->afficher_panier();
     }
 
+    public function vider_panier() {
+        $this->session->set_userdata('panier', []);
+
+        $data = array(
+            'message_display' => 'Le panier a été vidé',
+        );
+
+        // Load the logged_in view
+        $this->layout->views('template/message_display', $data);
+        
+        $this->afficher_panier();
+    }
+
     /**
      * Supprime un produit du panier
      * @param int $idProduit    l'id du produit a supprimer
-     * @param int $quantite     La quantite a supprimer, si la quantite est < 0 ou est plus grande que la quantite actuelle, supprime tout. 
+     * @param int $quantite     La quantite a supprimer, si la quantite est < 0 ou est plus grande que la quantite actuelle, supprime tout.
      */
     private function supprimer_produit_sesssion($idProduit, $quantite = 1) {
         $session_data = array();

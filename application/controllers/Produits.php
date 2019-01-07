@@ -25,6 +25,7 @@ class Produits extends CI_Controller {
         $this->load->model('Commerce_model');
         $this->load->model('Commercant_model');
         $this->load->model('User_admin_model');
+        $this->load->model('Client_donner_avis_model');
 
         $categ = $this->Categorie_model->read('*');
 
@@ -33,6 +34,7 @@ class Produits extends CI_Controller {
             $this->layout->ajouter_menu_url('sideMenu', $intitule, 'Produits/liste_produits/' . $c->idCategorie);
         }
 
+        $this->layout->ajouter_css("ficheProduit");
         $this->layout->setNomSideMenu("Categories");
     }
 
@@ -61,7 +63,7 @@ class Produits extends CI_Controller {
                     $produit->descriptionProduitType .= '...';
                 }
 
-                // On reccupere le prix 
+                // On reccupere le prix
                 $produit->prixProduitType = $this->Produit_type_model->getRangePrice($produit->idProduitType);
 
                 $liste_produits[] = $produit;
@@ -108,7 +110,7 @@ class Produits extends CI_Controller {
             }
             $variante_select = $this->Produit_variante_model->read("*", ["idProduitVariante" => $id_variante])[0];
 
-            // Reccupere la liste des url des images du produit type ET de la variante 
+            // Reccupere la liste des url des images du produit type ET de la variante
             $img_paths = ["/assets/images/produits/produit_" . $id_Produit . "/variante_" . $id_variante,
                 "/assets/images/produits/produit_" . $id_Produit];
             $images_url = url_images_in_folder($img_paths);
@@ -127,19 +129,21 @@ class Produits extends CI_Controller {
             }
             $variante_select->descriptionProduitVariante = nl2br($variante_select->descriptionProduitVariante);
             $produit->descriptionProduitType = nl2br($produit->descriptionProduitType);
-
             $data = array(
                 "produit" => $produit,
                 "images" => $images_url,
                 "variantes" => $variantes,
                 "variante" => $variante_select,
                 "caracteristiques" => array_merge($this->Produit_variante_model->getCaracteristiques($id_variante), $this->Produit_type_model->getCaracteristiques($produit->idProduitType)),
+                "commentaire" => $this->Client_donner_avis_model->getCommentaires($id_Produit),
             );
+
             $this->layout->view('Produits/fiche_produit', $data);
         } else {
             $data = array(
                 'error_message' => 'Une erreur s\'est produite',
             );
+
             $this->layout->view('template/error_display', $data);
         }
     }

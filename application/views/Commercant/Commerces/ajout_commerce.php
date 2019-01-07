@@ -45,11 +45,11 @@
                 <input type="text" class="form-control" name="villeCommerce" id="inputVille" placeholder="" value="<?php echo set_value('villeCommerce') ?>">
             </div>
             <div class="form-group">
-                <label for="inputTempsReservation">Temps de réservation maximum pour les produits :</label>
+                <label for="inputTempsReservation">Temps de réservation maximum pour les produits (en jours):</label>
                 <input type="time" class="form-control" name="tempsReservationProduitsCommerce" id="inputTempsReservation" placeholder="" value="<?php echo set_value('tempsReservationProduitsCommerce') ?>">
             </div>
             <div class="form-group">
-                <label for="inputLivrable">Possibilité de livraison des produits (cocher si vous pouvez) :</label>
+                <label for="inputLivrable">Possibilité de livraison des produits (cochez si vous souhaitez) :</label>
                 <select class="form-control" name="produitsLivrablesCommerce" id="inputLivrable">
                     <option value=""></option>
                     <option name="produitsLivrablesCommerce" value="<?php echo set_value('produitsLivrablesCommerce',1) ?>" >Oui</option>
@@ -60,7 +60,7 @@
                 <label for="description">Description du commerce :</label>
                 <textarea type="text" class="form-control" name="descriptionCommerce" id="inputCaract" placeholder="" rows="10"><?php echo set_value('descriptionCommerce') ?></textarea>
             </div>
-       
+
             <button type="submit" class="btn btn-primary">Ajouter le commerce</button>
 
             <?php echo form_close(); ?>

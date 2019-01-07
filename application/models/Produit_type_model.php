@@ -86,6 +86,7 @@ class Produit_type_model extends MY_Model {
 
     /**
      * Reccupere la fourchette des prix des variantes du produit
+     * Retourne -1 si le produit type n'a pas de variantes
      * @param type $idProduitType
      * @return String la fourchette de prix
      */
@@ -99,27 +100,31 @@ class Produit_type_model extends MY_Model {
         $prix_variantes = $CI->Produit_variante_model->read("prixProduitVariante", $whereProduit);
 
         // Formate le prix
-        if (count($prix_variantes) >= 2) {
-            if (isset($min)) {
-                unset($min);
-            }
-            if (isset($max)) {
-                unset($max);
-            }
+        if ($prix_variantes) {
+            if (count($prix_variantes) >= 2) {
+                if (isset($min)) {
+                    unset($min);
+                }
+                if (isset($max)) {
+                    unset($max);
+                }
 
 
-            foreach ($prix_variantes as $prix) {
-                $p = $prix->prixProduitVariante;
-                if (!isset($min) || $p <= $min) {
-                    $min = $p;
+                foreach ($prix_variantes as $prix) {
+                    $p = $prix->prixProduitVariante;
+                    if (!isset($min) || $p <= $min) {
+                        $min = $p;
+                    }
+                    if (!isset($max) || $p >= $max) {
+                        $max = $p;
+                    }
                 }
-                if (!isset($max) || $p >= $max) {
-                    $max = $p;
-                }
+                $prix = $min . ' - ' . $max;
+            } else {
+                $prix = $prix_variantes[0]->prixProduitVariante;
             }
-            $prix = $min . ' - ' . $max;
         } else {
-            $prix = $prix_variantes[0]->prixProduitVariante;
+            $prix = -1;
         }
         return $prix;
     }

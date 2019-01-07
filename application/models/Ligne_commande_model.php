@@ -6,7 +6,8 @@ class Ligne_commande_model extends MY_Model
     protected $table = 'ligne_commande';
     // Nom de l'identifiant de la table
     protected $id = 'idLigneCommande';
-    
+
+    // NOTE : Inutilisé
     public function ajouter_ligne_commande($etatReservationLigneCommande,
             $quantite,$prixAchatProduit,$idProduitVariante,$idCommande)
 	{
@@ -17,10 +18,10 @@ class Ligne_commande_model extends MY_Model
                 'idProduitVariante' => $idProduitVariante,
                 'idCommande' => $idCommande
                 );
-            
+
             return $this->create($data);
 	}
-    
+
 }
 
 

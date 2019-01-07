@@ -1,8 +1,14 @@
+<!-- TODO : Ajouter nbPoint-->
 <div id="panier">
     <h2>Liste des produits</h2>
     <hr/>
 
     <div class="table-responsive">
+        
+        <div class="col-md-2 offset-md-10" style="text-align: right">
+            <a href="<?php echo base_url('Panier/vider_panier/') ?>">Vider le panier</a>
+        </div>
+        
         <table class="table">
             <thead>
                 <tr>
@@ -74,7 +80,16 @@
     </div>
     <div class="row justify-content-end">
         <div class="col-lg-3">
-            <a class="passer_commande btn btn-primary" role="button" href= "<?php echo base_url('Commandes/afficher_commandes')?>">Passer Commande</a>
+            <span class="pull-right lead"> Vous avez <?php echo $pointsFidelitesClient ?> points </span>
+            <div class="form-group">
+                <label for="inputNumAdresse"> Nombre de points à utiliser : </label>
+                <input type="number" class="form-control" name="nbpoints" id="inputNbpoints" min="0" placeholder="" value="<?php echo set_value('nbpoints') ?>">
+            </div>
+        </div>
+    </div>
+    <div class="row justify-content-end">
+        <div class="col-lg-3">
+            <a class="passer_commande btn btn-primary" role="button" href= "<?php echo base_url('Client/Commandes/ajouter_commandes')?>">Passer Commande</a>
         </div>
     </div>
 </div>
