@@ -1,5 +1,5 @@
 <div id="commandes">
-    <h2>Liste des produits commandés</h2>
+    <h2>Liste des produits commandés par des clients</h2>
     <hr/>
 
     <div class="table-responsive">
@@ -21,7 +21,7 @@
             <tbody>
                 <?php if (isset($commandes)): ?>
                     <?php foreach ($commandes as $c): ?>
-                        <tr>
+                        <tr style="background: <?php echo $c->color ?>">
 
                             <!-- Image -->
                             <td>
@@ -39,10 +39,10 @@
 
                             <!-- Client -->
                             <td>
-                                <a href="<?php echo site_url('/Clients/fiche_client/' . $c->idClient) ?>">
+                                <a href="<?php echo site_url('/Commercant/Clients/fiche_client/' . $c->idClient) ?>">
                                     <?php echo mb_ucfirst($c->nomClient) . ' ' . mb_ucfirst($c->prenomClient) ?>
                                 </a>
-                                
+
                             </td>
 
                             <!-- Date -->
@@ -72,7 +72,12 @@
 
                             <td>
                                 <a href="<?php echo "" ?>">
-                                    <i class="fa fa-trash-o"></i>
+                                    <a href="<?php echo base_url('Commercant/Commandes/confirmer_commande/' . $c->idLigneCommande) ?>">
+                                        <i class="fa fa-check"></i>
+                                    </a>
+                                    <a href="<?php echo base_url('Commercant/Commandes/refuser_commande/' . $c->idLigneCommande) ?>" style="color:red">
+                                        <i class="fa fa-times"></i>
+                                    </a>
                                 </a>
                             </td>
                         </tr>

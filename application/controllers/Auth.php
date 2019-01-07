@@ -85,7 +85,7 @@ class Auth extends CI_Controller {
                 $idUser = $this->User_model->select_from_username($username)[0]->idUser;
                 // Check if user have a clientId
                 $idClientBdd = $this->Client_model->get_client_id($idUser);
-                if (isset($idClientBdd->idClient)){
+                if (isset($idClientBdd->idClient)) {
                     $idClient = $idClientBdd->idClient;
                 } else {
                     $idClient = null;
@@ -145,6 +145,17 @@ class Auth extends CI_Controller {
         $this->form_validation->set_rules('loginUser', '"Login"', 'trim|required|min_length[4]|encode_php_tags|required');
         $this->form_validation->set_rules('passUser', '"Password"', 'trim|required|min_length[5]|encode_php_tags|required');
         $this->form_validation->set_rules('confirm_password', '"Confirm Password"', 'trim|required|min_length[5]|encode_php_tags|required');
+        $this->form_validation->set_rules('email', '"Adresse Email"', 'trim|required|min_length[5]|encode_php_tags|required|valid_email');
+        $this->form_validation->set_rules('type', '"Vous etes (Client / Commerçant)"', 'trim|required|encode_php_tags');
+        $this->form_validation->set_rules('nom', '"Nom"', 'trim|required|encode_php_tags');
+        $this->form_validation->set_rules('prenom', '"Prénom"', 'trim|required|encode_php_tags');
+        $this->form_validation->set_rules('naiss_date', '"Date de naissance"', 'trim|required|encode_php_tags');
+        $this->form_validation->set_rules('tel', '"Téléphone"', 'trim|encode_php_tags');
+        $this->form_validation->set_rules('numAdr', '"Numéro d\'adresse"', 'trim|encode_php_tags');
+        $this->form_validation->set_rules('rue', '"Rue"', 'trim|encode_php_tags');
+        $this->form_validation->set_rules('cplAdr', '"Complément d\'adresse"', 'trim|encode_php_tags');
+        $this->form_validation->set_rules('cp', '"Code Postal"', 'trim|encode_php_tags');
+        $this->form_validation->set_rules('ville', '"Ville"', 'trim|encode_php_tags');
 
         // If the form wasn't filled properly
         if (!$this->form_validation->run()) {
@@ -183,13 +194,39 @@ class Auth extends CI_Controller {
                 if ($result) {
                     $idUser = $this->User_model->select_from_username($loginUser)[0]->idUser;
                     // Create the client profile
-
-                    // TODO : Ameliorer le formulaire pour demander nom, prenom, mail, date de naissance et adresse
                     $data_client = array(
                         "idUser" => $idUser,
+                        "mailClient" => $this->input->post("email"),
+                        "nomClient" => $this->input->post("nom"),
+                        "prenomClient" => $this->input->post("prenom"),
+                        "dateNaissanceClient" => $this->input->post("naiss_date"),
+                        "telClient" => $this->input->post("tel"),
+                        "numAdresseClient" => $this->input->post("numAdr"),
+                        "rueClient" => $this->input->post("rue"),
+                        "complementAdresseCommerce" => $this->input->post("cplAdr"),
+                        "codePostalClient" => $this->input->post("cp"),
+                        "villeClient" => $this->input->post("ville"),
                     );
 
+
                     $result = $this->Client_model->create($data_client);
+
+                    if ($result) {
+                        // Creation du commercant
+                        if ($this->input->post('type') == 1) {
+                            $data_commercant = array(
+                                "idUser" => $idUser,
+                                "nomCommercant" => $this->input->post("nom"),
+                                "prenomCommercant" => $this->input->post("prenom"),
+                                "dateNaissanceCommercant" => $this->input->post("naiss_date"),
+                                "telCommercant" => $this->input->post("tel"),
+                            );
+                            $result = $this->Commercant_model->create($data_commercant);
+                            if ($result) {
+                                $idCommercant = $this->Commercant_model->get_commercant_iduser($idUser)[0]->idCommercant;
+                            }
+                        }
+                    }
                 }
 
                 // If the user is correctly created
@@ -199,7 +236,7 @@ class Auth extends CI_Controller {
 
                     // Check if user have a clientId
                     $idClientBdd = $this->Client_model->get_client_id($idUser);
-                    if (isset($idClientBdd->idClient)){
+                    if (isset($idClientBdd->idClient)) {
                         $idClient = $idClientBdd->idClient;
                     } else {
                         $idClient = null;
@@ -210,6 +247,9 @@ class Auth extends CI_Controller {
                         'idUser' => $idUser,
                         'idClient' => $idClient,
                     );
+                    if (isset($idCommercant)) {
+                        $session_data['idCommercant'] = $idCommercant;
+                    }
 
                     // Add user data in session
                     $this->session->set_userdata('logged_in', $session_data);
