@@ -1,4 +1,3 @@
-<!-- TODO : Ajouter nbPoint-->
 <div id="panier">
     <h2>Liste des produits</h2>
     <hr/>

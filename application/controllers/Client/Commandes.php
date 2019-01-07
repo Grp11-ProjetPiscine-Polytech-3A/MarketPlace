@@ -182,7 +182,6 @@ class Commandes extends CI_Controller {
             // Supprime la ligne de commande
             $del = $this->Ligne_commande_model->delete($where);
 
-            // TODO suppression des points
             if ($del) {
 
 
