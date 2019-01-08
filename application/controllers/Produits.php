@@ -177,34 +177,38 @@ class Produits extends CI_Controller {
         $note = $this->input->post('note');
         $error_message = '';
         $message_display = '';
-        if ($note >= 0 && $note <= 5) {
-            if ($this->Client_commande_effectuer_model->a_commande($id_produit_variante)) {
+        if (isset($this->session->logged_in['username'])) {
+            if ($note >= 0 && $note <= 5) {
+                if ($this->Client_commande_effectuer_model->a_commande($id_produit_variante)) {
 
-                // Update du comment
-                $where = [
-                    'idClient' => $this->session->logged_in['idClient'],
-                    'idProduitVariante' => $id_produit_variante,
-                ];
-                if (count($this->Client_donner_avis_model->read('*', $where)) > 0) {
-                    $set = [
-                        'commentaire' => $comment,
-                        'note' => $note,
+                    // Update du comment
+                    $where = [
+                        'idClient' => $this->session->logged_in['idClient'],
+                        'idProduitVariante' => $id_produit_variante,
                     ];
-                    $result = $this->Client_donner_avis_model->update($where, $set);
+                    if (count($this->Client_donner_avis_model->read('*', $where)) > 0) {
+                        $set = [
+                            'commentaire' => $comment,
+                            'note' => $note,
+                        ];
+                        $result = $this->Client_donner_avis_model->update($where, $set);
+                    } else {
+                        // Creation du comment
+                        $result = $this->Client_donner_avis_model->ajouter_client_donner_avis($id_produit_variante, $comment, $note);
+                    }
+                    if ($result) {
+                        $message_display = 'Message ajouté';
+                    } else {
+                        $error_message = 'Erreur lors de l\'ajout du message';
+                    }
                 } else {
-                    // Creation du comment
-                    $result = $this->Client_donner_avis_model->ajouter_client_donner_avis($id_produit_variante, $comment, $note);
-                }
-                if ($result) {
-                    $message_display = 'Message ajouté';
-                } else {
-                    $error_message = 'Erreur lors de l\'ajout du message';
+                    $error_message = 'Vous n\'avez pas acheté ce produit';
                 }
             } else {
-                $error_message = 'Vous n\'avez pas acheté ce produit';
+                $error_message = 'Note incorrecte';
             }
         } else {
-            $error_message = 'Note incorrecte';
+            $error_message = 'Vous n\'êtes pas connecté';
         }
         $this->fiche_produit($id_produit, $id_produit_variante, $error_message, $message_display);
     }
