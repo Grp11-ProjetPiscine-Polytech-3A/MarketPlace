@@ -86,7 +86,7 @@ class Commande_model extends MY_Model {
 
         $this->db->order_by("co.dateCommande", "desc");
         $this->db->order_by("co.idCommande", "desc");
-        $this->db->group_by("cl.idClient");
+        $this->db->order_by("cl.idClient", "asc");
 
         $query = $this->db->get();
 
