@@ -118,7 +118,7 @@
                                 </div>
                             </div>
                         </fieldset>
-                        <?php echo form_close(); ?>
+                        
 
                         <!-- Partie Note -->
                         <div class="form-group" id="rating-ability-wrapper">
@@ -147,7 +147,7 @@
                             </button>
                         </div>
                         <button type="submit" class="btn btn-normal pull-right">Envoyer</button>
-                        </form>
+                        <?php echo form_close(); ?>
                     </div>
 
                 </div>
