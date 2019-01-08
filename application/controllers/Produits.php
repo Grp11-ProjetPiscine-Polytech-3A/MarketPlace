@@ -96,7 +96,8 @@ class Produits extends CI_Controller {
                     'error_message' => 'Aucuns produits correspondant',
                 );
             }
-            $this->layout->view('template/error_display', $data);
+            $this->layout->views('template/error_display', $data);
+            $this->layout->view('Produits/liste_produits');
         }
     }
 
