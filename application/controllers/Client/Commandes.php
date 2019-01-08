@@ -85,6 +85,17 @@ class Commandes extends CI_Controller {
         $this->layout->view('Client/Commandes/commandes', $data);
     }
 
+    public function passer_commande() {
+        if (isset($this->session->logged_in['username'])) {
+            $this -> ajouter_commandes();
+        } else {
+            $data = array(
+                'error_message' => 'Vous n\'êtes pas connecté',
+            );
+            $this -> layout->view('template/error_display', $data);
+        }
+    }
+
     /**
      * Ajoute le panier aux commandes
      */

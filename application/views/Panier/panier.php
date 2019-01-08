@@ -71,7 +71,7 @@
             </tbody>
         </table>
     </div>
-    <?php echo form_open_multipart(base_url('Client/Commandes/ajouter_commandes')); ?>
+    <?php echo form_open_multipart(base_url('Client/Commandes/passer_commande')); ?>
     <div class="row justify-content-end">
         <div class="col-lg-3">
             <span class="pull-right lead"> Total : <?php echo $somme_totale ?> € </span>
