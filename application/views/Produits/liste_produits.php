@@ -11,7 +11,7 @@
                         <input class="form-control form-control-lg form-control-borderless" type="search" name="search" placeholder="TShirt, parfum ...">
                     </div>
                     <div class="col-auto">
-                        <button class="btn btn-lg btn-success" type="submit" style="margin-left: 10px;">Search</button>
+                        <button class="btn btn-lg btn-success" type="submit" style="margin-left: 10px;">Rechercher</button>
                     </div>
                 </div>
             <?php echo form_close(); ?>
