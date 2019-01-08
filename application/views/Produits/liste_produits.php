@@ -14,12 +14,12 @@
                             <h4 class="card-title">
 
                                 <a href="<?php echo site_url('/Produits/fiche_produit/' . $p->idProduitType) ?>">
-                                    <?php echo $p->nomProduitType ?>
+                                    <?php echo mb_ucfirst($p->nomProduitType) ?>
                                 </a>
 
                             </h4>
                             <h5><?php echo $p->prixProduitType ?> €</h5>
-                            <p class="card-text"><?php echo $p->descriptionProduitType ?></p>
+                            <p class="card-text"><?php echo mb_ucfirst($p->descriptionProduitType) ?></p>
                         </div>
                     </div>
                 </div>

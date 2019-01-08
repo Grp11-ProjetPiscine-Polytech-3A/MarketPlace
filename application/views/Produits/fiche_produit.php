@@ -1,7 +1,7 @@
 <div id="fiche_produit">
 
     <?php if (isset($produit)): ?>
-        <h2><?php echo $produit->nomProduitType ?></h2>
+    <h2><?php echo mb_ucfirst($produit->nomProduitType) ?></h2>
         <hr/>
 
 
@@ -45,7 +45,7 @@
                 <div id="choix_variante" class="choix-variante">
                     <?php foreach ($variantes as $v): ?>
                         <a class="btn <?php ($v->idProduitVariante == $variante->idProduitVariante) ? print 'btn-dark' : print 'btn-secondary' ?> btn-variante" href="<?php echo base_url('/Produits/fiche_produit/' . $produit->idProduitType . '/' . $v->idProduitVariante) ?>">
-                            <?php echo $v->nomProduitVariante ?>
+                            <?php echo mb_ucfirst($v->nomProduitVariante) ?>
                         </a>
                     <?php endforeach; ?>
                 </div>
@@ -82,14 +82,14 @@
             <div id="description" class="col-12" style="word-wrap: break-word;">
                 <div id="description_generale">
                     <h5>Description :</h5>
-                    <p class="card-text"><?php echo $produit->descriptionProduitType ?></p>
+                    <p class="card-text"><?php echo mb_ucfirst($produit->descriptionProduitType) ?></p>
                 </div>
 
                 <br/>
 
                 <!--Description de la variante-->
                 <div id="description_variante">
-                    <p class="card-text"><?php echo $variante->descriptionProduitVariante ?></p>
+                    <p class="card-text"><?php echo mb_ucfirst($variante->descriptionProduitVariante) ?></p>
                 </div>
 
                 <hr/>
