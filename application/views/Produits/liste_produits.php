@@ -1,6 +1,20 @@
 <div id="liste_produits">
 
+    <div id="searchbar" class="row form-group ">
+
+        <span class="col-2 mb-4 font-weight-bold">Rechercher</span>
+        <div class="col">
+            <?php echo form_open('/Produits/liste_produits/'); ?>
+            <input class="champ" name="search" type="text" placeholder="TShirt, parfum ..."/>
+            <input type="submit" value=" Envoyer " name="submit"/>
+            <?php echo form_close(); ?>
+
+        </div>
+    </div>
+
     <div class="row">
+
+
         <?php if (isset($produits)): ?>
             <?php foreach ($produits as $p): ?>
                 <div class="col-lg-4 col-md-6 mb-4">

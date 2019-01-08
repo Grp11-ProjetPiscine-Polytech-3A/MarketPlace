@@ -1,7 +1,7 @@
 <div id="fiche_produit">
 
     <?php if (isset($produit)): ?>
-    <h2><?php echo mb_ucfirst($produit->nomProduitType) ?></h2>
+        <h2><?php echo mb_ucfirst($produit->nomProduitType) ?></h2>
         <hr/>
 
 
@@ -106,46 +106,47 @@
                 <h5>Commentaires :</h5>
                 <div class="row">
                     <div class="col-12">
-                        <?php echo form_open('/Produits/ajouter_commentaire/'.$variante->idProduitType . '/' . $variante->idProduitVariante . '/'); ?>
-                            <!-- Partie Commentaire-->
-                            <fieldset>
-                                <div class="row">
-                                    <div class="col-sm-3 col-lg-2 hidden-xs">
-                                        <img class="img-responsive" src="<?php echo site_url('/assets/images/website/comments.png') ?>" alt="">
-                                    </div>
-                                    <div class="form-group col-xs-12 col-sm-9 col-lg-10">
-                                        <textarea class="form-control" id="message" name ="comment" placeholder="Votre avis sur ce produit" rows="3" required></textarea>
-                                    </div>
+                        <?php echo form_open('/Produits/ajouter_commentaire/' . $variante->idProduitType . '/' . $variante->idProduitVariante . '/'); ?>
+                        <!-- Partie Commentaire-->
+                        <fieldset>
+                            <div class="row">
+                                <div class="col-sm-3 col-lg-2 hidden-xs">
+                                    <img class="img-responsive" src="<?php echo site_url('/assets/images/website/comments.png') ?>" alt="">
                                 </div>
-                            </fieldset>
-
-                            <!-- Partie Note -->
-                            <div class="form-group" id="rating-ability-wrapper">
-                                <label class="control-label" for="rating">
-                                    <span class="field-label-info"></span>
-                                    <input type="hidden" id="selected_rating" name="note" value="" required="required">
-                                </label>
-                                <h4 class="bold rating-header" style="">
-                                    <span>Votre note :</span>
-                                    <span class="selected-rating">0</span> / 5
-                                </h4>
-                                <button type="button" class="btnrating btn btn-default btn-sm" data-attr="1" id="rating-star-1">
-                                    <i class="fa fa-star" aria-hidden="true"></i>
-                                </button>
-                                <button type="button" class="btnrating btn btn-default btn-sm" data-attr="2" id="rating-star-2">
-                                    <i class="fa fa-star" aria-hidden="true"></i>
-                                </button>
-                                <button type="button" class="btnrating btn btn-default btn-sm" data-attr="3" id="rating-star-3">
-                                    <i class="fa fa-star" aria-hidden="true"></i>
-                                </button>
-                                <button type="button" class="btnrating btn btn-default btn-sm" data-attr="4" id="rating-star-4">
-                                    <i class="fa fa-star" aria-hidden="true"></i>
-                                </button>
-                                <button type="button" class="btnrating btn btn-default btn-sm" data-attr="5" id="rating-star-5">
-                                    <i class="fa fa-star" aria-hidden="true"></i>
-                                </button>
+                                <div class="form-group col-xs-12 col-sm-9 col-lg-10">
+                                    <textarea class="form-control" id="message" name ="comment" placeholder="Votre avis sur ce produit" rows="3" required></textarea>
+                                </div>
                             </div>
-                            <button type="submit" class="btn btn-normal pull-right">Envoyer</button>
+                        </fieldset>
+                        <?php echo form_close(); ?>
+
+                        <!-- Partie Note -->
+                        <div class="form-group" id="rating-ability-wrapper">
+                            <label class="control-label" for="rating">
+                                <span class="field-label-info"></span>
+                                <input type="hidden" id="selected_rating" name="note" value="" required="required">
+                            </label>
+                            <h4 class="bold rating-header" style="">
+                                <span>Votre note :</span>
+                                <span class="selected-rating">0</span> / 5
+                            </h4>
+                            <button type="button" class="btnrating btn btn-default btn-sm" data-attr="1" id="rating-star-1">
+                                <i class="fa fa-star" aria-hidden="true"></i>
+                            </button>
+                            <button type="button" class="btnrating btn btn-default btn-sm" data-attr="2" id="rating-star-2">
+                                <i class="fa fa-star" aria-hidden="true"></i>
+                            </button>
+                            <button type="button" class="btnrating btn btn-default btn-sm" data-attr="3" id="rating-star-3">
+                                <i class="fa fa-star" aria-hidden="true"></i>
+                            </button>
+                            <button type="button" class="btnrating btn btn-default btn-sm" data-attr="4" id="rating-star-4">
+                                <i class="fa fa-star" aria-hidden="true"></i>
+                            </button>
+                            <button type="button" class="btnrating btn btn-default btn-sm" data-attr="5" id="rating-star-5">
+                                <i class="fa fa-star" aria-hidden="true"></i>
+                            </button>
+                        </div>
+                        <button type="submit" class="btn btn-normal pull-right">Envoyer</button>
                         </form>
                     </div>
 
