@@ -1,14 +1,20 @@
 <div id="liste_produits">
 
     <div id="searchbar" class="row form-group ">
-
-        <span class="col-2 mb-4 font-weight-bold">Rechercher</span>
-        <div class="col">
+        <div class="col-12">
             <?php echo form_open('/Produits/liste_produits/'); ?>
-            <input class="champ" name="search" type="text" placeholder="TShirt, parfum ..."/>
-            <input type="submit" value=" Envoyer " name="submit"/>
+                <div class="card-body row no-gutters align-items-center">
+                    <div class="col-auto">
+                        <i class="fa fa-search" style="font-size:35px; margin-right: 10px;" aria-hidden="true"></i>
+                    </div>
+                    <div class="col">
+                        <input class="form-control form-control-lg form-control-borderless" type="search" name="search" placeholder="TShirt, parfum ...">
+                    </div>
+                    <div class="col-auto">
+                        <button class="btn btn-lg btn-success" type="submit" style="margin-left: 10px;">Search</button>
+                    </div>
+                </div>
             <?php echo form_close(); ?>
-
         </div>
     </div>
 
