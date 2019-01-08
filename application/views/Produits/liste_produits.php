@@ -5,7 +5,7 @@
         <span class="col-2 mb-4 font-weight-bold">Rechercher</span>
         <div class="col">
             <?php echo form_open('/Produits/liste_produits/'); ?>
-            <input class="champ" name="search" type="text" placeholder="TShirt, parfum ..."/>
+            <input class="champ" name="search" value="<?php echo set_value('search') ?>" type="text" placeholder="TShirt, parfum ..."/>
             <input type="submit" value=" Envoyer " name="submit"/>
             <?php echo form_close(); ?>
 
