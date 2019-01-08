@@ -256,7 +256,7 @@ CREATE TABLE IF NOT EXISTS `ligne_commande` (
 `idLigneCommande` int(8) unsigned NOT NULL,
   `etatReservationLigneCommande` varchar(64) NOT NULL,
   `quantité` int(8) NOT NULL,
-  `prixAchatProduit` int(8) NOT NULL,
+  `prixAchatProduit` double(32) NOT NULL,
   `idProduitVariante` int(8) unsigned NOT NULL,
   `idCommande` int(8) unsigned NOT NULL
 ) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;

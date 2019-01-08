@@ -134,7 +134,7 @@ class Commandes extends CI_Controller {
                     }
 
                     // Calcul des points
-                    $pointsGagnes = (Int) $prixTotal * $this->tauxGainPoints;
+                    $pointsGagnes = (double) $prixTotal * $this->tauxGainPoints;
 
                     // Ajout des points
                     $addPts = $this->Client_model->update($whereClient, ['pointsFidelitesClient' => $ptsFidelitesClients + $pointsGagnes]);
